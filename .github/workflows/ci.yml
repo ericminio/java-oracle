@@ -25,4 +25,4 @@ jobs:
       run: |
         chmod +x ./service/start.sh
         export DIR=$(pwd)
-        docker-compose up service
+        docker-compose up --exit-code-from service service
