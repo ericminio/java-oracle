@@ -44,7 +44,7 @@ public class GetEventCountTest {
     @Test
     public void worksWithRawSql() throws Exception {
         Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery("select get_event_count() as count from dual");
+        ResultSet resultSet = statement.executeQuery("select exploration.get_event_count() as count from dual");
         resultSet.next();
         int count = resultSet.getInt("count");
 
@@ -53,7 +53,7 @@ public class GetEventCountTest {
 
     @Test
     public void worksWithCallableStatement() throws Exception {
-        CallableStatement statement = connection.prepareCall("{? = call get_event_count()}");
+        CallableStatement statement = connection.prepareCall("{? = call exploration.get_event_count()}");
         statement.registerOutParameter(1, Types.INTEGER);
         statement.executeUpdate();
         int count = statement.getInt(1);

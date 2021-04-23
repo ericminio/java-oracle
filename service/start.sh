@@ -21,8 +21,8 @@ echo "Oracle is ready";
 executeFile /usr/local/src/service/migrations/1-create-table-event.sql
 executeFile /usr/local/src/service/migrations/2-insert-events.sql
 execute "select * from event;"
-executeFile /usr/local/src/service/migrations/3-create-get-events.sql
-execute "select get_event_count() as count from dual;"
+executeFile /usr/local/src/service/migrations/3-create-get-event-count.sql
+execute "select exploration.get_event_count() as count from dual;"
 
 pwd
 ls -la
