@@ -30,11 +30,11 @@ docker ps -a
 docker network ls
 
 docker rm java7
-docker run --rm --name java7 --network exploration_default java:7 java -version
-docker run --rm --name java7 --network exploration_default java:7 mvn -v
-docker run --rm --name java7 --network exploration_default -v "$DIR:/usr/local/src" --workdir /usr/local/src/service/code  java:7 mvn test
+docker run --rm --name java7 --network java-oracle_default java:7 java -version
+docker run --rm --name java7 --network java-oracle_default java:7 mvn -v
+docker run --rm --name java7 --network java-oracle_default -v "$DIR:/usr/local/src" --workdir /usr/local/src/service/code  java:7 mvn test
 
 docker rm java8
-docker run --rm --name java8 --network exploration_default java:8 java -version
-docker run --rm --name java8 --network exploration_default java:8 mvn -v
-docker run --rm --name java8 --network exploration_default -v "$DIR:/usr/local/src" --workdir /usr/local/src/service/code  java:8 mvn test
+docker run --rm --name java8 --network java-oracle_default java:8 java -version
+docker run --rm --name java8 --network java-oracle_default java:8 mvn -v
+docker run --rm --name java8 --network java-oracle_default -v "$DIR:/usr/local/src" --workdir /usr/local/src/service/code  java:8 mvn test
