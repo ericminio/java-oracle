@@ -58,6 +58,6 @@ public class GetEventCountTest {
         statement.executeUpdate();
         int count = statement.getInt(1);
         
-        assertThat(count, equalTo(4));
+        assertThat(count, equalTo(5));
     }
 }
