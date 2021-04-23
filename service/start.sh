@@ -24,6 +24,11 @@ execute "select * from event;"
 executeFile /usr/local/src/service/migrations/3-create-get-events.sql
 execute "select get_event_count() as count from dual;"
 
+pwd
+ls -la
+docker ps -a
+docker network ls
+
 docker rm java7
 docker run --rm --name java7 --network exploration_default java:7 java -version
 docker run --rm --name java7 --network exploration_default java:7 mvn -v
