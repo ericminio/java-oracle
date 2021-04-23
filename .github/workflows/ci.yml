@@ -26,4 +26,3 @@ jobs:
         chmod +x ./service/start.sh
         export DIR=$(pwd)
         docker-compose up service
-        exit $?

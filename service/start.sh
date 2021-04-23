@@ -29,12 +29,16 @@ ls -la
 docker ps -a
 docker network ls
 
+docker stop java7
 docker rm java7
 docker run --rm --name java7 --network java-oracle_default java:7 java -version
 docker run --rm --name java7 --network java-oracle_default java:7 mvn -v
 docker run --rm --name java7 --network java-oracle_default -v "$DIR:/usr/local/src" --workdir /usr/local/src/service/code  java:7 mvn test
 
+docker stop java8
 docker rm java8
 docker run --rm --name java8 --network java-oracle_default java:8 java -version
 docker run --rm --name java8 --network java-oracle_default java:8 mvn -v
 docker run --rm --name java8 --network java-oracle_default -v "$DIR:/usr/local/src" --workdir /usr/local/src/service/code  java:8 mvn test
+
+exit $?
