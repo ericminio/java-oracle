@@ -9,7 +9,7 @@ public class Generator {
     public String generate(List<String> specification) throws IOException {
         InputStream stream = this.getClass().getClassLoader().getResourceAsStream("template.java");
         String code = new Stringify().inputStream(stream)
-            .replace("ClassName", new ExtractClassName().please(specification));
+            .replace("ClassName", new ExtractPackageName().please(specification));
 
         return code;
     }

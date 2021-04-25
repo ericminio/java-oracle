@@ -2,7 +2,7 @@ package ericminio.javaoracle;
 
 import java.util.List;
 
-public class ExtractClassName {
+public class ExtractPackageName {
 
     public String please(List<String> specification) {
         String match = specification

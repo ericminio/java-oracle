@@ -7,11 +7,11 @@ import java.util.Arrays;
 
 import org.junit.Test;
 
-public class ExtractClassNameTest {
+public class ExtractPackageNameTest {
 
     @Test
     public void works() {
-        assertThat(new ExtractClassName().please(Arrays.asList(
+        assertThat(new ExtractPackageName().please(Arrays.asList(
             "PACKAGE EXPLORATION\n",
             "AS\n",
             "   FUNCTION get_event_count RETURN NUMBER;\n",
@@ -21,7 +21,7 @@ public class ExtractClassNameTest {
 
     @Test
     public void resistsLowerCase() {
-        assertThat(new ExtractClassName().please(Arrays.asList(
+        assertThat(new ExtractPackageName().please(Arrays.asList(
             "PACKAGE beautiful\n",
             "AS\n",
             "END beautiful;"
