@@ -12,8 +12,8 @@ public class ClassName {
         this.connection = connection;
     }
 
-    public int getEventCount() throws SQLException {
-        CallableStatement statement = connection.prepareCall("{? = call exploration.get_event_count()}");
+    public int methodName() throws SQLException {
+        CallableStatement statement = connection.prepareCall("{? = call packageName.functionName()}");
         statement.registerOutParameter(1, Types.INTEGER);
         statement.executeUpdate();
         

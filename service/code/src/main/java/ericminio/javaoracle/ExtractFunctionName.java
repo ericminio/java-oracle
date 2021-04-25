@@ -2,15 +2,15 @@ package ericminio.javaoracle;
 
 import java.util.List;
 
-public class ExtractPackageName {
+public class ExtractFunctionName {
 
     public String please(List<String> specification) {
         String match = specification
             .stream()
-            .filter(line -> line.trim().startsWith("PACKAGE"))
+            .filter(line -> line.trim().startsWith("FUNCTION"))
             .findFirst()
             .orElse(null);
-        String name = match.replace("PACKAGE", "").trim().toLowerCase();
+        String name = match.trim().split(" ")[1];
 
         return name;
     }

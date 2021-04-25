@@ -12,19 +12,18 @@ public class ExtractPackageNameTest {
     @Test
     public void works() {
         assertThat(new ExtractPackageName().please(Arrays.asList(
-            "PACKAGE EXPLORATION\n",
-            "AS\n",
-            "   FUNCTION get_event_count RETURN NUMBER;\n",
-            "END EXPLORATION;"
-        )), equalTo("Exploration"));
-    }
-
-    @Test
-    public void resistsLowerCase() {
-        assertThat(new ExtractPackageName().please(Arrays.asList(
             "PACKAGE beautiful\n",
             "AS\n",
             "END beautiful;"
-        )), equalTo("Beautiful"));
+        )), equalTo("beautiful"));
+    }
+
+    @Test
+    public void returnsLowerCase() {
+        assertThat(new ExtractPackageName().please(Arrays.asList(
+            "PACKAGE EXPLORATION\n",
+            "AS\n",
+            "END EXPLORATION;"
+        )), equalTo("exploration"));
     }
 }
