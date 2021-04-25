@@ -10,7 +10,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-public class FunctionTest extends DatabaseTest {
+public class ExplorationTest extends DatabaseTest {
 
     @Before
     public void seeds() throws SQLException {
@@ -22,9 +22,9 @@ public class FunctionTest extends DatabaseTest {
 
     @Test
     public void works() throws SQLException {
-        Function function = new Function();
-        function.setConnection(connection);
+        Exploration exploration = new Exploration();
+        exploration.setConnection(connection);
         
-        assertThat(function.getEventCount(), equalTo(3));
+        assertThat(exploration.getEventCount(), equalTo(3));
     }
 }

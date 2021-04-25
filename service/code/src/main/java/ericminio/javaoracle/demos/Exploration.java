@@ -5,7 +5,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Types;
 
-public class Function {
+public class Exploration {
 
     private Connection connection;
 
