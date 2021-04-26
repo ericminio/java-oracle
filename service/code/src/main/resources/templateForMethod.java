@@ -1,7 +1,7 @@
     public int methodName() throws SQLException {
         CallableStatement statement = connection.prepareCall("{? = call packageName.functionName()}");
-        statement.registerOutParameter(1, Types.INTEGER);
+        statement.registerOutParameter(1, Types.TTT);
         statement.executeUpdate();
 
-        return statement.getInt(1);
+        return statement.getTtt(1);
     }

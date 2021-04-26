@@ -15,11 +15,16 @@ public class Generator {
         String methods = "";
         List<List<String>> functionSpecifications = new ExtractFunctionSpecifications().please(packageSpecification);
         for (int i=0; i < functionSpecifications.size(); i++){
-            String functionName = new ExtractFunctionName().please(functionSpecifications.get(i));
+            List<String> functionSpecification = functionSpecifications.get(i);
+            String functionName = new ExtractFunctionName().please(functionSpecification);
+            String returnType = new ExtractReturnType().please(functionSpecification);
             String methodCode = classTemplate = methodTemplate
                 .replace("methodName", new ConvertFunctionNameIntoMethodName().please(functionName))
                 .replace("packageName", packageName)
-                .replace("functionName", functionName);
+                .replace("functionName", functionName)
+                .replace("Types.TTT", new TypeMapper().typeOf(returnType))
+                .replace("getTtt", new TypeMapper().accessorOf(returnType))
+                    ;
             methods += methodCode;
         }
         classCode = classCode.replace("    // methods", methods);
