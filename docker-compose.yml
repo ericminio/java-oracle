@@ -20,6 +20,7 @@ services:
     container_name: java7
     volumes:
       - .:/usr/local/src 
+      - /var/run/docker.sock:/var/run/docker.sock
     working_dir: /usr/local/src/service/code
 
   java8:
@@ -28,6 +29,7 @@ services:
     container_name: java8
     volumes:
       - .:/usr/local/src 
+      - /var/run/docker.sock:/var/run/docker.sock
     working_dir: /usr/local/src/service/code
 
   service:
@@ -41,5 +43,3 @@ services:
       - .:/usr/local/src
       - /var/run/docker.sock:/var/run/docker.sock
     working_dir: /usr/local/src
-    environment: 
-      DIR: ${DIR}

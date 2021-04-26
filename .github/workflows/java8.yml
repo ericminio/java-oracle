@@ -1,0 +1,27 @@
+name: java 8
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+
+  info:
+    name: about docker
+    runs-on: ubuntu-latest
+    steps:
+    - name: versions
+      run: |
+        docker version
+        docker-compose version
+  tests:
+    needs: info
+    name: run tests
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Run tests
+      run: |
+        chmod +x ./java/java8/start.sh
+        docker-compose up --exit-code-from java8 java8

@@ -1,6 +1,14 @@
-FROM maven:3.8.1-openjdk-8
+FROM openjdk:8u171-jdk-alpine
 
+RUN apk update && apk add \
+    maven \
+    bash \
+    vim && \
+    apk add --update docker openrc && \
+    rc-update add docker boot
+
+RUN ln -sfn /usr/lib/jvm/java-1.8-openjdk/ /usr/lib/jvm/default-jvm
 RUN echo "PS1='\n\[\e[32m\]\u \[\e[33m\]in \w\[\e[0m\] \n> '" >> ~/.bashrc
 RUN echo 'alias ls="ls --color=none"' >> ~/.bashrc
 
-CMD [ "bash" ]
+CMD [ "/usr/local/src/java/java8/start.sh" ]

@@ -1,4 +1,4 @@
-name: CI
+name: java 7
 
 on:
   push:
@@ -23,6 +23,5 @@ jobs:
     - uses: actions/checkout@v2
     - name: Run tests
       run: |
-        chmod +x ./service/start.sh
-        export DIR=$(pwd)
-        docker-compose up --exit-code-from service service
+        chmod +x ./java/java7/start.sh
+        docker-compose up --exit-code-from java7 java7
