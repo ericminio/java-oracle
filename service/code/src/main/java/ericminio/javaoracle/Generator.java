@@ -5,11 +5,13 @@ import java.util.List;
 
 public class Generator {
 
+    private String packageName;
+
     public String generate(List<String> packageSpecification) throws IOException {
         String classTemplate = new Stringify().inputStream(this.getClass().getClassLoader().getResourceAsStream("templateForClass.java"));
         String methodTemplate = new Stringify().inputStream(this.getClass().getClassLoader().getResourceAsStream("templateForMethod.java"));
 
-        String packageName = new ExtractPackageName().please(packageSpecification);
+        this.packageName = new ExtractPackageName().please(packageSpecification);
         String classCode = classTemplate.replace("ClassName", new ConvertPackageNameIntoClassName().please(packageName));
 
         String methods = "";
@@ -30,5 +32,9 @@ public class Generator {
         classCode = classCode.replace("    // methods", methods);
 
         return classCode;
+    }
+
+    public String getPackageName() {
+        return this.packageName;
     }
 }
