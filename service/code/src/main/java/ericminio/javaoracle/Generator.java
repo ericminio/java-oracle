@@ -1,24 +1,29 @@
 package ericminio.javaoracle;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
 
 public class Generator {
 
-    public String generate(List<String> specification) throws IOException {        
-        InputStream stream = this.getClass().getClassLoader().getResourceAsStream("template.java");
+    public String generate(List<String> packageSpecification) throws IOException {
+        String classTemplate = new Stringify().inputStream(this.getClass().getClassLoader().getResourceAsStream("templateForClass.java"));
+        String methodTemplate = new Stringify().inputStream(this.getClass().getClassLoader().getResourceAsStream("templateForMethod.java"));
 
-        String packageName = new ExtractPackageName().please(specification);
-        String functionName = new ExtractFunctionName().please(specification);
+        String packageName = new ExtractPackageName().please(packageSpecification);
+        String classCode = classTemplate.replace("ClassName", new ConvertPackageNameIntoClassName().please(packageName));
 
-        String code = new Stringify().inputStream(stream)
-            .replace("ClassName", new ConvertPackageNameIntoClassName().please(packageName))
-            .replace("methodName", new ConvertFunctionNameIntoMethodName().please(functionName))
-            .replace("packageName", packageName)
-            .replace("functionName", functionName)
-            ;
+        String methods = "";
+        List<List<String>> functionSpecifications = new ExtractFunctionSpecifications().please(packageSpecification);
+        for (int i=0; i < functionSpecifications.size(); i++){
+            String functionName = new ExtractFunctionName().please(functionSpecifications.get(i));
+            String methodCode = classTemplate = methodTemplate
+                .replace("methodName", new ConvertFunctionNameIntoMethodName().please(functionName))
+                .replace("packageName", packageName)
+                .replace("functionName", functionName);
+            methods += methodCode;
+        }
+        classCode = classCode.replace("    // methods", methods);
 
-        return code;
+        return classCode;
     }
 }

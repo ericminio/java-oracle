@@ -17,7 +17,8 @@ public class Exploration {
         CallableStatement statement = connection.prepareCall("{? = call exploration.get_event_count()}");
         statement.registerOutParameter(1, Types.INTEGER);
         statement.executeUpdate();
-        
+
         return statement.getInt(1);
     }
+
 }

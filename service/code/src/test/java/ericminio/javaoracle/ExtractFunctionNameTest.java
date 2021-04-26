@@ -1,11 +1,11 @@
 package ericminio.javaoracle;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertThat;
+import org.junit.Test;
 
 import java.util.Arrays;
 
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertThat;
 
 public class ExtractFunctionNameTest {
 
@@ -14,7 +14,7 @@ public class ExtractFunctionNameTest {
         assertThat(new ExtractFunctionName().please(Arrays.asList(
             "PACKAGE beautiful\n",
             "AS\n",
-            "   FUNCTION get_event_count RETURN NUMBER;\n",
+            "   FUNCTION get_event_count RETURN INTEGER;\n",
             "END beautiful;"
         )), equalTo("get_event_count"));
     }

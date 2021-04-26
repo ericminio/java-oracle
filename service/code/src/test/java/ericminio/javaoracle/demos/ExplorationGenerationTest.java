@@ -1,19 +1,17 @@
 package ericminio.javaoracle.demos;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertThat;
-
 import ericminio.javaoracle.Generator;
+import org.junit.Test;
 
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertThat;
 
 public class ExplorationGenerationTest {
 
@@ -22,7 +20,7 @@ public class ExplorationGenerationTest {
         String actual = generate(Arrays.asList(
             "PACKAGE EXPLORATION\n",
             "AS\n",
-            "   FUNCTION get_event_count RETURN NUMBER;\n",
+            "   FUNCTION get_event_count RETURN INTEGER;\n",
             "END EXPLORATION;"
         ));
         
