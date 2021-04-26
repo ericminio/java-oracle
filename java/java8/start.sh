@@ -31,4 +31,4 @@ execute "select exploration.get_event_count() as count from dual;"
 
 java -version
 mvn -v
-mvn test
+mvn test -Doracle.host=oracle

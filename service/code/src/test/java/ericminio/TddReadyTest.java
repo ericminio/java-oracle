@@ -1,16 +1,13 @@
 package ericminio;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertThat;
-
 import ericminio.javaoracle.support.DatabaseTest;
-
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-
 import org.junit.Before;
 import org.junit.Test;
+
+import java.sql.SQLException;
+
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertThat;
 
 public class TddReadyTest extends DatabaseTest {
 
