@@ -24,4 +24,4 @@ jobs:
     - name: Run tests
       run: |
         chmod +x ./java/java8/start.sh
-        docker-compose up --exit-code-from java8 java8
+        docker-compose up java8

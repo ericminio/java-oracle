@@ -1,5 +1,10 @@
 #!/bin/bash
 
+pwd
+ls -la
+docker ps -a
+docker network ls
+
 function execute {
     docker exec oracle bash -c "export ORACLE_HOME=/u01/app/oracle/product/11.2.0/xe && echo \"$1\" | /u01/app/oracle/product/11.2.0/xe/bin/sqlplus -S SYSTEM/oracle@localhost"
 }
@@ -23,11 +28,6 @@ executeFile /usr/local/src/service/migrations/2-insert-events.sql
 execute "select * from event;"
 executeFile /usr/local/src/service/migrations/3-create-get-event-count.sql
 execute "select exploration.get_event_count() as count from dual;"
-
-pwd
-ls -la
-docker ps -a
-docker network ls
 
 java -version
 mvn -v

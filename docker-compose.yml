@@ -15,6 +15,8 @@ services:
       - .:/usr/local/src  
 
   java7:
+    depends_on: 
+      - oracle
     build: java/java7
     image: java:7
     container_name: java7
@@ -24,6 +26,8 @@ services:
     working_dir: /usr/local/src/service/code
 
   java8:
+    depends_on: 
+      - oracle
     build: java/java8
     image: java:8
     container_name: java8
@@ -33,10 +37,6 @@ services:
     working_dir: /usr/local/src/service/code
 
   service:
-    depends_on: 
-      - oracle
-      - java7
-      - java8
     build: service
     container_name: service
     volumes:
