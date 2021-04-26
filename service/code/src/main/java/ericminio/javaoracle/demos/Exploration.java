@@ -16,7 +16,7 @@ public class Exploration {
     public int getEventCount() throws SQLException {
         CallableStatement statement = connection.prepareCall("{? = call exploration.get_event_count()}");
         statement.registerOutParameter(1, Types.INTEGER);
-        statement.executeUpdate();
+        statement.execute();
 
         return statement.getInt(1);
     }

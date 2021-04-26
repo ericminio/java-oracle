@@ -28,6 +28,8 @@ executeFile /usr/local/src/service/migrations/2-insert-events.sql
 execute "select * from event;"
 executeFile /usr/local/src/service/migrations/3-create-get-event-count.sql
 execute "select exploration.get_event_count() as count from dual;"
+executeFile /usr/local/src/service/migrations/4-function-with-parameter.sql
+execute "select function_with_parameter.count_by_type('MATCH') as count from dual;"
 
 java -version
 mvn -v
