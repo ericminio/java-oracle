@@ -24,4 +24,4 @@ jobs:
     - name: Run tests
       run: |
         chmod +x ./java/java7/start.sh
-        docker-compose up java7
+        docker-compose up --exit-code-from java7 java7
