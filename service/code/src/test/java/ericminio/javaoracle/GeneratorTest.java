@@ -35,12 +35,10 @@ public class GeneratorTest {
 
         assertThat(code, containsString("public class Example {"));
 
-        assertThat(code, containsString("public int hello(String value1)"));
-        assertThat(code, containsString("statement.registerOutParameter(1, Types.INTEGER);"));
-        assertThat(code, containsString("statement.setString(2, value1);"));
+        assertThat(code, containsString("public Integer hello(String value1)"));
+        assertThat(code, containsString("statement.setString(1, value1);"));
 
-        assertThat(code, containsString("public String world(int value2)"));
-        assertThat(code, containsString("statement.registerOutParameter(1, Types.VARCHAR);"));
-        assertThat(code, containsString("statement.setInt(2, value2);"));
+        assertThat(code, containsString("public String world(Integer value2)"));
+        assertThat(code, containsString("statement.setInt(1, value2);"));
     }
 }

@@ -16,12 +16,12 @@ public class GenerateMethodCodeTest {
                 "FUNCTION any_method RETURN integer;"
         ), "any_package");
         assertThat(code, equalTo("" +
-                "    public int anyMethod() throws SQLException {\n" +
-                "        CallableStatement statement = connection.prepareCall(\"{? = call any_package.any_method()}\");\n" +
-                "        statement.registerOutParameter(1, Types.INTEGER);\n" +
-                "        statement.execute();\n" +
+                "    public Integer anyMethod() throws SQLException {\n" +
+                "        PreparedStatement statement = connection.prepareStatement(\"select any_package.any_method() from dual\");\n" +
+                "        ResultSet resultSet = statement.executeQuery();\n" +
+                "        resultSet.next();\n" +
                 "\n" +
-                "        return statement.getInt(1);\n" +
+                "        return resultSet.getInt(1);\n" +
                 "    }"));
     }
 
@@ -32,11 +32,11 @@ public class GenerateMethodCodeTest {
         ), "any_package");
         assertThat(code, equalTo("" +
                 "    public String anyMethod() throws SQLException {\n" +
-                "        CallableStatement statement = connection.prepareCall(\"{? = call any_package.any_method()}\");\n" +
-                "        statement.registerOutParameter(1, Types.VARCHAR);\n" +
-                "        statement.execute();\n" +
+                "        PreparedStatement statement = connection.prepareStatement(\"select any_package.any_method() from dual\");\n" +
+                "        ResultSet resultSet = statement.executeQuery();\n" +
+                "        resultSet.next();\n" +
                 "\n" +
-                "        return statement.getString(1);\n" +
+                "        return resultSet.getString(1);\n" +
                 "    }"));
     }
 
@@ -46,14 +46,14 @@ public class GenerateMethodCodeTest {
                 "FUNCTION any_method(field1 integer, field2 varchar2) RETURN varchar2;"
         ), "any_package");
         assertThat(code, equalTo("" +
-                "    public String anyMethod(int field1, String field2) throws SQLException {\n" +
-                "        CallableStatement statement = connection.prepareCall(\"{? = call any_package.any_method(?, ?)}\");\n" +
-                "        statement.registerOutParameter(1, Types.VARCHAR);\n" +
-                "        statement.setInt(2, field1);\n" +
-                "        statement.setString(3, field2);\n" +
-                "        statement.execute();\n" +
+                "    public String anyMethod(Integer field1, String field2) throws SQLException {\n" +
+                "        PreparedStatement statement = connection.prepareStatement(\"select any_package.any_method(?, ?) from dual\");\n" +
+                "        statement.setInt(1, field1);\n" +
+                "        statement.setString(2, field2);\n" +
+                "        ResultSet resultSet = statement.executeQuery();\n" +
+                "        resultSet.next();\n" +
                 "\n" +
-                "        return statement.getString(1);\n" +
+                "        return resultSet.getString(1);\n" +
                 "    }"));
     }
 }

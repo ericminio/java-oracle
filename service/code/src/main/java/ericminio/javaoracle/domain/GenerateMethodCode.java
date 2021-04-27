@@ -21,9 +21,8 @@ public class GenerateMethodCode {
                 .replace("packageName", packageName)
                 .replace("functionName", functionName)
                 .replace("???", new PlaceholderList().please(parameters.size()))
-                .replace("getTtt", new TypeMapperFactory().of(returnType).getter())
-                .replace("Types.TTT", new TypeMapperFactory().of(returnType).sqlType())
                 .replace("        // set IN parameters\n", parameters.getParametersSettings())
+                .replace("getTtt", new TypeMapperFactory().of(returnType).getter())
                 ;
         return methodCode;
     }

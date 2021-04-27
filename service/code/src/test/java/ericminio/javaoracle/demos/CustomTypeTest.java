@@ -39,13 +39,6 @@ public class CustomTypeTest extends DatabaseTest {
     }
 
     @Test
-    public void structureIsReady() throws SQLException, ClassNotFoundException {
-        connection.getTypeMap().put(CustomType.NAME, CustomType.class);
-        CustomType value = with(connection).selectCustomType("select function_returning_custom_type.get_value from dual");
-        assertThat(value.getValue(), equalTo(15));
-    }
-
-    @Test
     public void customTypeCanBeFetched() throws SQLException {
         FunctionReturningCustomType functionReturningCustomType = new FunctionReturningCustomType();
         functionReturningCustomType.setConnection(connection);

@@ -33,7 +33,7 @@ public class ExtractFunctionParametersTest {
                 "FUNCTION any(param integer) RETURN INTEGER;"
         ));
         assertThat(parameters.size(), equalTo(1));
-        assertThat(parameters.toList(), equalTo("int param"));
+        assertThat(parameters.toList(), equalTo("Integer param"));
     }
 
     @Test
@@ -42,7 +42,7 @@ public class ExtractFunctionParametersTest {
                 "FUNCTION any(field1 integer, field2 varchar2) RETURN INTEGER;"
         ));
         assertThat(parameters.size(), equalTo(2));
-        assertThat(parameters.toList(), equalTo("int field1, String field2"));
+        assertThat(parameters.toList(), equalTo("Integer field1, String field2"));
     }
 
     @Test
@@ -56,7 +56,7 @@ public class ExtractFunctionParametersTest {
                 ") RETURN INTEGER;"
         ));
         assertThat(parameters.size(), equalTo(4));
-        assertThat(parameters.toList(), equalTo("int field1, int field2, String field3, String field4"));
+        assertThat(parameters.toList(), equalTo("Integer field1, Integer field2, String field3, String field4"));
     }
 
     @Test
@@ -68,7 +68,7 @@ public class ExtractFunctionParametersTest {
                 ") RETURN INTEGER;"
         ));
         assertThat(parameters.size(), equalTo(1));
-        assertThat(parameters.toList(), equalTo("int param"));
+        assertThat(parameters.toList(), equalTo("Integer param"));
     }
 
     @Test
@@ -81,7 +81,7 @@ public class ExtractFunctionParametersTest {
                 "RETURN INTEGER;"
         ));
         assertThat(parameters.size(), equalTo(1));
-        assertThat(parameters.toList(), equalTo("int param"));
+        assertThat(parameters.toList(), equalTo("Integer param"));
     }
 
     @Test
@@ -95,10 +95,10 @@ public class ExtractFunctionParametersTest {
                 ") RETURN INTEGER;"
         ));
         assertThat(parameters.getParametersSettings(), equalTo("" +
-                "        statement.setInt(2, field1);\n" +
-                "        statement.setInt(3, field2);\n" +
-                "        statement.setString(4, field3);\n" +
-                "        statement.setString(5, field4);\n" +
+                "        statement.setInt(1, field1);\n" +
+                "        statement.setInt(2, field2);\n" +
+                "        statement.setString(3, field3);\n" +
+                "        statement.setString(4, field4);\n" +
                 ""));
     }
 

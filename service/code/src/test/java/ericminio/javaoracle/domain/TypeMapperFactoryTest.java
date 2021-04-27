@@ -1,6 +1,5 @@
 package ericminio.javaoracle.domain;
 
-import ericminio.javaoracle.domain.TypeMapperFactory;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -13,7 +12,7 @@ public class TypeMapperFactoryTest {
         assertThat(new TypeMapperFactory().of("INTEGER").sqlType(), equalTo("Types.INTEGER"));
         assertThat(new TypeMapperFactory().of("INTEGER").getter(), equalTo("getInt"));
         assertThat(new TypeMapperFactory().of("INTEGER").setter(), equalTo("setInt"));
-        assertThat(new TypeMapperFactory().of("INTEGER").javaType(), equalTo("int"));
+        assertThat(new TypeMapperFactory().of("INTEGER").javaType(), equalTo("Integer"));
     }
 
     @Test

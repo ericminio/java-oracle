@@ -21,7 +21,7 @@ public class FunctionWithoutParameterGenerationTest {
                 "END function_without_parameter;"
         ));
         
-        assertThat(actual, equalTo(contentOf("src/main/java/ericminio/javaoracle/demos/FunctionWithoutParameter.java")));
+        assertThat(actual, equalTo(contentOf("src/test/java/ericminio/javaoracle/demos/FunctionWithoutParameter.java")));
     }
 
 }

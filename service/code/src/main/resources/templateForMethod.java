@@ -1,8 +1,8 @@
     public int methodName() throws SQLException {
-        CallableStatement statement = connection.prepareCall("{? = call packageName.functionName(???)}");
-        statement.registerOutParameter(1, Types.TTT);
+        PreparedStatement statement = connection.prepareStatement("select packageName.functionName(???) from dual");
         // set IN parameters
-        statement.execute();
+        ResultSet resultSet = statement.executeQuery();
+        resultSet.next();
 
-        return statement.getTtt(1);
+        return resultSet.getTtt(1);
     }

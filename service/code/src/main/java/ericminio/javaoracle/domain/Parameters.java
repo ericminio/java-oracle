@@ -41,7 +41,7 @@ public class Parameters {
             String[] parts = parameterSpecification.trim().split("\\s|,");
             String name = parts[0];
             String type = parts[1];
-            settings += ("        statement." + new TypeMapperFactory().of(type).setter() + "(" + (i+2) + ", " + name + ");\n");
+            settings += ("        statement." + new TypeMapperFactory().of(type).setter() + "(" + (i+1) + ", " + name + ");\n");
         }
         return settings;
     }

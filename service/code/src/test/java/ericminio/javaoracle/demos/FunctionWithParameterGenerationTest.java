@@ -29,7 +29,7 @@ public class FunctionWithParameterGenerationTest {
                 "END function_with_parameter;"
         ));
         
-        assertThat(actual, equalTo(contentOf("src/main/java/ericminio/javaoracle/demos/FunctionWithParameter.java")));
+        assertThat(actual, equalTo(contentOf("src/test/java/ericminio/javaoracle/demos/FunctionWithParameter.java")));
     }
 
 }

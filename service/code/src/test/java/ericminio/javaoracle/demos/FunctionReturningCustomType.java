@@ -1,9 +1,8 @@
 package ericminio.javaoracle.demos;
 
-import oracle.jdbc.OracleTypes;
-
-import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class FunctionReturningCustomType {
@@ -16,10 +15,10 @@ public class FunctionReturningCustomType {
 
     public CustomType getValue() throws SQLException {
         connection.getTypeMap().put(CustomType.NAME, CustomType.class);
-        CallableStatement statement = connection.prepareCall("{? = call function_returning_custom_type.get_value()}");
-        statement.registerOutParameter(1, OracleTypes.STRUCT, CustomType.NAME);
-        statement.execute();
+        PreparedStatement statement = connection.prepareStatement("select function_returning_custom_type.get_value() from dual");
+        ResultSet resultSet = statement.executeQuery();
+        resultSet.next();
 
-        return (CustomType) statement.getObject(1);
+        return (CustomType) resultSet.getObject(1);
     }
 }

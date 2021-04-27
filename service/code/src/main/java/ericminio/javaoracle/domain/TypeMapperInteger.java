@@ -18,6 +18,6 @@ public class TypeMapperInteger implements TypeMapper {
 
     @Override
     public String javaType() {
-        return "int";
+        return "Integer";
     }
 }
