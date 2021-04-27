@@ -11,12 +11,12 @@ import java.util.List;
 
 import static ericminio.javaoracle.support.Query.with;
 
-public class ExtractPackage {
+public class Generator {
 
     public static void main(String[] args) {
-        ExtractPackage extractPackage = new ExtractPackage();
+        Generator generator = new Generator();
         try {
-            extractPackage.go(
+            generator.go(
                     System.getProperty("oraclePackage"),
                     System.getProperty("javaPackage"),
                     System.getProperty("outputFolder")

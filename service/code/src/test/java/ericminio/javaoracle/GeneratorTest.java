@@ -9,7 +9,7 @@ import static ericminio.javaoracle.support.Query.with;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.assertThat;
 
-public class ExtractPackageTest {
+public class GeneratorTest {
 
     @Before
     public void createPackage() throws Exception {
@@ -30,7 +30,7 @@ public class ExtractPackageTest {
 
     @Test
     public void createsExpectedFile() throws Exception {
-        new ExtractPackage().go("example", "examples", "target");
+        new Generator().go("example", "examples", "target");
         String code = contentOf("target/Example.java");
 
         assertThat(code, containsString("public class Example {"));
