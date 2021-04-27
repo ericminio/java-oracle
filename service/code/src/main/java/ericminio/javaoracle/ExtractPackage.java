@@ -5,11 +5,9 @@ import ericminio.javaoracle.support.Database;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.util.ArrayList;
 import java.util.List;
+
+import static ericminio.javaoracle.support.Query.with;
 
 public class ExtractPackage {
 
@@ -31,21 +29,11 @@ public class ExtractPackage {
     }
 
     public void go(String oraclePackage, String javaPackage, String outputFolder) throws Exception {
-        Connection connection = new Database().connection();
-        PreparedStatement statement = connection.prepareStatement("select text from all_source where type='PACKAGE' and name=? order by line");
-        statement.setString(1, oraclePackage.toUpperCase());
-        ResultSet resultSet = statement.executeQuery();
-
-        List<String> packageSpecification = new ArrayList<>();
-        debug("Package specification:");
-        while (resultSet.next()) {
-            String line = resultSet.getString(1);
-            debug(line.trim());
-            packageSpecification.add(line);
-        }
-
+        List<String> packageSpecification = with(new Database().connection())
+                .selectPackageDefinition(oraclePackage);
         Generator generator = new Generator();
-        String code = "package " + javaPackage + ";\n" + generator.generate(packageSpecification);
+        String code = generator.generate(packageSpecification);;
+        code = "package " + javaPackage + ";\n" + code;
         Path path = Paths.get(outputFolder, new ConvertPackageNameIntoClassName().please(generator.getPackageName())+".java");
         Files.write(path, code.getBytes());
     }
