@@ -1,5 +1,7 @@
 package ericminio.javaoracle;
 
+import ericminio.javaoracle.domain.ConvertPackageNameIntoClassName;
+import ericminio.javaoracle.domain.Generator;
 import ericminio.javaoracle.support.Database;
 
 import java.nio.file.Files;

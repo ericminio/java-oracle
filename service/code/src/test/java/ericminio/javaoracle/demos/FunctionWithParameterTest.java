@@ -13,28 +13,55 @@ import static org.junit.Assert.assertThat;
 public class FunctionWithParameterTest extends DatabaseTest {
 
     @Before
-    public void seeds() throws SQLException {
-        with(connection).execute("truncate table event");
-        with(connection).execute("insert into event(type, label) values('A', '42')");
-        with(connection).execute("insert into event(type, label) values('A', '42')");
-        with(connection).execute("insert into event(type, label) values('B', '42')");
+    public void seeds() {
+        with(connection).execute("CREATE OR REPLACE PACKAGE function_with_parameter\n" +
+                "AS\n" +
+                "\n" +
+                "    FUNCTION count_by_type(\n" +
+                "        value varchar2\n" +
+                "    ) RETURN integer;\n" +
+                "\n" +
+                "    FUNCTION count_by_label(\n" +
+                "        value varchar2\n" +
+                "    ) RETURN integer;\n" +
+                "\n" +
+                "END function_with_parameter;");
+        with(connection).execute("create or replace package body function_with_parameter\n" +
+                "AS\n" +
+                "\n" +
+                "    function count_by_type(\n" +
+                "        value varchar2\n" +
+                "    ) return integer\n" +
+                "    as\n" +
+                "    begin\n" +
+                "        return 15;\n" +
+                "    end;\n" +
+                "\n" +
+                "\n" +
+                "    function count_by_label(\n" +
+                "        value varchar2\n" +
+                "    ) return integer\n" +
+                "    as\n" +
+                "    begin\n" +
+                "        return 42;\n" +
+                "    end;\n" +
+                "\n" +
+                "END function_with_parameter;");
     }
 
     @Test
-    public void findByType() throws SQLException {
+    public void countByType() throws SQLException {
         FunctionWithParameter functionWithParameter = new FunctionWithParameter();
         functionWithParameter.setConnection(connection);
         
-        assertThat(functionWithParameter.countByType("A"), equalTo(2));
-        assertThat(functionWithParameter.countByType("B"), equalTo(1));
+        assertThat(functionWithParameter.countByType("A"), equalTo(15));
     }
 
     @Test
-    public void findByLabel() throws SQLException {
+    public void countByLabel() throws SQLException {
         FunctionWithParameter functionWithParameter = new FunctionWithParameter();
         functionWithParameter.setConnection(connection);
 
-        assertThat(functionWithParameter.countByLabel("42"), equalTo(3));
-        assertThat(functionWithParameter.countByLabel("99"), equalTo(0));
+        assertThat(functionWithParameter.countByLabel("any"), equalTo(42));
     }
 }

@@ -4,12 +4,7 @@ import ericminio.javaoracle.support.Database;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.List;
-
+import static ericminio.javaoracle.support.FileUtils.contentOf;
 import static ericminio.javaoracle.support.Query.with;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.assertThat;
@@ -22,12 +17,12 @@ public class ExtractPackageTest {
                 "AS\n" +
                 "\n" +
                 "    FUNCTION hello(\n" +
-                "        value varchar2\n" +
+                "        value1 varchar2\n" +
                 "    ) RETURN integer;\n" +
                 "\n" +
                 "    FUNCTION world(\n" +
-                "        value varchar2\n" +
-                "    ) RETURN integer;\n" +
+                "        value2 integer\n" +
+                "    ) RETURN varchar2;\n" +
                 "\n" +
                 "END example";
         with(new Database().connection()).execute(creation);
@@ -35,17 +30,17 @@ public class ExtractPackageTest {
 
     @Test
     public void createsExpectedFile() throws Exception {
-        ExtractPackage extractPackage = new ExtractPackage();
-        extractPackage.go("example", "examples", "../demos");
-        Path path = Paths.get("../demos/Example.java");
-        List<String> lines = Files.readAllLines(path, StandardCharsets.UTF_8);
-        String code = "";
-        for (int i=0; i<lines.size(); i++) {
-            code += lines.get(i) + "\n";
-        }
+        new ExtractPackage().go("example", "examples", "target");
+        String code = contentOf("target/Example.java");
 
         assertThat(code, containsString("public class Example {"));
-        assertThat(code, containsString("public int hello(String value)"));
-        assertThat(code, containsString("public int world(String value)"));
+
+        assertThat(code, containsString("public int hello(String value1)"));
+        assertThat(code, containsString("statement.registerOutParameter(1, Types.INTEGER);"));
+        assertThat(code, containsString("statement.setString(2, value1);"));
+
+        assertThat(code, containsString("public String world(int value2)"));
+        assertThat(code, containsString("statement.registerOutParameter(1, Types.VARCHAR);"));
+        assertThat(code, containsString("statement.setInt(2, value2);"));
     }
 }

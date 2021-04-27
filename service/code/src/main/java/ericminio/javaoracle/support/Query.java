@@ -35,27 +35,6 @@ public class Query {
         }
     }
 
-    public int selectInt(String sql) {
-        Statement statement = null;
-        try {
-            statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(sql);
-            resultSet.next();
-            return resultSet.getInt(1);
-        }
-        catch (SQLException executing) {
-            throw new RuntimeException(executing.getMessage() + " " + sql);
-        }
-        finally {
-            try {
-                statement.close();
-            }
-            catch (SQLException closing) {
-                throw new RuntimeException(closing.getMessage());
-            }
-        }
-    }
-
     public List<String> selectPackageDefinition(String packageName) {
         String sql = "select text from all_source where type='PACKAGE' and name=? order by line";
         PreparedStatement statement = null;

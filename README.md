@@ -8,46 +8,35 @@ docker-compose up java8
 
 # Usage
 
-Assuming
-- [migrations](service/migrations) have been run via `docker-compose up java8`
-- active shell is bash inside java8 container via `docker-compose run java8 bash` 
-- run `/usr/local/src/service/demos/run.sh`
+- `docker-compose run java8 bash` 
+- `/usr/local/src/service/demos/run.sh`
 
 ```
-Results :
-
-Tests run: 43, Failures: 0, Errors: 0, Skipped: 0
-
-[INFO]
-[INFO] --- maven-jar-plugin:2.4:jar (default-jar) @ java-oracle ---
-[INFO] Building jar: /usr/local/src/service/code/target/java-oracle-1.0.jar
-[INFO]
-[INFO] --- maven-assembly-plugin:3.3.0:single (default) @ java-oracle ---
-[INFO] Building jar: /usr/local/src/service/code/target/java-oracle-1.0-jar-with-dependencies.jar
-[INFO] ------------------------------------------------------------------------
-[INFO] BUILD SUCCESS
-[INFO] ------------------------------------------------------------------------
-[INFO] Total time:  10.539 s
-[INFO] Finished at: 2021-04-27T14:31:22Z
-[INFO] ------------------------------------------------------------------------
-
-Package specification:
-PACKAGE function_with_parameter
+TEXT
+--------------------------------------------------------------------------------
+PACKAGE example
 AS
 
-FUNCTION count_by_type(
-value varchar2
-) RETURN integer;
+    FUNCTION hello(
+        value1 varchar2
+    ) RETURN integer;
 
-FUNCTION count_by_label(
-value varchar2
-) RETURN integer;
+    FUNCTION world(
+        value2 integer
+    ) RETURN varchar2;
 
-END function_with_parameter;
-total 5
-drwxrwxrwx    1 root     root          4096 Apr 27 14:31 .
-drwxrwxrwx    1 root     root             0 Apr 26 20:20 ..
--rwxr-xr-x    1 root     root          1017 Apr 27 14:31 FunctionWithParameter.java
+
+TEXT
+--------------------------------------------------------------------------------
+END example
+
+12 rows selected.
+
+total 2
+drwxrwxrwx    1 root     root             0 Apr 27 18:11 .
+drwxrwxrwx    1 root     root             0 Apr 26 20:19 ..
+-rwxr-xr-x    1 root     root           945 Apr 27 18:11 Example.java
+-rwxr-xr-x    1 root     root           774 Apr 27 18:11 run.sh
 package company.name;
 
 import java.sql.CallableStatement;
@@ -55,7 +44,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Types;
 
-public class FunctionWithParameter {
+public class Example {
 
     private Connection connection;
 
@@ -63,22 +52,22 @@ public class FunctionWithParameter {
         this.connection = connection;
     }
 
-    public int countByType(String value) throws SQLException {
-        CallableStatement statement = connection.prepareCall("{? = call function_with_parameter.count_by_type(?)}");
+    public int hello(String value1) throws SQLException {
+        CallableStatement statement = connection.prepareCall("{? = call example.hello(?)}");
         statement.registerOutParameter(1, Types.INTEGER);
-        statement.setString(2, value);
+        statement.setString(2, value1);
         statement.execute();
 
         return statement.getInt(1);
     }
 
-    public int countByLabel(String value) throws SQLException {
-        CallableStatement statement = connection.prepareCall("{? = call function_with_parameter.count_by_label(?)}");
-        statement.registerOutParameter(1, Types.INTEGER);
-        statement.setString(2, value);
+    public String world(int value2) throws SQLException {
+        CallableStatement statement = connection.prepareCall("{? = call example.world(?)}");
+        statement.registerOutParameter(1, Types.VARCHAR);
+        statement.setInt(2, value2);
         statement.execute();
 
-        return statement.getInt(1);
+        return statement.getString(1);
     }
 
 }
