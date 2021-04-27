@@ -11,4 +11,4 @@ RUN ln -sfn /usr/lib/jvm/java-1.8-openjdk/ /usr/lib/jvm/default-jvm
 RUN echo "PS1='\n\[\e[32m\]\u \[\e[33m\]in \w\[\e[0m\] \n> '" >> ~/.bashrc
 RUN echo 'alias ls="ls --color=none"' >> ~/.bashrc
 
-CMD [ "/usr/local/src/java/java8/start.sh" ]
+CMD [ "/usr/local/src/java/start.sh" ]
