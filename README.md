@@ -37,16 +37,16 @@ END example
 12 rows selected.
 
 total 2
-drwxrwxrwx    1 root     root             0 Apr 27 18:11 .
-drwxrwxrwx    1 root     root             0 Apr 26 20:19 ..
--rwxr-xr-x    1 root     root           945 Apr 27 18:11 Example.java
--rwxr-xr-x    1 root     root           774 Apr 27 18:11 run.sh
+drwxrwxrwx    1 root     root             0 Apr 27 23:42 .
+drwxrwxrwx    1 root     root             0 Apr 27 18:22 ..
+-rwxr-xr-x    1 root     root           969 Apr 27 23:42 Example.java
+-rwxr-xr-x    1 root     root           768 Apr 27 18:55 run.sh
 package company.name;
 
-import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Types;
 
 public class Example {
 
@@ -56,22 +56,22 @@ public class Example {
         this.connection = connection;
     }
 
-    public int hello(String value1) throws SQLException {
-        CallableStatement statement = connection.prepareCall("{? = call example.hello(?)}");
-        statement.registerOutParameter(1, Types.INTEGER);
-        statement.setString(2, value1);
-        statement.execute();
+    public Integer hello(String value1) throws SQLException {
+        PreparedStatement statement = connection.prepareStatement("select example.hello(?) from dual");
+        statement.setString(1, value1);
+        ResultSet resultSet = statement.executeQuery();
+        resultSet.next();
 
-        return statement.getInt(1);
+        return resultSet.getInt(1);
     }
 
-    public String world(int value2) throws SQLException {
-        CallableStatement statement = connection.prepareCall("{? = call example.world(?)}");
-        statement.registerOutParameter(1, Types.VARCHAR);
-        statement.setInt(2, value2);
-        statement.execute();
+    public String world(Integer value2) throws SQLException {
+        PreparedStatement statement = connection.prepareStatement("select example.world(?) from dual");
+        statement.setInt(1, value2);
+        ResultSet resultSet = statement.executeQuery();
+        resultSet.next();
 
-        return statement.getString(1);
+        return resultSet.getString(1);
     }
 
 }
