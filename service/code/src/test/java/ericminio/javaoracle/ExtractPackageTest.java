@@ -36,8 +36,8 @@ public class ExtractPackageTest {
     @Test
     public void createsExpectedFile() throws Exception {
         ExtractPackage extractPackage = new ExtractPackage();
-        extractPackage.go("example", "examples", "../demos/output");
-        Path path = Paths.get("../demos/output/Example.java");
+        extractPackage.go("example", "examples", "../demos");
+        Path path = Paths.get("../demos/Example.java");
         List<String> lines = Files.readAllLines(path, StandardCharsets.UTF_8);
         String code = "";
         for (int i=0; i<lines.size(); i++) {
