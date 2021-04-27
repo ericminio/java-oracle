@@ -1,7 +1,5 @@
 package ericminio.javaoracle.domain;
 
-import ericminio.javaoracle.domain.ExtractFunctionParameters;
-import ericminio.javaoracle.domain.Parameters;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -12,7 +10,7 @@ import static org.junit.Assert.assertThat;
 public class ExtractFunctionParametersTest {
 
     @Test
-    public void works() {
+    public void withoutParameter() {
         Parameters parameters = new ExtractFunctionParameters().please(Arrays.asList(
             "FUNCTION get_event_count RETURN INTEGER;"
         ));
@@ -21,7 +19,7 @@ public class ExtractFunctionParametersTest {
     }
 
     @Test
-    public void resistsParenthesis() {
+    public void withEmptyParameterList() {
         Parameters parameters = new ExtractFunctionParameters().please(Arrays.asList(
                 "FUNCTION get_event_count() RETURN INTEGER;"
         ));
@@ -30,12 +28,21 @@ public class ExtractFunctionParametersTest {
     }
 
     @Test
-    public void resistsParameter() {
+    public void withOneParameter() {
         Parameters parameters = new ExtractFunctionParameters().please(Arrays.asList(
                 "FUNCTION any(param integer) RETURN INTEGER;"
         ));
         assertThat(parameters.size(), equalTo(1));
         assertThat(parameters.toList(), equalTo("int param"));
+    }
+
+    @Test
+    public void withTwoParameters() {
+        Parameters parameters = new ExtractFunctionParameters().please(Arrays.asList(
+                "FUNCTION any(field1 integer, field2 varchar2) RETURN INTEGER;"
+        ));
+        assertThat(parameters.size(), equalTo(2));
+        assertThat(parameters.toList(), equalTo("int field1, String field2"));
     }
 
     @Test
