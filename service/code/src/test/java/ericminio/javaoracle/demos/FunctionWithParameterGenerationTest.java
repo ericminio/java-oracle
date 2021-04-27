@@ -1,6 +1,6 @@
 package ericminio.javaoracle.demos;
 
-import ericminio.javaoracle.domain.Generator;
+import ericminio.javaoracle.domain.GenerateClassCode;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -14,7 +14,7 @@ public class FunctionWithParameterGenerationTest {
 
     @Test
     public void works() throws IOException {
-        String actual = new Generator().generate(Arrays.asList(
+        String actual = new GenerateClassCode().please(Arrays.asList(
                 "PACKAGE function_with_parameter\n",
                 "AS\n",
                 "\n",

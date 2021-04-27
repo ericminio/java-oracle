@@ -1,7 +1,7 @@
 package ericminio.javaoracle;
 
 import ericminio.javaoracle.support.PascalCase;
-import ericminio.javaoracle.domain.Generator;
+import ericminio.javaoracle.domain.GenerateClassCode;
 import ericminio.javaoracle.support.Database;
 
 import java.nio.file.Files;
@@ -26,17 +26,13 @@ public class ExtractPackage {
         }
     }
 
-    private static void debug(String message) {
-        System.out.println(message);
-    }
-
     public void go(String oraclePackage, String javaPackage, String outputFolder) throws Exception {
         List<String> packageSpecification = with(new Database().connection())
                 .selectPackageDefinition(oraclePackage);
-        Generator generator = new Generator();
-        String code = generator.generate(packageSpecification);;
+        GenerateClassCode generateClassCode = new GenerateClassCode();
+        String code = generateClassCode.please(packageSpecification);;
         code = "package " + javaPackage + ";\n" + code;
-        Path path = Paths.get(outputFolder, new PascalCase().please(generator.getPackageName())+".java");
+        Path path = Paths.get(outputFolder, new PascalCase().please(generateClassCode.getPackageName())+".java");
         Files.write(path, code.getBytes());
     }
 }

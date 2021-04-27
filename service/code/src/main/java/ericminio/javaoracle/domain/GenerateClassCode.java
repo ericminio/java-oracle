@@ -7,11 +7,11 @@ import ericminio.javaoracle.support.Stringify;
 import java.io.IOException;
 import java.util.List;
 
-public class Generator {
+public class GenerateClassCode {
 
     private String packageName;
 
-    public String generate(List<String> packageSpecification) throws IOException {
+    public String please(List<String> packageSpecification) throws IOException {
         String classTemplate = new Stringify().inputStream(this.getClass().getClassLoader().getResourceAsStream("templateForClass.java"));
         String methodTemplate = new Stringify().inputStream(this.getClass().getClassLoader().getResourceAsStream("templateForMethod.java"));
 
