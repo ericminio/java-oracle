@@ -23,5 +23,5 @@ jobs:
     - uses: actions/checkout@v2
     - name: Run tests
       run: |
-        chmod +x ./java/java8/start.sh
+        chmod +x ./java/start.sh
         docker-compose up --exit-code-from java8 java8
