@@ -42,7 +42,9 @@ public class CustomTypeTest extends DatabaseTest {
     public void customTypeCanBeFetched() throws SQLException {
         FunctionReturningCustomType functionReturningCustomType = new FunctionReturningCustomType();
         functionReturningCustomType.setConnection(connection);
+        CustomType customType = new CustomType();
+        customType.setValue(15);
 
-        assertThat(functionReturningCustomType.getValue(), equalTo(new CustomType(15)));
+        assertThat(functionReturningCustomType.getValue(), equalTo(customType));
     }
 }

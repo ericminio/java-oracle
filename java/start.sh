@@ -16,4 +16,4 @@ echo "Oracle is ready";
 
 java -version
 mvn -v
-mvn test -Doracle.host=oracle
+mvn clean test -Doracle.host=oracle

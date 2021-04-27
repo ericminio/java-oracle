@@ -5,18 +5,18 @@ import java.sql.SQLException;
 import java.sql.SQLInput;
 import java.sql.SQLOutput;
 
-public class CustomType implements SQLData {
-    public static final String NAME = "CUSTOM_TYPE";
+public class CustomTypeNested implements SQLData {
+    public static final String NAME = "CUSTOM_TYPE_NESTED";
     private Integer value;
 
-    public CustomType() {}
+    public CustomTypeNested() {}
 
     @Override
     public boolean equals(Object o) {
-        if (! (o instanceof CustomType)) {
+        if (! (o instanceof CustomTypeNested)) {
             return false;
         }
-        CustomType other = (CustomType) o;
+        CustomTypeNested other = (CustomTypeNested) o;
 
         return this.getValue().equals(other.getValue());
     }

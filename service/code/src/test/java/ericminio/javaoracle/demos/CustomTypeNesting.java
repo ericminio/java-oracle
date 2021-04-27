@@ -5,18 +5,18 @@ import java.sql.SQLException;
 import java.sql.SQLInput;
 import java.sql.SQLOutput;
 
-public class CustomType implements SQLData {
-    public static final String NAME = "CUSTOM_TYPE";
-    private Integer value;
+public class CustomTypeNesting implements SQLData {
+    public static final String NAME = "CUSTOM_TYPE_NESTING";
+    private CustomTypeNested value;
 
-    public CustomType() {}
+    public CustomTypeNesting() {}
 
     @Override
     public boolean equals(Object o) {
-        if (! (o instanceof CustomType)) {
+        if (! (o instanceof CustomTypeNesting)) {
             return false;
         }
-        CustomType other = (CustomType) o;
+        CustomTypeNesting other = (CustomTypeNesting) o;
 
         return this.getValue().equals(other.getValue());
     }
@@ -33,11 +33,11 @@ public class CustomType implements SQLData {
                 + " ]";
     }
 
-    public Integer getValue() {
+    public CustomTypeNested getValue() {
         return value;
     }
 
-    public void setValue(Integer value) {
+    public void setValue(CustomTypeNested value) {
         this.value = value;
     }
 
@@ -48,11 +48,11 @@ public class CustomType implements SQLData {
 
     @Override
     public void readSQL(SQLInput stream, String typeName) throws SQLException {
-        this.setValue(stream.readInt());
+        this.setValue((CustomTypeNested) stream.readObject());
     }
 
     @Override
     public void writeSQL(SQLOutput stream) throws SQLException {
-        stream.writeInt(this.getValue());
+        this.getValue().writeSQL(stream);
     }
 }
