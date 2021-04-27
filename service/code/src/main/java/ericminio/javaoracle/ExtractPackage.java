@@ -46,7 +46,7 @@ public class ExtractPackage {
 
         Generator generator = new Generator();
         String code = "package " + javaPackage + ";\n" + generator.generate(packageSpecification);
-        Path path = Paths.get(outputFolder, new Capitalize().please(generator.getPackageName())+".java");
+        Path path = Paths.get(outputFolder, new ConvertPackageNameIntoClassName().please(generator.getPackageName())+".java");
         Files.write(path, code.getBytes());
     }
 }
