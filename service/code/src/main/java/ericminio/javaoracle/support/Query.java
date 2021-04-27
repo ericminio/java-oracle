@@ -1,5 +1,7 @@
 package ericminio.javaoracle.support;
 
+import ericminio.javaoracle.demos.CustomType;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +23,48 @@ public class Query {
         try {
             statement = connection.createStatement();
             statement.executeUpdate(sql);
+        }
+        catch (SQLException executing) {
+            throw new RuntimeException(executing.getMessage() + " " + sql);
+        }
+        finally {
+            try {
+                statement.close();
+            }
+            catch (SQLException closing) {
+                throw new RuntimeException(closing.getMessage());
+            }
+        }
+    }
+
+    public String selectString(String sql) {
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement(sql);
+            ResultSet resultSet = statement.executeQuery(sql);
+            resultSet.next();
+            return resultSet.getString(1);
+        }
+        catch (SQLException executing) {
+            throw new RuntimeException(executing.getMessage() + " " + sql);
+        }
+        finally {
+            try {
+                statement.close();
+            }
+            catch (SQLException closing) {
+                throw new RuntimeException(closing.getMessage());
+            }
+        }
+    }
+
+    public CustomType selectCustomType(String sql) {
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement(sql);
+            ResultSet resultSet = statement.executeQuery(sql);
+            resultSet.next();
+            return (CustomType) resultSet.getObject(1);
         }
         catch (SQLException executing) {
             throw new RuntimeException(executing.getMessage() + " " + sql);
