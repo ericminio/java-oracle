@@ -1,5 +1,7 @@
 package ericminio.javaoracle.domain;
 
+import ericminio.javaoracle.support.CamelCase;
+import ericminio.javaoracle.support.PascalCase;
 import ericminio.javaoracle.support.Stringify;
 
 import java.io.IOException;
@@ -14,7 +16,7 @@ public class Generator {
         String methodTemplate = new Stringify().inputStream(this.getClass().getClassLoader().getResourceAsStream("templateForMethod.java"));
 
         this.packageName = new ExtractPackageName().please(packageSpecification);
-        String classCode = classTemplate.replace("ClassName", new ConvertPackageNameIntoClassName().please(packageName));
+        String classCode = classTemplate.replace("ClassName", new PascalCase().please(packageName));
 
         String methods = "";
         List<List<String>> functionSpecifications = new ExtractFunctionSpecifications().please(packageSpecification);
@@ -26,7 +28,7 @@ public class Generator {
             String methodCode = classTemplate = methodTemplate
                 .replace("public int", "public " + new TypeMapperFactory().of(returnType).javaType())
                 .replace("methodName()", "methodName(" + parameters.toList() + ")")
-                .replace("methodName", new ConvertFunctionNameIntoMethodName().please(functionName))
+                .replace("methodName", new CamelCase().please(functionName))
                 .replace("packageName", packageName)
                 .replace("functionName", functionName)
                 .replace("???", new PlaceholderList().please(parameters.size()))

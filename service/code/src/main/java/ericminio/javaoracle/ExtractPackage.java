@@ -1,6 +1,6 @@
 package ericminio.javaoracle;
 
-import ericminio.javaoracle.domain.ConvertPackageNameIntoClassName;
+import ericminio.javaoracle.support.PascalCase;
 import ericminio.javaoracle.domain.Generator;
 import ericminio.javaoracle.support.Database;
 
@@ -36,7 +36,7 @@ public class ExtractPackage {
         Generator generator = new Generator();
         String code = generator.generate(packageSpecification);;
         code = "package " + javaPackage + ";\n" + code;
-        Path path = Paths.get(outputFolder, new ConvertPackageNameIntoClassName().please(generator.getPackageName())+".java");
+        Path path = Paths.get(outputFolder, new PascalCase().please(generator.getPackageName())+".java");
         Files.write(path, code.getBytes());
     }
 }
