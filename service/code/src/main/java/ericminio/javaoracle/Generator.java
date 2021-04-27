@@ -20,14 +20,21 @@ public class Generator {
             List<String> functionSpecification = functionSpecifications.get(i);
             String functionName = new ExtractFunctionName().please(functionSpecification);
             String returnType = new ExtractReturnType().please(functionSpecification);
+            Parameters parameters = new ExtractFunctionParameters().please(functionSpecification);
             String methodCode = classTemplate = methodTemplate
+                .replace("methodName()", "methodName(" + parameters.toList() + ")")
                 .replace("methodName", new ConvertFunctionNameIntoMethodName().please(functionName))
                 .replace("packageName", packageName)
                 .replace("functionName", functionName)
                 .replace("Types.TTT", new TypeMapper().typeOf(returnType))
-                .replace("getTtt", new TypeMapper().accessorOf(returnType))
+                .replace("getTtt", new TypeMapper().getterOf(returnType))
+                .replace("???", new PlaceholderList().please(parameters.size()))
+                .replace("        // set IN parameters\n", parameters.getParametersSettings())
                     ;
-            methods += methodCode;
+            methods += methodCode + "\n";
+            if (i != functionSpecifications.size()-1) {
+                methods += "\n";
+            }
         }
         classCode = classCode.replace("    // methods", methods);
 

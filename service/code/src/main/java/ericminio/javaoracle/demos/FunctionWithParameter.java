@@ -15,8 +15,8 @@ public class FunctionWithParameter {
 
     public int countByType(String value) throws SQLException {
         CallableStatement statement = connection.prepareCall("{? = call function_with_parameter.count_by_type(?)}");
-        statement.setString(2, value);
         statement.registerOutParameter(1, Types.INTEGER);
+        statement.setString(2, value);
         statement.execute();
 
         return statement.getInt(1);
@@ -24,8 +24,8 @@ public class FunctionWithParameter {
 
     public int countByLabel(String value) throws SQLException {
         CallableStatement statement = connection.prepareCall("{? = call function_with_parameter.count_by_label(?)}");
-        statement.setString(2, value);
         statement.registerOutParameter(1, Types.INTEGER);
+        statement.setString(2, value);
         statement.execute();
 
         return statement.getInt(1);

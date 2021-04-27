@@ -3,6 +3,11 @@ package ericminio.javaoracle;
 public class ConvertPackageNameIntoClassName {
 
     public String please(String input) {
-        return new Capitalize().please(input);
+        String name = "";
+        String[] parts = input.split("_");
+        for (int i=0; i<parts.length; i++) {
+            name += new Capitalize().please(parts[i]);
+        }
+        return name;
     }
 }

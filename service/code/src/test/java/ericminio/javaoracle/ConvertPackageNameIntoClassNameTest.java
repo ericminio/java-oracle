@@ -1,9 +1,9 @@
 package ericminio.javaoracle;
 
+import org.junit.Test;
+
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
-
-import org.junit.Test;
 
 public class ConvertPackageNameIntoClassNameTest {
 
@@ -16,4 +16,10 @@ public class ConvertPackageNameIntoClassNameTest {
     public void resistsUpperCase() {
         assertThat(new ConvertPackageNameIntoClassName().please("HELLO"), equalTo("Hello"));
     }
+
+    @Test
+    public void snakeCaseIntoPascalCase() {
+        assertThat(new ConvertPackageNameIntoClassName().please("hello_world"), equalTo("HelloWorld"));
+    }
+
 }
