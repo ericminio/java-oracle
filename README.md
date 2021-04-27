@@ -1,6 +1,7 @@
 [![Build Status](https://github.com/ericminio/java-oracle/actions/workflows/java7.yml/badge.svg)](https://github.com/ericminio/java-oracle/actions)
 [![Build Status](https://github.com/ericminio/java-oracle/actions/workflows/java8.yml/badge.svg)](https://github.com/ericminio/java-oracle/actions)
 
+# Run the tests
 ```
 docker-compose up java7 
 docker-compose up java8 
@@ -8,6 +9,9 @@ docker-compose up java8
 
 # Usage
 
+Study [service/demos/run.sh](service/demos/run.sh).
+
+One way to see it running:
 - `docker-compose run java8 bash` 
 - `/usr/local/src/service/demos/run.sh`
 
