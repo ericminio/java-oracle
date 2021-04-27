@@ -1,48 +1,12 @@
 package ericminio.javaoracle;
 
-public class TypeMapper {
+public interface TypeMapper {
 
-    public String typeOf(String type) {
-        if ("INTEGER".equalsIgnoreCase(type)) {
-            return "Types.INTEGER";
-        }
-        if ("VARCHAR2".equalsIgnoreCase(type)) {
-            return "Types.VARCHAR";
-        }
+    String getter();
 
-        throw new RuntimeException(("Teach me about type " + type));
-    }
+    String setter();
 
-    public String getterOf(String type) {
-        if ("INTEGER".equalsIgnoreCase(type)) {
-            return "getInt";
-        }
-        if ("VARCHAR2".equalsIgnoreCase(type)) {
-            return "getString";
-        }
+    String sqlType();
 
-        throw new RuntimeException(("Teach me about type " + type));
-    }
-
-    public String setterOf(String type) {
-        if ("INTEGER".equalsIgnoreCase(type)) {
-            return "setInt";
-        }
-        if ("VARCHAR2".equalsIgnoreCase(type)) {
-            return "setString";
-        }
-
-        throw new RuntimeException(("Teach me about type " + type));
-    }
-
-    public String javaTypeOf(String type) {
-        if ("INTEGER".equalsIgnoreCase(type)) {
-            return "int";
-        }
-        if ("VARCHAR2".equalsIgnoreCase(type)) {
-            return "String";
-        }
-
-        throw new RuntimeException(("Teach me about type " + type));
-    }
+    String javaType();
 }

@@ -22,7 +22,7 @@ public class Parameters {
             String[] parts = parameterSpecification.trim().split("\\s|,");
             String name = parts[0];
             String type = parts[1];
-            list += (new TypeMapper().javaTypeOf(type) + " " + name);
+            list += (new TypeMapperFactory().of(type).javaType() + " " + name);
             if (i != parameterSpecifications.size()-1) {
                 list += ", ";
             }
@@ -41,7 +41,7 @@ public class Parameters {
             String[] parts = parameterSpecification.trim().split("\\s|,");
             String name = parts[0];
             String type = parts[1];
-            settings += ("        statement." + new TypeMapper().setterOf(type) + "(" + (i+2) + ", " + name + ");\n");
+            settings += ("        statement." + new TypeMapperFactory().of(type).setter() + "(" + (i+2) + ", " + name + ");\n");
         }
         return settings;
     }

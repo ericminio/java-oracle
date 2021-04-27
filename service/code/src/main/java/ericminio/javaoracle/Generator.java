@@ -22,14 +22,14 @@ public class Generator {
             String returnType = new ExtractReturnType().please(functionSpecification);
             Parameters parameters = new ExtractFunctionParameters().please(functionSpecification);
             String methodCode = classTemplate = methodTemplate
-                .replace("public int", "public " + new TypeMapper().javaTypeOf(returnType))
+                .replace("public int", "public " + new TypeMapperFactory().of(returnType).javaType())
                 .replace("methodName()", "methodName(" + parameters.toList() + ")")
                 .replace("methodName", new ConvertFunctionNameIntoMethodName().please(functionName))
                 .replace("packageName", packageName)
                 .replace("functionName", functionName)
                 .replace("???", new PlaceholderList().please(parameters.size()))
-                .replace("getTtt", new TypeMapper().getterOf(returnType))
-                .replace("Types.TTT", new TypeMapper().typeOf(returnType))
+                .replace("getTtt", new TypeMapperFactory().of(returnType).getter())
+                .replace("Types.TTT", new TypeMapperFactory().of(returnType).sqlType())
                 .replace("        // set IN parameters\n", parameters.getParametersSettings())
                     ;
             methods += methodCode + "\n";
