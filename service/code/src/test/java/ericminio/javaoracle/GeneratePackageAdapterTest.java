@@ -34,11 +34,13 @@ public class GeneratePackageAdapterTest extends DatabaseTest {
         String code = contentOf("target/Example.java");
 
         assertThat(code, containsString("public class Example {"));
+        assertThat(code, containsString("   private Connection connection;"));
+        assertThat(code, containsString("   public Example(Connection connection) {"));
 
-        assertThat(code, containsString("public Integer hello(String value1)"));
-        assertThat(code, containsString("statement.setString(1, value1);"));
+        assertThat(code, containsString("   public Integer hello(String value1)"));
+        assertThat(code, containsString("       statement.setString(1, value1);"));
 
-        assertThat(code, containsString("public String world(Integer value2)"));
-        assertThat(code, containsString("statement.setInt(1, value2);"));
+        assertThat(code, containsString("   public String world(Integer value2)"));
+        assertThat(code, containsString("       statement.setInt(1, value2);"));
     }
 }

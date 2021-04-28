@@ -39,10 +39,10 @@ END example
 12 rows selected.
 
 total 2
-drwxrwxrwx    1 root     root             0 Apr 27 23:42 .
-drwxrwxrwx    1 root     root             0 Apr 27 18:22 ..
--rwxr-xr-x    1 root     root           969 Apr 27 23:42 Example.java
--rwxr-xr-x    1 root     root           768 Apr 27 18:55 run.sh
+drwxrwxrwx    1 root     root             0 Apr 28 23:06 .
+drwxrwxrwx    1 root     root             0 Apr 28 16:11 ..
+-rwxr-xr-x    1 root     root           958 Apr 28 23:06 Example.java
+-rwxr-xr-x    1 root     root           781 Apr 28 22:42 run.sh
 package company.name;
 
 import java.sql.Connection;
@@ -54,7 +54,7 @@ public class Example {
 
     private Connection connection;
 
-    public void setConnection(Connection connection) {
+    public Example(Connection connection) {
         this.connection = connection;
     }
 

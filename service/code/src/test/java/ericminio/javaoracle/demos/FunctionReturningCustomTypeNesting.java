@@ -9,7 +9,7 @@ public class FunctionReturningCustomTypeNesting {
 
     private Connection connection;
 
-    public void setConnection(Connection connection) {
+    public FunctionReturningCustomTypeNesting(Connection connection) {
         this.connection = connection;
     }
 

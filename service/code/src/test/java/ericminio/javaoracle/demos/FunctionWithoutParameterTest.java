@@ -34,8 +34,7 @@ public class FunctionWithoutParameterTest extends DatabaseTest {
 
     @Test
     public void works() throws SQLException {
-        FunctionWithoutParameter functionWithoutParameter = new FunctionWithoutParameter();
-        functionWithoutParameter.setConnection(connection);
+        FunctionWithoutParameter functionWithoutParameter = new FunctionWithoutParameter(connection);
         
         assertThat(functionWithoutParameter.getValue(), equalTo(42));
     }

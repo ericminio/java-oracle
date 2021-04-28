@@ -51,16 +51,14 @@ public class FunctionWithParameterTest extends DatabaseTest {
 
     @Test
     public void countByType() throws SQLException {
-        FunctionWithParameter functionWithParameter = new FunctionWithParameter();
-        functionWithParameter.setConnection(connection);
+        FunctionWithParameter functionWithParameter = new FunctionWithParameter(connection);
         
         assertThat(functionWithParameter.countByType("A"), equalTo(15));
     }
 
     @Test
     public void countByLabel() throws SQLException {
-        FunctionWithParameter functionWithParameter = new FunctionWithParameter();
-        functionWithParameter.setConnection(connection);
+        FunctionWithParameter functionWithParameter = new FunctionWithParameter(connection);
 
         assertThat(functionWithParameter.countByLabel("any"), equalTo(42));
     }

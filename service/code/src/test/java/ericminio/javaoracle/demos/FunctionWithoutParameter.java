@@ -9,7 +9,7 @@ public class FunctionWithoutParameter {
 
     private Connection connection;
 
-    public void setConnection(Connection connection) {
+    public FunctionWithoutParameter(Connection connection) {
         this.connection = connection;
     }
 

@@ -47,8 +47,7 @@ public class FunctionReturningCustomTypeNestingTest extends DatabaseTest {
 
     @Test
     public void customTypeCanBeFetched() throws SQLException {
-        FunctionReturningCustomTypeNesting functionReturningCustomTypeNesting = new FunctionReturningCustomTypeNesting();
-        functionReturningCustomTypeNesting.setConnection(connection);
+        FunctionReturningCustomTypeNesting functionReturningCustomTypeNesting = new FunctionReturningCustomTypeNesting(connection);
         CustomTypeNested customTypeNested = new CustomTypeNested();
         customTypeNested.setValue(15);
         CustomTypeNesting customTypeNesting = new CustomTypeNesting();

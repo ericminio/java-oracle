@@ -40,8 +40,7 @@ public class FunctionReturningCustomTypeTest extends DatabaseTest {
 
     @Test
     public void customTypeCanBeFetched() throws SQLException {
-        FunctionReturningCustomType functionReturningCustomType = new FunctionReturningCustomType();
-        functionReturningCustomType.setConnection(connection);
+        FunctionReturningCustomType functionReturningCustomType = new FunctionReturningCustomType(connection);
         CustomType customType = new CustomType();
         customType.setValue(15);
 

@@ -8,7 +8,7 @@ public class ClassName {
 
     private Connection connection;
 
-    public void setConnection(Connection connection) {
+    public ClassName(Connection connection) {
         this.connection = connection;
     }
 

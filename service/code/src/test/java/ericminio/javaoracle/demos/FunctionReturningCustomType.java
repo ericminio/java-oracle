@@ -9,7 +9,7 @@ public class FunctionReturningCustomType {
 
     private Connection connection;
 
-    public void setConnection(Connection connection) {
+    public FunctionReturningCustomType(Connection connection) {
         this.connection = connection;
     }
 
