@@ -18,6 +18,7 @@ public class GenerateTypeCode {
                 .replace("ClassName", new PascalCase().please(typeName))
                 .replace("STATIC_NAME_FIELD", typeName.toUpperCase())
                 .replace("    // fields", new BuildFieldDeclarationStatements().please(parameters))
+                .replace("    // accessors", new BuildFieldAccessors().please(parameters))
         ;
 
         return typeCode;

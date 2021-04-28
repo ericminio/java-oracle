@@ -51,4 +51,32 @@ public class GenerateTypeCodeTest {
     public void stringField() {
         assertThat(code, containsString("private String field2;"));
     }
+
+    @Test
+    public void integerAccessor() {
+        assertThat(code, containsString("" +
+                "   public Integer getField1() {\n" +
+                "        return this.field1;\n" +
+                "    }\n"
+        ));
+        assertThat(code, containsString("" +
+                "   public void setField1(Integer field1) {\n" +
+                "        this.field1 = field1;\n" +
+                "    }\n"
+        ));
+    }
+
+    @Test
+    public void stringAccessor() {
+        assertThat(code, containsString("" +
+                "   public String getField2() {\n" +
+                "        return this.field2;\n" +
+                "    }\n"
+        ));
+        assertThat(code, containsString("" +
+                "   public void setField2(String field2) {\n" +
+                "        this.field2 = field2;\n" +
+                "    }\n"
+        ));
+    }
 }

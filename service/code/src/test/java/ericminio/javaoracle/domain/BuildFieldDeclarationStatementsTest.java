@@ -10,9 +10,9 @@ public class BuildFieldDeclarationStatementsTest {
     @Test
     public void integerType() {
         Parameters parameters = new Parameters();
-        parameters.add("field1 integer");
+        parameters.add("any_field integer");
         assertThat(new BuildFieldDeclarationStatements().please(parameters), equalTo("" +
-                "        private Integer field1;"
+                "    private Integer anyField;"
         ));
     }
 
@@ -21,7 +21,7 @@ public class BuildFieldDeclarationStatementsTest {
         Parameters parameters = new Parameters();
         parameters.add("field1 varchar2(10)");
         assertThat(new BuildFieldDeclarationStatements().please(parameters), equalTo("" +
-                "        private String field1;"
+                "    private String field1;"
         ));
     }
 
@@ -31,8 +31,8 @@ public class BuildFieldDeclarationStatementsTest {
         parameters.add("field1 varchar2(10)");
         parameters.add("field2 integer");
         assertThat(new BuildFieldDeclarationStatements().please(parameters), equalTo("" +
-                "        private String field1;\n" +
-                "        private Integer field2;"
+                "    private String field1;\n" +
+                "    private Integer field2;"
         ));
     }
 }
