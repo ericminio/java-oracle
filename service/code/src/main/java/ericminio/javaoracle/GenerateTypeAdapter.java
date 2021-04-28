@@ -1,7 +1,7 @@
 package ericminio.javaoracle;
 
+import ericminio.javaoracle.data.Database;
 import ericminio.javaoracle.domain.GenerateTypeCode;
-import ericminio.javaoracle.support.Database;
 import ericminio.javaoracle.support.PascalCase;
 
 import java.nio.file.Files;
@@ -9,12 +9,10 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
-import static ericminio.javaoracle.support.Query.with;
-
-public class GenerateType {
+public class GenerateTypeAdapter {
 
     public static void main(String[] args) {
-        GenerateType generator = new GenerateType();
+        GenerateTypeAdapter generator = new GenerateTypeAdapter();
         try {
             generator.go(
                     System.getProperty("oraclePackage"),
@@ -27,7 +25,7 @@ public class GenerateType {
     }
 
     public void go(String typeName, String javaPackage, String outputFolder) throws Exception {
-        List<String> typeSpecification = with(new Database().connection()).selectTypeDefinition(typeName);
+        List<String> typeSpecification = new Database().selectTypeDefinition(typeName);
         GenerateTypeCode generateTypeCode = new GenerateTypeCode();
         String code = generateTypeCode.please(typeSpecification);;
         code = "package " + javaPackage + ";\n" + code;

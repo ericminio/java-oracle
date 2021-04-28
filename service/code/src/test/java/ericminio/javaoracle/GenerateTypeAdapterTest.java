@@ -5,11 +5,11 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static ericminio.javaoracle.support.FileUtils.contentOf;
-import static ericminio.javaoracle.support.Query.with;
+import static ericminio.javaoracle.data.Query.with;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.assertThat;
 
-public class GenerateTypeTest extends DatabaseTest {
+public class GenerateTypeAdapterTest extends DatabaseTest {
 
     @Before
     public void createType() {
@@ -23,7 +23,7 @@ public class GenerateTypeTest extends DatabaseTest {
 
     @Test
     public void createsExpectedFile() throws Exception {
-        new GenerateType().go("custom_type", "examples", "target");
+        new GenerateTypeAdapter().go("custom_type", "examples", "target");
         String code = contentOf("target/CustomType.java");
 
         assertThat(code, containsString("public class CustomType implements SQLData {"));

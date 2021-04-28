@@ -1,4 +1,4 @@
-package ericminio.javaoracle.support;
+package ericminio.javaoracle.data;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -52,60 +52,11 @@ public class Query {
         }
     }
 
-    public String selectString(String sql) {
+    public List<String> selectStrings(String sql, String parameterValue) {
         PreparedStatement statement = null;
         try {
             statement = connection.prepareStatement(sql);
-            ResultSet resultSet = statement.executeQuery(sql);
-            resultSet.next();
-            return resultSet.getString(1);
-        }
-        catch (SQLException executing) {
-            throw new RuntimeException(executing.getMessage() + " " + sql);
-        }
-        finally {
-            try {
-                statement.close();
-            }
-            catch (SQLException closing) {
-                throw new RuntimeException(closing.getMessage());
-            }
-        }
-    }
-
-    public List<String> selectPackageDefinition(String packageName) {
-        String sql = "select text from all_source where type='PACKAGE' and name=? order by line";
-        PreparedStatement statement = null;
-        try {
-            statement = connection.prepareStatement(sql);
-            statement.setString(1, packageName.toUpperCase());
-            ResultSet resultSet = statement.executeQuery();
-            List<String> strings = new ArrayList<>();
-            while (resultSet.next()) {
-                String line = resultSet.getString(1);
-                strings.add(line);
-            }
-            return strings;
-        }
-        catch (SQLException executing) {
-            throw new RuntimeException(executing.getMessage() + " " + sql);
-        }
-        finally {
-            try {
-                statement.close();
-            }
-            catch (SQLException closing) {
-                throw new RuntimeException(closing.getMessage());
-            }
-        }
-    }
-
-    public List<String> selectTypeDefinition(String typeName) {
-        String sql = "select text from all_source where type='TYPE' and name=? order by line";
-        PreparedStatement statement = null;
-        try {
-            statement = connection.prepareStatement(sql);
-            statement.setString(1, typeName.toUpperCase());
+            statement.setString(1, parameterValue);
             ResultSet resultSet = statement.executeQuery();
             List<String> strings = new ArrayList<>();
             while (resultSet.next()) {

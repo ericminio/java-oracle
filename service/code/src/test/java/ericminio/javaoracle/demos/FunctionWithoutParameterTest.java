@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import java.sql.SQLException;
 
-import static ericminio.javaoracle.support.Query.with;
+import static ericminio.javaoracle.data.Query.with;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
 

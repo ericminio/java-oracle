@@ -1,18 +1,18 @@
 package ericminio.javaoracle;
 
-import ericminio.javaoracle.support.Database;
+import ericminio.javaoracle.support.DatabaseTest;
 import org.junit.Before;
 import org.junit.Test;
 
+import static ericminio.javaoracle.data.Query.with;
 import static ericminio.javaoracle.support.FileUtils.contentOf;
-import static ericminio.javaoracle.support.Query.with;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.assertThat;
 
-public class GeneratorTest {
+public class GeneratePackageAdapterTest extends DatabaseTest {
 
     @Before
-    public void createPackage() throws Exception {
+    public void createPackage() {
         String creation = "CREATE OR REPLACE PACKAGE example\n" +
                 "AS\n" +
                 "\n" +
@@ -25,12 +25,12 @@ public class GeneratorTest {
                 "    ) RETURN varchar2;\n" +
                 "\n" +
                 "END example";
-        with(new Database().connection()).execute(creation);
+        with(connection).execute(creation);
     }
 
     @Test
     public void createsExpectedFile() throws Exception {
-        new Generator().go("example", "examples", "target");
+        new GeneratePackageAdapter().go("example", "examples", "target");
         String code = contentOf("target/Example.java");
 
         assertThat(code, containsString("public class Example {"));

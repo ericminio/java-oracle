@@ -1,5 +1,6 @@
 package ericminio.javaoracle.support;
 
+import ericminio.javaoracle.data.Database;
 import org.junit.After;
 import org.junit.Before;
 
