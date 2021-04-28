@@ -36,6 +36,17 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     working_dir: /usr/local/src/service/code
 
+  java11:
+    depends_on: 
+      - oracle
+    build: java/java11
+    image: java:11
+    container_name: java11
+    volumes:
+      - .:/usr/local/src 
+      - /var/run/docker.sock:/var/run/docker.sock
+    working_dir: /usr/local/src/service/code
+
   service:
     build: service
     container_name: service

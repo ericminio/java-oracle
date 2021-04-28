@@ -2,7 +2,7 @@ FROM alpine:3.11
 
 RUN apk update && apk add \
     maven \
-    openjdk8 \
+    openjdk11 \
     bash \
     vim && \
     apk add --update docker openrc && \
