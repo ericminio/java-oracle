@@ -99,4 +99,31 @@ public class Query {
             }
         }
     }
+
+    public List<String> selectTypeDefinition(String typeName) {
+        String sql = "select text from all_source where type='TYPE' and name=? order by line";
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement(sql);
+            statement.setString(1, typeName.toUpperCase());
+            ResultSet resultSet = statement.executeQuery();
+            List<String> strings = new ArrayList<>();
+            while (resultSet.next()) {
+                String line = resultSet.getString(1);
+                strings.add(line);
+            }
+            return strings;
+        }
+        catch (SQLException executing) {
+            throw new RuntimeException(executing.getMessage() + " " + sql);
+        }
+        finally {
+            try {
+                statement.close();
+            }
+            catch (SQLException closing) {
+                throw new RuntimeException(closing.getMessage());
+            }
+        }
+    }
 }

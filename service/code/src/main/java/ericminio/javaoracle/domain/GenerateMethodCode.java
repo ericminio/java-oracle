@@ -13,15 +13,15 @@ public class GenerateMethodCode {
 
         String functionName = new ExtractFunctionName().please(functionSpecification);
         String returnType = new ExtractReturnType().please(functionSpecification);
-        Parameters parameters = new ExtractFunctionParameters().please(functionSpecification);
+        Parameters parameters = new ExtractParameters().please(functionSpecification);
         String methodCode = methodTemplate
                 .replace("public int", "public " + new TypeMapperFactory().of(returnType).javaType())
-                .replace("methodName()", "methodName(" + parameters.toList() + ")")
+                .replace("methodName()", "methodName(" + new BuildMethodParameterList().please(parameters) + ")")
                 .replace("methodName", new CamelCase().please(functionName))
                 .replace("packageName", packageName)
                 .replace("functionName", functionName)
-                .replace("???", new PlaceholderList().please(parameters.size()))
-                .replace("        // set IN parameters\n", parameters.getParametersSettings())
+                .replace("???", new PlaceholderList().please(parameters.count()))
+                .replace("        // set IN parameters\n", new BuildSqlStatementParameterSettings().please(parameters))
                 .replace("getTtt", new TypeMapperFactory().of(returnType).getter())
                 ;
         return methodCode;

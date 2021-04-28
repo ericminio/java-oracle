@@ -3,10 +3,11 @@ package ericminio.javaoracle.domain;
 public class TypeMapperFactory {
 
     public TypeMapper of(String incoming) {
-        if ("INTEGER".equalsIgnoreCase(incoming)) {
+        String normalized = incoming.toUpperCase();
+        if (normalized.equalsIgnoreCase("INTEGER")) {
             return new TypeMapperInteger();
         }
-        if ("VARCHAR2".equalsIgnoreCase(incoming)) {
+        if (normalized.startsWith("VARCHAR2")) {
             return new TypeMapperString();
         }
 
