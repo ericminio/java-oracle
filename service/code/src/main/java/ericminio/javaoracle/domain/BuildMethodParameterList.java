@@ -1,19 +1,12 @@
 package ericminio.javaoracle.domain;
 
-public class BuildMethodParameterList {
+public class BuildMethodParameterList extends BuildSomethingWithParameters {
 
-    public String please(Parameters parameters) {
-        String list = "";
-        for (int i = 0; i< parameters.count(); i++) {
-            String specification = parameters.get(i);
-            String[] parts = specification.trim().split("\\s");
-            String name = parts[0];
-            String type = parts[1];
-            list += (new TypeMapperFactory().of(type).javaType() + " " + name);
-            if (i != parameters.count()-1) {
-                list += ", ";
-            }
-        }
-        return list;
+    @Override
+    protected String modify(String output, int index, String name, String type, boolean isLast) {
+        return output
+                + new TypeMapperFactory().of(type).javaType() + " " + name
+                + (!isLast ? ", ": "")
+                ;
     }
 }

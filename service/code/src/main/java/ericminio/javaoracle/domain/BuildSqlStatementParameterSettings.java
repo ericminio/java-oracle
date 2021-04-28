@@ -1,16 +1,11 @@
 package ericminio.javaoracle.domain;
 
-public class BuildSqlStatementParameterSettings {
+public class BuildSqlStatementParameterSettings extends BuildSomethingWithParameters {
 
-    public String please(Parameters parameters) {
-        String settings = "";
-        for (int i = 0; i< parameters.count(); i++) {
-            String specification = parameters.get(i);
-            String[] parts = specification.trim().split("\\s");
-            String name = parts[0];
-            String type = parts[1];
-            settings += ("        statement." + new TypeMapperFactory().of(type).setter() + "(" + (i+1) + ", " + name + ");\n");
-        }
-        return settings;
+    @Override
+    protected String modify(String output, int index, String name, String type, boolean isLast) {
+        return output
+                + "        statement."
+                + new TypeMapperFactory().of(type).setter() + "(" + (index + 1) + ", " + name + ");\n";
     }
 }
