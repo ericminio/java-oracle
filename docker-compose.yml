@@ -46,11 +46,3 @@ services:
       - .:/usr/local/src 
       - /var/run/docker.sock:/var/run/docker.sock
     working_dir: /usr/local/src/service/code
-
-  service:
-    build: service
-    container_name: service
-    volumes:
-      - .:/usr/local/src
-      - /var/run/docker.sock:/var/run/docker.sock
-    working_dir: /usr/local/src
