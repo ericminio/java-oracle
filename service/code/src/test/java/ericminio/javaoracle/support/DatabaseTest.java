@@ -3,7 +3,8 @@ package ericminio.javaoracle.support;
 import org.junit.After;
 import org.junit.Before;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.SQLException;
 
 public class DatabaseTest {
 

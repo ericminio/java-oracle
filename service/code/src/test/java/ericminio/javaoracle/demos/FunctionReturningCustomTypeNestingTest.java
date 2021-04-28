@@ -14,23 +14,20 @@ public class FunctionReturningCustomTypeNestingTest extends DatabaseTest {
 
     @Before
     public void createStructure() {
-        try {
-            with(connection).execute("drop type custom_type_nesting");
-            with(connection).execute("drop type custom_type_nested");
-        }
-        catch (Exception ignored) {}
+        with(connection).executeIgnoringFailure("drop type custom_type_nesting");
+        with(connection).executeIgnoringFailure("drop type custom_type_nested");
         with(connection).execute("" +
-                "create or replace type custom_type_nested as object" +
+                "create type custom_type_nested as object" +
                 "(" +
                 "   value integer\n" +
                 ");");
         with(connection).execute("" +
-                "create or replace type custom_type_nesting as object" +
+                "create type custom_type_nesting as object" +
                 "(" +
                 "   field custom_type_nested\n" +
                 ");");
         with(connection).execute("" +
-                "CREATE OR REPLACE PACKAGE returning_custom_type_nesting\n" +
+                "create or replace package returning_custom_type_nesting\n" +
                 "AS\n" +
                 "    FUNCTION get_field RETURN custom_type_nesting;\n" +
                 "\n" +

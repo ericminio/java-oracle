@@ -35,6 +35,23 @@ public class Query {
         }
     }
 
+    public void executeIgnoringFailure(String sql) {
+        Statement statement = null;
+        try {
+            statement = connection.createStatement();
+            statement.executeUpdate(sql);
+        }
+        catch (SQLException ignoring) { }
+        finally {
+            try {
+                statement.close();
+            }
+            catch (SQLException closing) {
+                throw new RuntimeException(closing.getMessage());
+            }
+        }
+    }
+
     public String selectString(String sql) {
         PreparedStatement statement = null;
         try {
