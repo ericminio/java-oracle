@@ -20,6 +20,7 @@ public class GenerateTypeCode {
                 .replace("    // fields", new BuildFieldDeclarationStatements().please(parameters))
                 .replace("    // accessors", new BuildFieldAccessors().please(parameters))
                 .replace("                false // EQUALS_RETURN_VALUE", new BuildEqualsReturnValue().please(parameters))
+                .replace("                0 // HASHCODE_RETURN_VALUE", new BuildHashcodeReturnValue().please(parameters))
         ;
 
         return typeCode;

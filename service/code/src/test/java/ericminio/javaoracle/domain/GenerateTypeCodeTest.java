@@ -88,4 +88,17 @@ public class GenerateTypeCodeTest {
                 "    }"
         ));
     }
+
+    @Test
+    public void hashcodeMethod() {
+        assertThat(code, containsString("" +
+                "    @Override\n" +
+                "    public int hashCode() {\n" +
+                "        return\n" +
+                "                this.getField1().hashCode()\n" +
+                "                + this.getField2().hashCode()\n" +
+                "                ;\n" +
+                "    }"
+        ));
+    }
 }

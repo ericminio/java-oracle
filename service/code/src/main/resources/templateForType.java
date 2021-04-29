@@ -23,4 +23,11 @@ public class ClassName implements SQLData {
                 false // EQUALS_RETURN_VALUE
                 ;
     }
+
+    @Override
+    public int hashCode() {
+        return
+                0 // HASHCODE_RETURN_VALUE
+                ;
+    }
 }

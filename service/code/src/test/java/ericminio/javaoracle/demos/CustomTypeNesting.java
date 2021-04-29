@@ -32,7 +32,9 @@ public class CustomTypeNesting implements SQLData {
 
     @Override
     public int hashCode() {
-        return this.getValue().hashCode();
+        return
+                this.getValue().hashCode()
+                ;
     }
 
     @Override
