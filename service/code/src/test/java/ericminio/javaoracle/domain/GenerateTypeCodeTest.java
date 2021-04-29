@@ -101,4 +101,17 @@ public class GenerateTypeCodeTest {
                 "    }"
         ));
     }
+
+    @Test
+    public void toStringMethod() {
+        assertThat(code, containsString("" +
+                "    @Override\n" +
+                "    public String toString() {\n" +
+                "        return this.getClass().getSimpleName() + \"[\"\n" +
+                "                + \" field1=\" + (this.getField1() == null ? \"null\" : this.getField1().toString())\n" +
+                "                + \", field2=\" + (this.getField2() == null ? \"null\" : this.getField2().toString())\n" +
+                "                + \" ]\";\n" +
+                "    }"
+        ));
+    }
 }

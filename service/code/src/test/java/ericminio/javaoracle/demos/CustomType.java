@@ -40,7 +40,7 @@ public class CustomType implements SQLData {
     @Override
     public String toString() {
         return this.getClass().getSimpleName() + "["
-                + " value=" + ( this.getValue() == null ? "null" : this.getValue().toString())
+                + " value=" + (this.getValue() == null ? "null" : this.getValue().toString())
                 + " ]";
     }
 

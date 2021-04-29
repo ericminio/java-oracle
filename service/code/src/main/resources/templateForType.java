@@ -6,11 +6,11 @@ import java.sql.SQLOutput;
 
 public class ClassName implements SQLData {
     public static final String NAME = "STATIC_NAME_FIELD";
-    // fields
+    // fields declaration
 
     public ClassName() {}
 
-    // accessors
+    // fields accessors
 
     @Override
     public boolean equals(Object o) {
@@ -20,14 +20,21 @@ public class ClassName implements SQLData {
         ClassName other = (ClassName) o;
 
         return
-                false // EQUALS_RETURN_VALUE
+                false // fields equals contribution
                 ;
     }
 
     @Override
     public int hashCode() {
         return
-                0 // HASHCODE_RETURN_VALUE
+                0 // field hashCode contribution
                 ;
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName() + "["
+                // fields toString concatenation
+                + " ]";
     }
 }

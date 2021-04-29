@@ -1,0 +1,29 @@
+package ericminio.javaoracle.domain;
+
+import org.junit.Test;
+
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
+
+public class BuildToStringConcatenationTest {
+
+    @Test
+    public void one() {
+        Parameters parameters = new Parameters();
+        parameters.add("any_field integer");
+        assertThat(new BuildToStringConcatenation().please(parameters), equalTo("" +
+                "                + \" anyField=\" + (this.getAnyField() == null ? \"null\" : this.getAnyField().toString())"
+        ));
+    }
+
+    @Test
+    public void two() {
+        Parameters parameters = new Parameters();
+        parameters.add("any_field integer");
+        parameters.add("another_field integer");
+        assertThat(new BuildToStringConcatenation().please(parameters), equalTo("" +
+                "                + \" anyField=\" + (this.getAnyField() == null ? \"null\" : this.getAnyField().toString())\n" +
+                "                + \", anotherField=\" + (this.getAnotherField() == null ? \"null\" : this.getAnotherField().toString())"
+        ));
+    }
+}

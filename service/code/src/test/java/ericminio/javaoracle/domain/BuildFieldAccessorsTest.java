@@ -8,7 +8,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class BuildFieldAccessorsTest {
 
     @Test
-    public void integerType() {
+    public void one() {
         Parameters parameters = new Parameters();
         parameters.add("any_field integer");
         assertThat(new BuildFieldAccessors().please(parameters), equalTo("" +
@@ -22,15 +22,23 @@ public class BuildFieldAccessorsTest {
     }
 
     @Test
-    public void stringType() {
+    public void two() {
         Parameters parameters = new Parameters();
-        parameters.add("field varchar2(15)");
+        parameters.add("any_field integer");
+        parameters.add("another_field integer");
         assertThat(new BuildFieldAccessors().please(parameters), equalTo("" +
-                "    public String getField() {\n" +
-                "        return this.field;\n" +
+                "    public Integer getAnyField() {\n" +
+                "        return this.anyField;\n" +
                 "    }\n" +
-                "    public void setField(String field) {\n" +
-                "        this.field = field;\n" +
+                "    public void setAnyField(Integer anyField) {\n" +
+                "        this.anyField = anyField;\n" +
+                "    }\n" +
+                "\n" +
+                "    public Integer getAnotherField() {\n" +
+                "        return this.anotherField;\n" +
+                "    }\n" +
+                "    public void setAnotherField(Integer anotherField) {\n" +
+                "        this.anotherField = anotherField;\n" +
                 "    }\n"
         ));
     }
