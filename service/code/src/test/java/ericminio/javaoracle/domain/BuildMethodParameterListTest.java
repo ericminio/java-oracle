@@ -16,23 +16,23 @@ public class BuildMethodParameterListTest {
     @Test
     public void listOfOneParameter() {
         Parameters parameters = new Parameters();
-        parameters.add("param integer");
-        assertThat(new BuildMethodParameterList().please(parameters), equalTo("Integer param"));
+        parameters.add("param number");
+        assertThat(new BuildMethodParameterList().please(parameters), equalTo("BigDecimal param"));
     }
 
     @Test
     public void listOfTwoParameters() {
         Parameters parameters = new Parameters();
-        parameters.add("field1 integer");
+        parameters.add("field1 number");
         parameters.add("field2 varchar2");
-        assertThat(new BuildMethodParameterList().please(parameters), equalTo("Integer field1, String field2"));
+        assertThat(new BuildMethodParameterList().please(parameters), equalTo("BigDecimal field1, String field2"));
     }
 
     @Test
     public void resistsVarcharSize() {
         Parameters parameters = new Parameters();
-        parameters.add("field1 integer");
+        parameters.add("field1 number");
         parameters.add("field2 varchar2(5)");
-        assertThat(new BuildMethodParameterList().please(parameters), equalTo("Integer field1, String field2"));
+        assertThat(new BuildMethodParameterList().please(parameters), equalTo("BigDecimal field1, String field2"));
     }
 }

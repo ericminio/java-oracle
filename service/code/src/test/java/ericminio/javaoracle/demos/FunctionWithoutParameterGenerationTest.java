@@ -6,7 +6,7 @@ import org.junit.Test;
 import java.io.IOException;
 import java.util.Arrays;
 
-import static ericminio.javaoracle.support.FileUtils.contentOf;
+import static ericminio.javaoracle.support.FileUtils.contentMinusTwoFirstLines;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
 
@@ -17,11 +17,11 @@ public class FunctionWithoutParameterGenerationTest {
         String actual = new GenerateClassCode().please(Arrays.asList(
                 "PACKAGE function_without_parameter\n",
                 "AS\n",
-                "   FUNCTION get_value RETURN integer;\n",
+                "   FUNCTION get_value RETURN number;\n",
                 "END function_without_parameter;"
         ));
         
-        assertThat(actual, equalTo(contentOf("src/test/java/ericminio/javaoracle/demos/FunctionWithoutParameter.java")));
+        assertThat(actual, equalTo(contentMinusTwoFirstLines("src/test/java/ericminio/javaoracle/demos/FunctionWithoutParameter.java")));
     }
 
 }

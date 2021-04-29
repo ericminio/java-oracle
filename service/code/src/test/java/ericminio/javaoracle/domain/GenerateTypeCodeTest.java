@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;
 
 public class GenerateTypeCodeTest {
@@ -19,12 +19,30 @@ public class GenerateTypeCodeTest {
         List<String> typeSpecification = Arrays.asList(
                 "type custom_type as object\n",
                 "(\n",
-                "   field1 integer,\n",
+                "   field1 number,\n",
                 "   field2 varchar2(10)\n",
                 ")"
         );
         GenerateTypeCode generateTypeCode = new GenerateTypeCode();
         code = generateTypeCode.please(typeSpecification);
+    }
+
+    @Test
+    public void importsIncludeBigDecimal() {
+        assertThat(code, containsString("import java.math.BigDecimal;\n"));
+    }
+
+    @Test
+    public void importsDoNotNeedBigDecimal() throws IOException {
+        List<String> typeSpecification = Arrays.asList(
+                "type custom_type as object\n",
+                "(\n",
+                "   field varchar2(10)\n",
+                ")"
+        );
+        GenerateTypeCode generateTypeCode = new GenerateTypeCode();
+        code = generateTypeCode.please(typeSpecification);
+        assertThat(code, not(containsString("import java.math.BigDecimal;")));
     }
 
     @Test
@@ -43,8 +61,8 @@ public class GenerateTypeCodeTest {
     }
 
     @Test
-    public void integerField() {
-        assertThat(code, containsString("private Integer field1;"));
+    public void numberField() {
+        assertThat(code, containsString("private BigDecimal field1;"));
     }
 
     @Test
@@ -55,10 +73,10 @@ public class GenerateTypeCodeTest {
     @Test
     public void accessors() {
         assertThat(code, containsString(""
-                + "    public Integer getField1() {\n"
+                + "    public BigDecimal getField1() {\n"
                 + "        return this.field1;\n"
                 + "    }\n"
-                + "    public void setField1(Integer field1) {\n"
+                + "    public void setField1(BigDecimal field1) {\n"
                 + "        this.field1 = field1;\n"
                 + "    }\n"
                 + "\n"
@@ -120,7 +138,7 @@ public class GenerateTypeCodeTest {
         assertThat(code, containsString("" +
                 "    @Override\n" +
                 "    public void readSQL(SQLInput stream, String typeName) throws SQLException {\n" +
-                "        this.setField1(stream.readInt());\n" +
+                "        this.setField1(stream.readBigDecimal());\n" +
                 "        this.setField2(stream.readString());\n" +
                 "    }"
         ));
@@ -131,7 +149,7 @@ public class GenerateTypeCodeTest {
         assertThat(code, containsString("" +
                 "    @Override\n" +
                 "    public void writeSQL(SQLOutput stream) throws SQLException {\n" +
-                "        stream.writeInt(this.getField1());\n" +
+                "        stream.writeBigDecimal(this.getField1());\n" +
                 "        stream.writeString(this.getField2());\n" +
                 "    }"
         ));

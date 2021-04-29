@@ -19,17 +19,17 @@ public class ParametersTest {
     @Test
     public void keepsGivenSpecification() {
         Parameters parameters = new Parameters();
-        parameters.add("field integer");
+        parameters.add("field number");
         assertThat(parameters.count(), equalTo(1));
-        assertThat(parameters.all(), equalTo(Arrays.asList("field integer")));
+        assertThat(parameters.all(), equalTo(Arrays.asList("field number")));
     }
 
     @Test
     public void keepsGivenSpecificationsOrdered() {
         Parameters parameters = new Parameters();
-        parameters.add("field1 integer");
-        parameters.add("field2 integer");
+        parameters.add("field1 number");
+        parameters.add("field2 number");
         assertThat(parameters.count(), equalTo(2));
-        assertThat(parameters.all(), equalTo(Arrays.asList("field1 integer", "field2 integer")));
+        assertThat(parameters.all(), equalTo(Arrays.asList("field1 number", "field2 number")));
     }
 }

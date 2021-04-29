@@ -1,5 +1,6 @@
 package ericminio.javaoracle.demos;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,12 +14,12 @@ public class FunctionWithoutParameter {
         this.connection = connection;
     }
 
-    public Integer getValue() throws SQLException {
+    public BigDecimal getValue() throws SQLException {
         PreparedStatement statement = connection.prepareStatement("select function_without_parameter.get_value() from dual");
         ResultSet resultSet = statement.executeQuery();
         resultSet.next();
 
-        return (Integer) resultSet.getInt(1);
+        return (BigDecimal) resultSet.getObject(1);
     }
 
 }

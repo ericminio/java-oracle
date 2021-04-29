@@ -4,6 +4,7 @@ import ericminio.javaoracle.support.DatabaseTest;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.math.BigDecimal;
 import java.sql.SQLException;
 
 import static ericminio.javaoracle.data.Query.with;
@@ -17,13 +18,13 @@ public class FunctionWithoutParameterTest extends DatabaseTest {
         with(connection).execute("CREATE OR REPLACE PACKAGE function_without_parameter\n" +
                 "AS\n" +
                 "\n" +
-                "    FUNCTION get_value RETURN integer;\n" +
+                "    FUNCTION get_value RETURN number;\n" +
                 "\n" +
                 "END function_without_parameter;");
         with(connection).execute("create or replace package body function_without_parameter\n" +
                 "AS\n" +
                 "\n" +
-                "    function get_value return integer\n" +
+                "    function get_value return number\n" +
                 "    as\n" +
                 "    begin\n" +
                 "        return 42;\n" +
@@ -36,6 +37,6 @@ public class FunctionWithoutParameterTest extends DatabaseTest {
     public void works() throws SQLException {
         FunctionWithoutParameter functionWithoutParameter = new FunctionWithoutParameter(connection);
         
-        assertThat(functionWithoutParameter.getValue(), equalTo(42));
+        assertThat(functionWithoutParameter.getValue(), equalTo(new BigDecimal(42)));
     }
 }

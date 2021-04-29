@@ -4,6 +4,7 @@ import ericminio.javaoracle.support.DatabaseTest;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.math.BigDecimal;
 import java.sql.SQLException;
 
 import static ericminio.javaoracle.data.Query.with;
@@ -42,7 +43,7 @@ public class FunctionReturningCustomTypeTest extends DatabaseTest {
     public void customTypeCanBeFetched() throws SQLException {
         FunctionReturningCustomType functionReturningCustomType = new FunctionReturningCustomType(connection);
         CustomType customType = new CustomType();
-        customType.setValue(15);
+        customType.setValue(new BigDecimal(15));
 
         assertThat(functionReturningCustomType.getValue(), equalTo(customType));
     }

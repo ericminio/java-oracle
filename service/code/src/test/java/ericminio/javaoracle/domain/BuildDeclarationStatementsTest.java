@@ -8,11 +8,11 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class BuildDeclarationStatementsTest {
 
     @Test
-    public void integerType() {
+    public void numberType() {
         Parameters parameters = new Parameters();
-        parameters.add("any_field integer");
+        parameters.add("any_field number");
         assertThat(new BuildDeclarationStatements().please(parameters), equalTo("" +
-                "    private Integer anyField;"
+                "    private BigDecimal anyField;"
         ));
     }
 
@@ -29,10 +29,10 @@ public class BuildDeclarationStatementsTest {
     public void twoEntries() {
         Parameters parameters = new Parameters();
         parameters.add("field1 varchar2(10)");
-        parameters.add("field2 integer");
+        parameters.add("field2 number");
         assertThat(new BuildDeclarationStatements().please(parameters), equalTo("" +
                 "    private String field1;\n" +
-                "    private Integer field2;"
+                "    private BigDecimal field2;"
         ));
     }
 }

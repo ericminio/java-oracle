@@ -10,12 +10,12 @@ public class BuildAccessorsTest {
     @Test
     public void one() {
         Parameters parameters = new Parameters();
-        parameters.add("any_field integer");
+        parameters.add("any_field number");
         assertThat(new BuildAccessors().please(parameters), equalTo("" +
-                "    public Integer getAnyField() {\n" +
+                "    public BigDecimal getAnyField() {\n" +
                 "        return this.anyField;\n" +
                 "    }\n" +
-                "    public void setAnyField(Integer anyField) {\n" +
+                "    public void setAnyField(BigDecimal anyField) {\n" +
                 "        this.anyField = anyField;\n" +
                 "    }"
         ));
@@ -24,20 +24,20 @@ public class BuildAccessorsTest {
     @Test
     public void two() {
         Parameters parameters = new Parameters();
-        parameters.add("any_field integer");
-        parameters.add("another_field integer");
+        parameters.add("any_field number");
+        parameters.add("another_field number");
         assertThat(new BuildAccessors().please(parameters), equalTo("" +
-                "    public Integer getAnyField() {\n" +
+                "    public BigDecimal getAnyField() {\n" +
                 "        return this.anyField;\n" +
                 "    }\n" +
-                "    public void setAnyField(Integer anyField) {\n" +
+                "    public void setAnyField(BigDecimal anyField) {\n" +
                 "        this.anyField = anyField;\n" +
                 "    }\n" +
                 "\n" +
-                "    public Integer getAnotherField() {\n" +
+                "    public BigDecimal getAnotherField() {\n" +
                 "        return this.anotherField;\n" +
                 "    }\n" +
-                "    public void setAnotherField(Integer anotherField) {\n" +
+                "    public void setAnotherField(BigDecimal anotherField) {\n" +
                 "        this.anotherField = anotherField;\n" +
                 "    }"
         ));

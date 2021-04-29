@@ -1,5 +1,6 @@
 package ericminio.javaoracle.demos;
 
+import java.math.BigDecimal;
 import java.sql.SQLData;
 import java.sql.SQLException;
 import java.sql.SQLInput;
@@ -7,14 +8,14 @@ import java.sql.SQLOutput;
 
 public class CustomType implements SQLData {
     public static final String NAME = "CUSTOM_TYPE";
-    private Integer value;
+    private BigDecimal value;
 
     public CustomType() {}
 
-    public Integer getValue() {
+    public BigDecimal getValue() {
         return this.value;
     }
-    public void setValue(Integer value) {
+    public void setValue(BigDecimal value) {
         this.value = value;
     }
 
@@ -51,11 +52,11 @@ public class CustomType implements SQLData {
 
     @Override
     public void readSQL(SQLInput stream, String typeName) throws SQLException {
-        this.setValue(stream.readInt());
+        this.setValue(stream.readBigDecimal());
     }
 
     @Override
     public void writeSQL(SQLOutput stream) throws SQLException {
-        stream.writeInt(this.getValue());
+        stream.writeBigDecimal(this.getValue());
     }
 }

@@ -12,7 +12,7 @@ public class ExtractParametersTest {
     @Test
     public void withoutParameter() {
         Parameters parameters = new ExtractParameters().please(Arrays.asList(
-            "FUNCTION get_event_count RETURN INTEGER;"
+            "FUNCTION get_event_count RETURN number;"
         ));
         assertThat(parameters.count(), equalTo(0));
         assertThat(parameters.all(), equalTo(Arrays.asList(new String[]{})));
@@ -21,7 +21,7 @@ public class ExtractParametersTest {
     @Test
     public void withEmptyParameterList() {
         Parameters parameters = new ExtractParameters().please(Arrays.asList(
-                "FUNCTION get_event_count() RETURN INTEGER;"
+                "FUNCTION get_event_count() RETURN number;"
         ));
         assertThat(parameters.count(), equalTo(0));
         assertThat(parameters.all(), equalTo(Arrays.asList(new String[]{})));
@@ -30,16 +30,16 @@ public class ExtractParametersTest {
     @Test
     public void withOneIntegerParameter() {
         Parameters parameters = new ExtractParameters().please(Arrays.asList(
-                "FUNCTION any(param integer) RETURN INTEGER;"
+                "FUNCTION any(param number) RETURN number;"
         ));
         assertThat(parameters.count(), equalTo(1));
-        assertThat(parameters.all(), equalTo(Arrays.asList("param integer")));
+        assertThat(parameters.all(), equalTo(Arrays.asList("param number")));
     }
 
     @Test
     public void withOneVarcharParameter() {
         Parameters parameters = new ExtractParameters().please(Arrays.asList(
-                "FUNCTION any(param varchar2) RETURN INTEGER;"
+                "FUNCTION any(param varchar2) RETURN number;"
         ));
         assertThat(parameters.count(), equalTo(1));
         assertThat(parameters.all(), equalTo(Arrays.asList("param varchar2")));
@@ -48,7 +48,7 @@ public class ExtractParametersTest {
     @Test
     public void withOneVarcharParameterIncludingSize() {
         Parameters parameters = new ExtractParameters().please(Arrays.asList(
-                "FUNCTION any(param varchar2(10)) RETURN INTEGER;"
+                "FUNCTION any(param varchar2(10)) RETURN number;"
         ));
         assertThat(parameters.count(), equalTo(1));
         assertThat(parameters.all(), equalTo(Arrays.asList("param varchar2(10)")));
@@ -57,25 +57,25 @@ public class ExtractParametersTest {
     @Test
     public void withTwoParameters() {
         Parameters parameters = new ExtractParameters().please(Arrays.asList(
-                "FUNCTION any(field1 integer, field2 varchar2) RETURN INTEGER;"
+                "FUNCTION any(field1 number, field2 varchar2) RETURN number;"
         ));
         assertThat(parameters.count(), equalTo(2));
-        assertThat(parameters.all(), equalTo(Arrays.asList("field1 integer", "field2 varchar2")));
+        assertThat(parameters.all(), equalTo(Arrays.asList("field1 number", "field2 varchar2")));
     }
 
     @Test
     public void resistsMultiline() {
         Parameters parameters = new ExtractParameters().please(Arrays.asList(
                 "FUNCTION any(",
-                "   field1 INTEGER,",
-                "   field2 integer,",
+                "   field1 number,",
+                "   field2 NUMBER,",
                 "   field3 varchar2,",
                 "   field4 VARCHAR2",
-                ") RETURN INTEGER;"
+                ") RETURN number;"
         ));
         assertThat(parameters.count(), equalTo(4));
         assertThat(parameters.all(), equalTo(Arrays.asList(
-                "field1 INTEGER", "field2 integer", "field3 varchar2", "field4 VARCHAR2"
+                "field1 number", "field2 NUMBER", "field3 varchar2", "field4 VARCHAR2"
         )));
     }
 
@@ -83,15 +83,15 @@ public class ExtractParametersTest {
     public void canBeUsedToParseType() {
         Parameters parameters = new ExtractParameters().please(Arrays.asList(
                 "TYPE any_type as object (",
-                "   field1 INTEGER,",
-                "   field2 integer,",
+                "   field1 NUMBER,",
+                "   field2 number,",
                 "   field3 varchar2(10),",
                 "   field4 VARCHAR2",
-                ") RETURN INTEGER;"
+                ") RETURN number;"
         ));
         assertThat(parameters.count(), equalTo(4));
         assertThat(parameters.all(), equalTo(Arrays.asList(
-                "field1 INTEGER", "field2 integer", "field3 varchar2(10)", "field4 VARCHAR2"
+                "field1 NUMBER", "field2 number", "field3 varchar2(10)", "field4 VARCHAR2"
         )));
     }
 
@@ -100,11 +100,11 @@ public class ExtractParametersTest {
         Parameters parameters = new ExtractParameters().please(Arrays.asList(
                 "FUNCTION any",
                 "(",
-                "   param integer",
-                ") RETURN INTEGER;"
+                "   param number",
+                ") RETURN number;"
         ));
         assertThat(parameters.count(), equalTo(1));
-        assertThat(parameters.all(), equalTo(Arrays.asList("param integer")));
+        assertThat(parameters.all(), equalTo(Arrays.asList("param number")));
     }
 
     @Test
@@ -112,11 +112,11 @@ public class ExtractParametersTest {
         Parameters parameters = new ExtractParameters().please(Arrays.asList(
                 "FUNCTION any",
                 "(",
-                "   param integer",
+                "   param number",
                 ")",
-                "RETURN INTEGER;"
+                "RETURN number;"
         ));
         assertThat(parameters.count(), equalTo(1));
-        assertThat(parameters.all(), equalTo(Arrays.asList("param integer")));
+        assertThat(parameters.all(), equalTo(Arrays.asList("param number")));
     }
 }

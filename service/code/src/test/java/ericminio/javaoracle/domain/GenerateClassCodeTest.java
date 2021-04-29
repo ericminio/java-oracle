@@ -5,8 +5,7 @@ import org.junit.Test;
 import java.io.IOException;
 import java.util.Arrays;
 
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;
 
 public class GenerateClassCodeTest {
@@ -17,7 +16,7 @@ public class GenerateClassCodeTest {
         generateClassCode.please(Arrays.asList(
                 "PACKAGE EXPLORATION\n",
                 "AS\n",
-                "   FUNCTION get_event_count RETURN INTEGER;\n",
+                "   FUNCTION get_event_count RETURN number;\n",
                 "END EXPLORATION;"
         ));
         assertThat(generateClassCode.getPackageName(), equalTo("exploration"));
@@ -29,7 +28,7 @@ public class GenerateClassCodeTest {
         String code = generateClassCode.please(Arrays.asList(
                 "PACKAGE any_package\n",
                 "AS\n",
-                "   FUNCTION any_function RETURN integer;\n",
+                "   FUNCTION any_function RETURN number;\n",
                 "END EXPLORATION;"
         ));
         assertThat(code, containsString("" +
@@ -54,5 +53,41 @@ public class GenerateClassCodeTest {
                 "        connection.getTypeMap().put(AnyType.NAME, AnyType.class);\n" +
                 "    }"
         ));
+    }
+
+    @Test
+    public void importsArePreservedByDefault() throws IOException {
+        GenerateClassCode generateClassCode = new GenerateClassCode();
+        String code = generateClassCode.please(Arrays.asList(
+                "PACKAGE any_package\n",
+                "AS\n",
+                "   FUNCTION any_function RETURN any_type;\n",
+                "END EXPLORATION;"
+        ));
+        assertThat(code, not(containsString("import java.math.BigDecimal;\n")));
+    }
+
+    @Test
+    public void importsAreUpdatedIfBigDecimalIsUsedAsReturnType() throws IOException {
+        GenerateClassCode generateClassCode = new GenerateClassCode();
+        String code = generateClassCode.please(Arrays.asList(
+                "PACKAGE any_package\n",
+                "AS\n",
+                "   FUNCTION any_function RETURN number;\n",
+                "END EXPLORATION;"
+        ));
+        assertThat(code, containsString("import java.math.BigDecimal;\n"));
+    }
+
+    @Test
+    public void importsAreUpdatedIfBigDecimalIsUsedAsParameter() throws IOException {
+        GenerateClassCode generateClassCode = new GenerateClassCode();
+        String code = generateClassCode.please(Arrays.asList(
+                "PACKAGE any_package\n",
+                "AS\n",
+                "   FUNCTION any_function(param number) RETURN any_type;\n",
+                "END EXPLORATION;"
+        ));
+        assertThat(code, containsString("import java.math.BigDecimal;\n"));
     }
 }

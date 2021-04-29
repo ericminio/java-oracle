@@ -4,8 +4,8 @@ public class TypeMapperFactory {
 
     public TypeMapper of(String incoming) {
         String normalized = incoming.toUpperCase();
-        if (normalized.equalsIgnoreCase("INTEGER")) {
-            return new TypeMapperInteger();
+        if (normalized.startsWith("NUMBER")) {
+            return new TypeMapperNumber();
         }
         if (normalized.startsWith("VARCHAR2")) {
             return new TypeMapperString();

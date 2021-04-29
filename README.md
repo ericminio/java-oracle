@@ -18,33 +18,92 @@ One way to see it running:
 - `/usr/local/src/service/demos/run.sh`
 
 ```
+drwxrwxrwx    1 root     root             0 Apr 29 23:42 .
+drwxrwxrwx    1 root     root             0 Apr 28 16:11 ..
+-rwxr-xr-x    1 root     root          1414 Apr 29 23:42 Example.java
+-rwxr-xr-x    1 root     root          1455 Apr 29 23:42 ExampleType.java
+-rwxr-xr-x    1 root     root          1168 Apr 29 23:42 run.sh
+
+TEXT
+--------------------------------------------------------------------------------
+type example_type as object(value number);
+
+package company.name;
+
+import java.math.BigDecimal;
+import java.sql.SQLData;
+import java.sql.SQLException;
+import java.sql.SQLInput;
+import java.sql.SQLOutput;
+
+public class ExampleType implements SQLData {
+    public static final String NAME = "EXAMPLE_TYPE";
+    private BigDecimal value;
+
+    public ExampleType() {}
+
+    public BigDecimal getValue() {
+        return this.value;
+    }
+    public void setValue(BigDecimal value) {
+        this.value = value;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (! (o instanceof ExampleType)) {
+            return false;
+        }
+        ExampleType other = (ExampleType) o;
+
+        return
+                this.getValue().equals(other.getValue())
+                ;
+    }
+
+    @Override
+    public int hashCode() {
+        return
+                this.getValue().hashCode()
+                ;
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName() + "["
+                + " value=" + (this.getValue() == null ? "null" : this.getValue().toString())
+                + " ]";
+    }
+
+    @Override
+    public String getSQLTypeName() {
+        return NAME;
+    }
+
+    @Override
+    public void readSQL(SQLInput stream, String typeName) throws SQLException {
+        this.setValue(stream.readBigDecimal());
+    }
+
+    @Override
+    public void writeSQL(SQLOutput stream) throws SQLException {
+        stream.writeBigDecimal(this.getValue());
+    }
+}
 TEXT
 --------------------------------------------------------------------------------
 PACKAGE example
 AS
-
-    FUNCTION hello(
-        value1 varchar2
-    ) RETURN integer;
-
-    FUNCTION world(
-        value2 integer
-    ) RETURN varchar2;
-
-
-TEXT
---------------------------------------------------------------------------------
+    FUNCTION hello(value1 varchar2) RETURN number;
+    FUNCTION world(value2 number) RETURN varchar2;
+    FUNCTION yop RETURN example_type;
 END example
 
-12 rows selected.
+6 rows selected.
 
-total 2
-drwxrwxrwx    1 root     root             0 Apr 28 23:06 .
-drwxrwxrwx    1 root     root             0 Apr 28 16:11 ..
--rwxr-xr-x    1 root     root           958 Apr 28 23:06 Example.java
--rwxr-xr-x    1 root     root           781 Apr 28 22:42 run.sh
 package company.name;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -54,26 +113,35 @@ public class Example {
 
     private Connection connection;
 
-    public Example(Connection connection) {
+    public Example(Connection connection) throws SQLException {
         this.connection = connection;
+        connection.getTypeMap().put(ExampleType.NAME, ExampleType.class);
     }
 
-    public Integer hello(String value1) throws SQLException {
+    public BigDecimal hello(String value1) throws SQLException {
         PreparedStatement statement = connection.prepareStatement("select example.hello(?) from dual");
         statement.setString(1, value1);
         ResultSet resultSet = statement.executeQuery();
         resultSet.next();
 
-        return resultSet.getInt(1);
+        return (BigDecimal) resultSet.getObject(1);
     }
 
-    public String world(Integer value2) throws SQLException {
+    public String world(BigDecimal value2) throws SQLException {
         PreparedStatement statement = connection.prepareStatement("select example.world(?) from dual");
-        statement.setInt(1, value2);
+        statement.setBigDecimal(1, value2);
         ResultSet resultSet = statement.executeQuery();
         resultSet.next();
 
-        return resultSet.getString(1);
+        return (String) resultSet.getString(1);
+    }
+
+    public ExampleType yop() throws SQLException {
+        PreparedStatement statement = connection.prepareStatement("select example.yop() from dual");
+        ResultSet resultSet = statement.executeQuery();
+        resultSet.next();
+
+        return (ExampleType) resultSet.getObject(1);
     }
 
 }

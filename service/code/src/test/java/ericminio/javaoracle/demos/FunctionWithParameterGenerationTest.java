@@ -6,7 +6,7 @@ import org.junit.Test;
 import java.io.IOException;
 import java.util.Arrays;
 
-import static ericminio.javaoracle.support.FileUtils.contentOf;
+import static ericminio.javaoracle.support.FileUtils.contentMinusTwoFirstLines;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
 
@@ -20,16 +20,16 @@ public class FunctionWithParameterGenerationTest {
                 "\n",
                 "   FUNCTION count_by_type(\n",
                 "       value varchar2\n",
-                "   ) RETURN integer;\n",
+                "   ) RETURN number;\n",
                 "\n",
                 "   FUNCTION count_by_label(\n",
                 "       value varchar2\n",
-                "   ) RETURN integer;\n",
+                "   ) RETURN number;\n",
                 "\n",
                 "END function_with_parameter;"
         ));
         
-        assertThat(actual, equalTo(contentOf("src/test/java/ericminio/javaoracle/demos/FunctionWithParameter.java")));
+        assertThat(actual, equalTo(contentMinusTwoFirstLines("src/test/java/ericminio/javaoracle/demos/FunctionWithParameter.java")));
     }
 
 }

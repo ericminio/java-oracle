@@ -14,7 +14,7 @@ public class ExtractTypeNameTest {
         assertThat(new ExtractTypeName().please(Arrays.asList(
                 "type beautiful_type as object\n",
                 "(\n",
-                "   value integer\n",
+                "   value number\n",
                 ")"
         )), equalTo("beautiful_type"));
     }

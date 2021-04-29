@@ -1,28 +1,28 @@
 package ericminio.javaoracle.domain;
 
-public class TypeMapperInteger implements TypeMapper {
+public class TypeMapperNumber implements TypeMapper {
     @Override
     public String resultSetGetter() {
-        return "getInt";
+        return "getObject";
     }
 
     @Override
     public String sqlStatementSetter() {
-        return "setInt";
+        return "setBigDecimal";
     }
 
     @Override
     public String javaType() {
-        return "Integer";
+        return "BigDecimal";
     }
 
     @Override
     public String sqlInputRead() {
-        return "readInt";
+        return "readBigDecimal";
     }
 
     @Override
     public String sqlOutputWrite() {
-        return "writeInt";
+        return "writeBigDecimal";
     }
 }

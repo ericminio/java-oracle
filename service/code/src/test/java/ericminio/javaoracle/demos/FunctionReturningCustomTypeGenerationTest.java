@@ -6,7 +6,7 @@ import org.junit.Test;
 import java.io.IOException;
 import java.util.Arrays;
 
-import static ericminio.javaoracle.support.FileUtils.contentOf;
+import static ericminio.javaoracle.support.FileUtils.contentMinusTwoFirstLines;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
 
@@ -21,7 +21,7 @@ public class FunctionReturningCustomTypeGenerationTest {
                 "END function_returning_custom_type;"
         ));
         
-        assertThat(actual, equalTo(contentOf("src/test/java/ericminio/javaoracle/demos/FunctionReturningCustomType.java")));
+        assertThat(actual, equalTo(contentMinusTwoFirstLines("src/test/java/ericminio/javaoracle/demos/FunctionReturningCustomType.java")));
     }
 
 }

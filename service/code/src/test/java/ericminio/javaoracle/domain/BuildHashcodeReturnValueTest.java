@@ -10,7 +10,7 @@ public class BuildHashcodeReturnValueTest {
     @Test
     public void one() {
         Parameters parameters = new Parameters();
-        parameters.add("any_field integer");
+        parameters.add("any_field any_type");
         assertThat(new BuildHashcodeReturnValue().please(parameters), equalTo("" +
                 "                this.getAnyField().hashCode()"
         ));
@@ -19,8 +19,8 @@ public class BuildHashcodeReturnValueTest {
     @Test
     public void two() {
         Parameters parameters = new Parameters();
-        parameters.add("any_field integer");
-        parameters.add("another_field integer");
+        parameters.add("any_field any_type");
+        parameters.add("another_field any_type");
         assertThat(new BuildHashcodeReturnValue().please(parameters), equalTo("" +
                 "                this.getAnyField().hashCode()\n" +
                 "                + this.getAnotherField().hashCode()"

@@ -10,9 +10,9 @@ public class BuildWriteSqlTest {
     @Test
     public void integerType() {
         Parameters parameters = new Parameters();
-        parameters.add("any_field integer");
+        parameters.add("any_field number");
         assertThat(new BuildWriteSql().please(parameters), equalTo("" +
-                "        stream.writeInt(this.getAnyField());"
+                "        stream.writeBigDecimal(this.getAnyField());"
         ));
     }
 
@@ -29,10 +29,10 @@ public class BuildWriteSqlTest {
     public void twoEntries() {
         Parameters parameters = new Parameters();
         parameters.add("field1 varchar2(10)");
-        parameters.add("field2 integer");
+        parameters.add("field2 number(15,4)");
         assertThat(new BuildWriteSql().please(parameters), equalTo("" +
                 "        stream.writeString(this.getField1());\n" +
-                "        stream.writeInt(this.getField2());"
+                "        stream.writeBigDecimal(this.getField2());"
         ));
     }
 }

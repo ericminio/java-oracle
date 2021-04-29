@@ -28,7 +28,7 @@ public class GeneratePackageAdapter {
         List<String> packageSpecification = new Database().selectPackageDefinition(oraclePackage);
         GenerateClassCode generateClassCode = new GenerateClassCode();
         String code = generateClassCode.please(packageSpecification);;
-        code = "package " + javaPackage + ";\n" + code;
+        code = "package " + javaPackage + ";\n\n" + code;
         Path path = Paths.get(outputFolder, new PascalCase().please(generateClassCode.getPackageName())+".java");
         Files.write(path, code.getBytes());
     }

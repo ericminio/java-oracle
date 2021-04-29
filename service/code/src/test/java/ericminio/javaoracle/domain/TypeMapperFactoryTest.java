@@ -8,12 +8,12 @@ import static org.junit.Assert.assertThat;
 public class TypeMapperFactoryTest {
 
     @Test
-    public void knowsAboutInteger() {
-        assertThat(new TypeMapperFactory().of("INTEGER").resultSetGetter(), equalTo("getInt"));
-        assertThat(new TypeMapperFactory().of("INTEGER").sqlStatementSetter(), equalTo("setInt"));
-        assertThat(new TypeMapperFactory().of("INTEGER").javaType(), equalTo("Integer"));
-        assertThat(new TypeMapperFactory().of("INTEGER").sqlInputRead(), equalTo("readInt"));
-        assertThat(new TypeMapperFactory().of("INTEGER").sqlOutputWrite(), equalTo("writeInt"));
+    public void knowsAboutNumber() {
+        assertThat(new TypeMapperFactory().of("number").resultSetGetter(), equalTo("getObject"));
+        assertThat(new TypeMapperFactory().of("number").sqlStatementSetter(), equalTo("setBigDecimal"));
+        assertThat(new TypeMapperFactory().of("number").javaType(), equalTo("BigDecimal"));
+        assertThat(new TypeMapperFactory().of("number").sqlInputRead(), equalTo("readBigDecimal"));
+        assertThat(new TypeMapperFactory().of("number").sqlOutputWrite(), equalTo("writeBigDecimal"));
     }
 
     @Test

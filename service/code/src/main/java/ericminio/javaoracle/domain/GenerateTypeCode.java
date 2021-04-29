@@ -10,11 +10,10 @@ public class GenerateTypeCode {
 
     public String please(List<String> typeSpecification) throws IOException {
         String typeTemplate = new Stringify().inputStream(this.getClass().getClassLoader().getResourceAsStream("templateForType.java"));
-        String typeCode = typeTemplate;
 
         String typeName = new ExtractTypeName().please(typeSpecification);
         Parameters parameters = new ExtractParameters().please(typeSpecification);
-        typeCode = typeCode
+        String code = typeTemplate
                 .replace("ClassName", new PascalCase().please(typeName))
                 .replace("STATIC_NAME_FIELD", typeName.toUpperCase())
                 .replace("    // fields declaration", new BuildDeclarationStatements().please(parameters))
@@ -26,6 +25,10 @@ public class GenerateTypeCode {
                 .replace("        // fields writeSQL contribution", new BuildWriteSql().please(parameters))
         ;
 
-        return typeCode;
+        if (code.indexOf("BigDecimal ") != -1) {
+            code = "import java.math.BigDecimal;\n" + code;
+        }
+
+        return code;
     }
 }

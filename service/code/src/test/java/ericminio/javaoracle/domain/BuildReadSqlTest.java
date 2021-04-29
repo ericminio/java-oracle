@@ -10,9 +10,9 @@ public class BuildReadSqlTest {
     @Test
     public void integerType() {
         Parameters parameters = new Parameters();
-        parameters.add("any_field integer");
+        parameters.add("any_field number");
         assertThat(new BuildReadSql().please(parameters), equalTo("" +
-                "        this.setAnyField(stream.readInt());"
+                "        this.setAnyField(stream.readBigDecimal());"
         ));
     }
 
@@ -29,10 +29,10 @@ public class BuildReadSqlTest {
     public void twoEntries() {
         Parameters parameters = new Parameters();
         parameters.add("field1 varchar2(10)");
-        parameters.add("field2 integer");
+        parameters.add("field2 number(15,4)");
         assertThat(new BuildReadSql().please(parameters), equalTo("" +
                 "        this.setField1(stream.readString());\n" +
-                "        this.setField2(stream.readInt());"
+                "        this.setField2(stream.readBigDecimal());"
         ));
     }
 }

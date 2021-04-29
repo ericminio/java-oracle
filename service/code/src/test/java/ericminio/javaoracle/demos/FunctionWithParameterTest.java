@@ -4,6 +4,7 @@ import ericminio.javaoracle.support.DatabaseTest;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.math.BigDecimal;
 import java.sql.SQLException;
 
 import static ericminio.javaoracle.data.Query.with;
@@ -53,13 +54,13 @@ public class FunctionWithParameterTest extends DatabaseTest {
     public void countByType() throws SQLException {
         FunctionWithParameter functionWithParameter = new FunctionWithParameter(connection);
         
-        assertThat(functionWithParameter.countByType("A"), equalTo(15));
+        assertThat(functionWithParameter.countByType("A"), equalTo(new BigDecimal(15)));
     }
 
     @Test
     public void countByLabel() throws SQLException {
         FunctionWithParameter functionWithParameter = new FunctionWithParameter(connection);
 
-        assertThat(functionWithParameter.countByLabel("any"), equalTo(42));
+        assertThat(functionWithParameter.countByLabel("any"), equalTo(new BigDecimal(42)));
     }
 }

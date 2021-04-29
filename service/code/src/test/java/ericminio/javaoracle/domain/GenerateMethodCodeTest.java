@@ -21,15 +21,15 @@ public class GenerateMethodCodeTest {
     @Test
     public void canReturnInteger() throws IOException {
         String code = new GenerateMethodCode().please(Arrays.asList(
-                "FUNCTION any_method RETURN integer;"
+                "FUNCTION any_method RETURN number;"
         ), "any_package");
         assertThat(code, equalTo("" +
-                "    public Integer anyMethod() throws SQLException {\n" +
+                "    public BigDecimal anyMethod() throws SQLException {\n" +
                 "        PreparedStatement statement = connection.prepareStatement(\"select any_package.any_method() from dual\");\n" +
                 "        ResultSet resultSet = statement.executeQuery();\n" +
                 "        resultSet.next();\n" +
                 "\n" +
-                "        return (Integer) resultSet.getInt(1);\n" +
+                "        return (BigDecimal) resultSet.getObject(1);\n" +
                 "    }"));
     }
 
@@ -51,12 +51,12 @@ public class GenerateMethodCodeTest {
     @Test
     public void canHaveParameters() throws IOException {
         String code = new GenerateMethodCode().please(Arrays.asList(
-                "FUNCTION any_method(field1 integer, field2 varchar2) RETURN varchar2;"
+                "FUNCTION any_method(field1 number, field2 varchar2) RETURN varchar2;"
         ), "any_package");
         assertThat(code, equalTo("" +
-                "    public String anyMethod(Integer field1, String field2) throws SQLException {\n" +
+                "    public String anyMethod(BigDecimal field1, String field2) throws SQLException {\n" +
                 "        PreparedStatement statement = connection.prepareStatement(\"select any_package.any_method(?, ?) from dual\");\n" +
-                "        statement.setInt(1, field1);\n" +
+                "        statement.setBigDecimal(1, field1);\n" +
                 "        statement.setString(2, field2);\n" +
                 "        ResultSet resultSet = statement.executeQuery();\n" +
                 "        resultSet.next();\n" +

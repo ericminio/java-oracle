@@ -37,6 +37,9 @@ public class GenerateClassCode {
                 .replace("        // type mapping\n", typeMapping)
                 .replace("    // methods", methodsCode)
         ;
+        if (code.indexOf("BigDecimal ") != -1) {
+            code = "import java.math.BigDecimal;\n" + code;
+        }
 
         return code;
     }

@@ -28,7 +28,7 @@ public class GenerateTypeAdapter {
         List<String> typeSpecification = new Database().selectTypeDefinition(typeName);
         GenerateTypeCode generateTypeCode = new GenerateTypeCode();
         String code = generateTypeCode.please(typeSpecification);;
-        code = "package " + javaPackage + ";\n" + code;
+        code = "package " + javaPackage + ";\n\n" + code;
         Path path = Paths.get(outputFolder, new PascalCase().please(typeName)+".java");
         Files.write(path, code.getBytes());
     }

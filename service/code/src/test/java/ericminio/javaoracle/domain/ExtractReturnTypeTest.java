@@ -1,6 +1,5 @@
 package ericminio.javaoracle.domain;
 
-import ericminio.javaoracle.domain.ExtractReturnType;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -13,31 +12,31 @@ public class ExtractReturnTypeTest {
     @Test
     public void works() {
         assertThat(new ExtractReturnType().please(Arrays.asList(
-            "FUNCTION get_event_count RETURN INTEGER;"
-        )), equalTo("INTEGER"));
+            "FUNCTION get_event_count RETURN NUMBER;"
+        )), equalTo("NUMBER"));
     }
 
     @Test
     public void resistsParenthesis() {
         assertThat(new ExtractReturnType().please(Arrays.asList(
-                "FUNCTION get_event_count() RETURN INTEGER;"
-        )), equalTo("INTEGER"));
+                "FUNCTION get_event_count() RETURN NUMBER;"
+        )), equalTo("NUMBER"));
     }
 
     @Test
     public void resistsParameters() {
         assertThat(new ExtractReturnType().please(Arrays.asList(
-                "FUNCTION any(param integer) RETURN INTEGER;"
-        )), equalTo("INTEGER"));
+                "FUNCTION any(param number) RETURN NUMBER;"
+        )), equalTo("NUMBER"));
     }
 
     @Test
     public void resistsMultiline() {
         assertThat(new ExtractReturnType().please(Arrays.asList(
                 "FUNCTION any(",
-                "   param integer",
-                ") RETURN INTEGER;"
-        )), equalTo("INTEGER"));
+                "   param number",
+                ") RETURN NUMBER;"
+        )), equalTo("NUMBER"));
     }
 
     @Test
@@ -45,9 +44,9 @@ public class ExtractReturnTypeTest {
         assertThat(new ExtractReturnType().please(Arrays.asList(
                 "FUNCTION any",
                 "(",
-                "   param integer",
-                ") RETURN INTEGER;"
-        )), equalTo("INTEGER"));
+                "   param number",
+                ") RETURN NUMBER;"
+        )), equalTo("NUMBER"));
     }
 
     @Test
@@ -55,9 +54,9 @@ public class ExtractReturnTypeTest {
         assertThat(new ExtractReturnType().please(Arrays.asList(
                 "FUNCTION any",
                 "(",
-                "   param integer",
+                "   param number",
                 ")",
-                "RETURN INTEGER;"
-        )), equalTo("INTEGER"));
+                "RETURN NUMBER;"
+        )), equalTo("NUMBER"));
     }
 }
