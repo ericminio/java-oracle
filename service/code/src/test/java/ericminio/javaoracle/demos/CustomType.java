@@ -11,6 +11,13 @@ public class CustomType implements SQLData {
 
     public CustomType() {}
 
+    public Integer getValue() {
+        return this.value;
+    }
+    public void setValue(Integer value) {
+        this.value = value;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (! (o instanceof CustomType)) {
@@ -31,14 +38,6 @@ public class CustomType implements SQLData {
         return this.getClass().getSimpleName() + "["
                 + " value=" + ( this.getValue() == null ? "null" : this.getValue().toString())
                 + " ]";
-    }
-
-    public Integer getValue() {
-        return value;
-    }
-
-    public void setValue(Integer value) {
-        this.value = value;
     }
 
     @Override

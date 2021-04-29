@@ -11,6 +11,13 @@ public class CustomTypeNesting implements SQLData {
 
     public CustomTypeNesting() {}
 
+    public CustomTypeNested getValue() {
+        return this.value;
+    }
+    public void setValue(CustomTypeNested value) {
+        this.value = value;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (! (o instanceof CustomTypeNesting)) {
@@ -31,14 +38,6 @@ public class CustomTypeNesting implements SQLData {
         return this.getClass().getSimpleName() + "["
                 + " value=" + ( this.getValue() == null ? "null" : this.getValue().toString())
                 + " ]";
-    }
-
-    public CustomTypeNested getValue() {
-        return value;
-    }
-
-    public void setValue(CustomTypeNested value) {
-        this.value = value;
     }
 
     @Override
