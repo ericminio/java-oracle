@@ -1,7 +1,5 @@
 package ericminio.javaoracle.domain;
 
-import ericminio.javaoracle.support.PascalCase;
-
 public class BuildHashcodeReturnValue extends BuildSomethingWithParameters {
 
     @Override
@@ -9,7 +7,7 @@ public class BuildHashcodeReturnValue extends BuildSomethingWithParameters {
         return output
                 + "                "
                 + (index > 0 ? "+ ": "")
-                + "this.get" + new PascalCase().please(name) + "().hashCode()"
+                + "this.get" + pascalCase.please(name) + "().hashCode()"
                 + (!isLast ? "\n" : "")
                 ;
     }

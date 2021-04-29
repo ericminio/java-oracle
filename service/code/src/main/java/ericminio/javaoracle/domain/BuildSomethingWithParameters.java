@@ -1,6 +1,19 @@
 package ericminio.javaoracle.domain;
 
+import ericminio.javaoracle.support.CamelCase;
+import ericminio.javaoracle.support.PascalCase;
+
 public abstract class BuildSomethingWithParameters {
+
+    protected final PascalCase pascalCase;
+    protected final CamelCase camelCase;
+    protected final TypeMapperFactory typeMapperFactory;
+
+    public BuildSomethingWithParameters() {
+        pascalCase = new PascalCase();
+        camelCase = new CamelCase();
+        typeMapperFactory = new TypeMapperFactory();
+    }
 
     public String please(Parameters parameters) {
         String output = "";

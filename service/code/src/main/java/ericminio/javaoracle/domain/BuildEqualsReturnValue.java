@@ -1,7 +1,5 @@
 package ericminio.javaoracle.domain;
 
-import ericminio.javaoracle.support.PascalCase;
-
 public class BuildEqualsReturnValue extends BuildSomethingWithParameters {
 
     @Override
@@ -9,7 +7,7 @@ public class BuildEqualsReturnValue extends BuildSomethingWithParameters {
         return output
                 + "                "
                 + (index > 0 ? "&& ": "")
-                + "this.get" + new PascalCase().please(name) + "().equals(other.get" + new PascalCase().please(name) + "())"
+                + "this.get" + pascalCase.please(name) + "().equals(other.get" + pascalCase.please(name) + "())"
                 + (!isLast ? "\n" : "")
                 ;
     }
