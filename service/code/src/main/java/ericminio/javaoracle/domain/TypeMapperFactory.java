@@ -10,7 +10,14 @@ public class TypeMapperFactory {
         if (normalized.startsWith("VARCHAR2")) {
             return new TypeMapperString();
         }
+        if (isCutomType(incoming)) {
+            return new TypeMapperCustomType(incoming);
+        }
 
         throw new RuntimeException(("Teach me about type " + incoming));
+    }
+
+    public static boolean isCutomType(String type) {
+        return type.indexOf("_") != -1;
     }
 }

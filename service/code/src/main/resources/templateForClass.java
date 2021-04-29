@@ -10,6 +10,7 @@ public class ClassName {
 
     public ClassName(Connection connection) {
         this.connection = connection;
+        // type mapping
     }
 
     // methods

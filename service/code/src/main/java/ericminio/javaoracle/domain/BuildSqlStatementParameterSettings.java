@@ -6,6 +6,6 @@ public class BuildSqlStatementParameterSettings extends BuildSomethingWithParame
     protected String modify(String output, int index, String name, String type, boolean isLast) {
         return output
                 + "        statement."
-                + typeMapperFactory.of(type).setter() + "(" + (index + 1) + ", " + name + ");\n";
+                + typeMapperFactory.of(type).sqlStatementSetter() + "(" + (index + 1) + ", " + name + ");\n";
     }
 }

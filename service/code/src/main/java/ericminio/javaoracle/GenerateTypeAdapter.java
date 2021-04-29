@@ -15,7 +15,7 @@ public class GenerateTypeAdapter {
         GenerateTypeAdapter generator = new GenerateTypeAdapter();
         try {
             generator.go(
-                    System.getProperty("oraclePackage"),
+                    System.getProperty("typeName"),
                     System.getProperty("javaPackage"),
                     System.getProperty("outputFolder")
             );

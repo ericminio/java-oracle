@@ -56,6 +56,6 @@ public class CustomTypeNesting implements SQLData {
 
     @Override
     public void writeSQL(SQLOutput stream) throws SQLException {
-        this.getValue().writeSQL(stream);
+        stream.writeObject(this.getValue());
     }
 }

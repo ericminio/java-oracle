@@ -19,7 +19,7 @@ public class FunctionWithParameter {
         ResultSet resultSet = statement.executeQuery();
         resultSet.next();
 
-        return resultSet.getInt(1);
+        return (Integer) resultSet.getInt(1);
     }
 
     public Integer countByLabel(String value) throws SQLException {
@@ -28,7 +28,7 @@ public class FunctionWithParameter {
         ResultSet resultSet = statement.executeQuery();
         resultSet.next();
 
-        return resultSet.getInt(1);
+        return (Integer) resultSet.getInt(1);
     }
 
 }

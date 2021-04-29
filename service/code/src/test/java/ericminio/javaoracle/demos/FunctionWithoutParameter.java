@@ -18,7 +18,7 @@ public class FunctionWithoutParameter {
         ResultSet resultSet = statement.executeQuery();
         resultSet.next();
 
-        return resultSet.getInt(1);
+        return (Integer) resultSet.getInt(1);
     }
 
 }

@@ -2,18 +2,13 @@ package ericminio.javaoracle.domain;
 
 public class TypeMapperInteger implements TypeMapper {
     @Override
-    public String getter() {
+    public String resultSetGetter() {
         return "getInt";
     }
 
     @Override
-    public String setter() {
+    public String sqlStatementSetter() {
         return "setInt";
-    }
-
-    @Override
-    public String sqlType() {
-        return "Types.INTEGER";
     }
 
     @Override

@@ -11,6 +11,14 @@ import static org.junit.Assert.assertThat;
 public class GenerateMethodCodeTest {
 
     @Test
+    public void disclosesReturnedType() throws IOException {
+        GenerateMethodCode generator = new GenerateMethodCode();
+        generator.please(Arrays.asList("FUNCTION any_method RETURN any_type;"), "any_package");
+
+        assertThat(generator.getReturnType(), equalTo("any_type"));
+    }
+
+    @Test
     public void canReturnInteger() throws IOException {
         String code = new GenerateMethodCode().please(Arrays.asList(
                 "FUNCTION any_method RETURN integer;"
@@ -21,7 +29,7 @@ public class GenerateMethodCodeTest {
                 "        ResultSet resultSet = statement.executeQuery();\n" +
                 "        resultSet.next();\n" +
                 "\n" +
-                "        return resultSet.getInt(1);\n" +
+                "        return (Integer) resultSet.getInt(1);\n" +
                 "    }"));
     }
 
@@ -36,7 +44,7 @@ public class GenerateMethodCodeTest {
                 "        ResultSet resultSet = statement.executeQuery();\n" +
                 "        resultSet.next();\n" +
                 "\n" +
-                "        return resultSet.getString(1);\n" +
+                "        return (String) resultSet.getString(1);\n" +
                 "    }"));
     }
 
@@ -53,7 +61,22 @@ public class GenerateMethodCodeTest {
                 "        ResultSet resultSet = statement.executeQuery();\n" +
                 "        resultSet.next();\n" +
                 "\n" +
-                "        return resultSet.getString(1);\n" +
+                "        return (String) resultSet.getString(1);\n" +
+                "    }"));
+    }
+
+    @Test
+    public void canReturnCustomType() throws IOException {
+        String code = new GenerateMethodCode().please(Arrays.asList(
+                "FUNCTION any_method RETURN any_type;"
+        ), "any_package");
+        assertThat(code, equalTo("" +
+                "    public AnyType anyMethod() throws SQLException {\n" +
+                "        PreparedStatement statement = connection.prepareStatement(\"select any_package.any_method() from dual\");\n" +
+                "        ResultSet resultSet = statement.executeQuery();\n" +
+                "        resultSet.next();\n" +
+                "\n" +
+                "        return (AnyType) resultSet.getObject(1);\n" +
                 "    }"));
     }
 }

@@ -9,16 +9,17 @@ public class FunctionReturningCustomType {
 
     private Connection connection;
 
-    public FunctionReturningCustomType(Connection connection) {
+    public FunctionReturningCustomType(Connection connection) throws SQLException {
         this.connection = connection;
+        connection.getTypeMap().put(CustomType.NAME, CustomType.class);
     }
 
     public CustomType getValue() throws SQLException {
-        connection.getTypeMap().put(CustomType.NAME, CustomType.class);
         PreparedStatement statement = connection.prepareStatement("select function_returning_custom_type.get_value() from dual");
         ResultSet resultSet = statement.executeQuery();
         resultSet.next();
 
         return (CustomType) resultSet.getObject(1);
     }
+
 }
