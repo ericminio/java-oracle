@@ -47,4 +47,9 @@ public class ClassName implements SQLData {
     public void readSQL(SQLInput stream, String typeName) throws SQLException {
         // fields readSQL contribution
     }
+
+    @Override
+    public void writeSQL(SQLOutput stream) throws SQLException {
+        // fields writeSQL contribution
+    }
 }

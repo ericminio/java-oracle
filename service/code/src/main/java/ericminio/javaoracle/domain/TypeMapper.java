@@ -11,4 +11,6 @@ public interface TypeMapper {
     String javaType();
 
     String sqlInputRead();
+
+    String sqlOutputWrite();
 }

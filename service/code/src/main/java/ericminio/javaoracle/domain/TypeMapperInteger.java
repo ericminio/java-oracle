@@ -25,4 +25,9 @@ public class TypeMapperInteger implements TypeMapper {
     public String sqlInputRead() {
         return "readInt";
     }
+
+    @Override
+    public String sqlOutputWrite() {
+        return "writeInt";
+    }
 }

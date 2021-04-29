@@ -14,6 +14,7 @@ public class TypeMapperFactoryTest {
         assertThat(new TypeMapperFactory().of("INTEGER").setter(), equalTo("setInt"));
         assertThat(new TypeMapperFactory().of("INTEGER").javaType(), equalTo("Integer"));
         assertThat(new TypeMapperFactory().of("INTEGER").sqlInputRead(), equalTo("readInt"));
+        assertThat(new TypeMapperFactory().of("INTEGER").sqlOutputWrite(), equalTo("writeInt"));
     }
 
     @Test
@@ -23,5 +24,6 @@ public class TypeMapperFactoryTest {
         assertThat(new TypeMapperFactory().of("VARCHAR2").setter(), equalTo("setString"));
         assertThat(new TypeMapperFactory().of("VARCHAR2").javaType(), equalTo("String"));
         assertThat(new TypeMapperFactory().of("VARCHAR2").sqlInputRead(), equalTo("readString"));
+        assertThat(new TypeMapperFactory().of("VARCHAR2").sqlOutputWrite(), equalTo("writeString"));
     }
 }

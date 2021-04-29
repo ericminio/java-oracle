@@ -23,6 +23,7 @@ public class GenerateTypeCode {
                 .replace("                0 // fields hashCode contribution", new BuildHashcodeReturnValue().please(parameters))
                 .replace("                // fields toString contribution", new BuildToStringConcatenation().please(parameters))
                 .replace("        // fields readSQL contribution", new BuildReadSql().please(parameters))
+                .replace("        // fields writeSQL contribution", new BuildWriteSql().please(parameters))
         ;
 
         return typeCode;

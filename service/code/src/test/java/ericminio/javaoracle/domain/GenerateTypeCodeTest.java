@@ -125,4 +125,15 @@ public class GenerateTypeCodeTest {
                 "    }"
         ));
     }
+
+    @Test
+    public void writeSQLMethod() {
+        assertThat(code, containsString("" +
+                "    @Override\n" +
+                "    public void writeSQL(SQLOutput stream) throws SQLException {\n" +
+                "        stream.writeInt(this.getField1());\n" +
+                "        stream.writeString(this.getField2());\n" +
+                "    }"
+        ));
+    }
 }
