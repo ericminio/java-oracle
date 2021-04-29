@@ -3,7 +3,7 @@ package ericminio.javaoracle.domain;
 public class TypeMapperString implements TypeMapper {
     @Override
     public String resultSetGetter() {
-        return "getString";
+        return "getObject";
     }
 
     @Override

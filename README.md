@@ -18,10 +18,10 @@ One way to see it running:
 - `/usr/local/src/service/demos/run.sh`
 
 ```
-drwxrwxrwx    1 root     root             0 Apr 29 23:42 .
+drwxrwxrwx    1 root     root             0 Apr 29 23:52 .
 drwxrwxrwx    1 root     root             0 Apr 28 16:11 ..
--rwxr-xr-x    1 root     root          1414 Apr 29 23:42 Example.java
--rwxr-xr-x    1 root     root          1455 Apr 29 23:42 ExampleType.java
+-rwxr-xr-x    1 root     root          1414 Apr 29 23:52 Example.java
+-rwxr-xr-x    1 root     root          1455 Apr 29 23:52 ExampleType.java
 -rwxr-xr-x    1 root     root          1168 Apr 29 23:42 run.sh
 
 TEXT
@@ -133,7 +133,7 @@ public class Example {
         ResultSet resultSet = statement.executeQuery();
         resultSet.next();
 
-        return (String) resultSet.getString(1);
+        return (String) resultSet.getObject(1);
     }
 
     public ExampleType yop() throws SQLException {

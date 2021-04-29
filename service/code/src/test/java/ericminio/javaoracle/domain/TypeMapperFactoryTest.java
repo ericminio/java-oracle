@@ -18,7 +18,7 @@ public class TypeMapperFactoryTest {
 
     @Test
     public void knowsAboutString() {
-        assertThat(new TypeMapperFactory().of("VARCHAR2").resultSetGetter(), equalTo("getString"));
+        assertThat(new TypeMapperFactory().of("VARCHAR2").resultSetGetter(), equalTo("getObject"));
         assertThat(new TypeMapperFactory().of("VARCHAR2").sqlStatementSetter(), equalTo("setString"));
         assertThat(new TypeMapperFactory().of("VARCHAR2").javaType(), equalTo("String"));
         assertThat(new TypeMapperFactory().of("VARCHAR2").sqlInputRead(), equalTo("readString"));

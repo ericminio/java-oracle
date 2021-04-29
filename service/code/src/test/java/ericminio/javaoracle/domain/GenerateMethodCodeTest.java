@@ -44,7 +44,7 @@ public class GenerateMethodCodeTest {
                 "        ResultSet resultSet = statement.executeQuery();\n" +
                 "        resultSet.next();\n" +
                 "\n" +
-                "        return (String) resultSet.getString(1);\n" +
+                "        return (String) resultSet.getObject(1);\n" +
                 "    }"));
     }
 
@@ -61,7 +61,7 @@ public class GenerateMethodCodeTest {
                 "        ResultSet resultSet = statement.executeQuery();\n" +
                 "        resultSet.next();\n" +
                 "\n" +
-                "        return (String) resultSet.getString(1);\n" +
+                "        return (String) resultSet.getObject(1);\n" +
                 "    }"));
     }
 
