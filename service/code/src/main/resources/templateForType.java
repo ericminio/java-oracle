@@ -34,7 +34,17 @@ public class ClassName implements SQLData {
     @Override
     public String toString() {
         return this.getClass().getSimpleName() + "["
-                // fields toString concatenation
+                // fields toString contribution
                 + " ]";
+    }
+
+    @Override
+    public String getSQLTypeName() {
+        return NAME;
+    }
+
+    @Override
+    public void readSQL(SQLInput stream, String typeName) throws SQLException {
+        // fields readSQL contribution
     }
 }

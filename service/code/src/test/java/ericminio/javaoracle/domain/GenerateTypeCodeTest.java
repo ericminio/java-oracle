@@ -114,4 +114,15 @@ public class GenerateTypeCodeTest {
                 "    }"
         ));
     }
+
+    @Test
+    public void readSQLMethod() {
+        assertThat(code, containsString("" +
+                "    @Override\n" +
+                "    public void readSQL(SQLInput stream, String typeName) throws SQLException {\n" +
+                "        this.setField1(stream.readInt());\n" +
+                "        this.setField2(stream.readString());\n" +
+                "    }"
+        ));
+    }
 }

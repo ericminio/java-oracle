@@ -21,7 +21,8 @@ public class GenerateTypeCode {
                 .replace("    // fields accessors", new BuildFieldAccessors().please(parameters))
                 .replace("                false // fields equals contribution", new BuildEqualsReturnValue().please(parameters))
                 .replace("                0 // fields hashCode contribution", new BuildHashcodeReturnValue().please(parameters))
-                .replace("                // fields toString concatenation", new BuildToStringConcatenation().please(parameters))
+                .replace("                // fields toString contribution", new BuildToStringConcatenation().please(parameters))
+                .replace("        // fields readSQL contribution", new BuildReadSql().please(parameters))
         ;
 
         return typeCode;

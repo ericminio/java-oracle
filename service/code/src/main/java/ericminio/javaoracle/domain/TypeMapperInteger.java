@@ -20,4 +20,9 @@ public class TypeMapperInteger implements TypeMapper {
     public String javaType() {
         return "Integer";
     }
+
+    @Override
+    public String sqlInputRead() {
+        return "readInt";
+    }
 }

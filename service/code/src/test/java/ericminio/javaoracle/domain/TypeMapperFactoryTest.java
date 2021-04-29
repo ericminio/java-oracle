@@ -13,6 +13,7 @@ public class TypeMapperFactoryTest {
         assertThat(new TypeMapperFactory().of("INTEGER").getter(), equalTo("getInt"));
         assertThat(new TypeMapperFactory().of("INTEGER").setter(), equalTo("setInt"));
         assertThat(new TypeMapperFactory().of("INTEGER").javaType(), equalTo("Integer"));
+        assertThat(new TypeMapperFactory().of("INTEGER").sqlInputRead(), equalTo("readInt"));
     }
 
     @Test
@@ -21,5 +22,6 @@ public class TypeMapperFactoryTest {
         assertThat(new TypeMapperFactory().of("VARCHAR2").getter(), equalTo("getString"));
         assertThat(new TypeMapperFactory().of("VARCHAR2").setter(), equalTo("setString"));
         assertThat(new TypeMapperFactory().of("VARCHAR2").javaType(), equalTo("String"));
+        assertThat(new TypeMapperFactory().of("VARCHAR2").sqlInputRead(), equalTo("readString"));
     }
 }

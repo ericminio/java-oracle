@@ -9,4 +9,6 @@ public interface TypeMapper {
     String sqlType();
 
     String javaType();
+
+    String sqlInputRead();
 }
