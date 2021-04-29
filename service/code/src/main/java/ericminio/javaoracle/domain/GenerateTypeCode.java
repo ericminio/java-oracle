@@ -19,6 +19,7 @@ public class GenerateTypeCode {
                 .replace("STATIC_NAME_FIELD", typeName.toUpperCase())
                 .replace("    // fields", new BuildFieldDeclarationStatements().please(parameters))
                 .replace("    // accessors", new BuildFieldAccessors().please(parameters))
+                .replace("                false // EQUALS_RETURN_VALUE", new BuildEqualsReturnValue().please(parameters))
         ;
 
         return typeCode;

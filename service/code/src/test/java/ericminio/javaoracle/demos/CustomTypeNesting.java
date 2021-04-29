@@ -25,7 +25,9 @@ public class CustomTypeNesting implements SQLData {
         }
         CustomTypeNesting other = (CustomTypeNesting) o;
 
-        return this.getValue().equals(other.getValue());
+        return
+                this.getValue().equals(other.getValue())
+                ;
     }
 
     @Override

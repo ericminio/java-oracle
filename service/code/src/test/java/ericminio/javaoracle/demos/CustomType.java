@@ -25,12 +25,16 @@ public class CustomType implements SQLData {
         }
         CustomType other = (CustomType) o;
 
-        return this.getValue().equals(other.getValue());
+        return
+                this.getValue().equals(other.getValue())
+                ;
     }
 
     @Override
     public int hashCode() {
-        return this.getValue().hashCode();
+        return
+                this.getValue().hashCode()
+                ;
     }
 
     @Override

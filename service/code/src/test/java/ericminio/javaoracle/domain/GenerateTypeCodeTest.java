@@ -70,4 +70,22 @@ public class GenerateTypeCodeTest {
                 + "    }\n"
         ));
     }
+
+    @Test
+    public void equalsMethod() {
+        assertThat(code, containsString("" +
+                "    @Override\n" +
+                "    public boolean equals(Object o) {\n" +
+                "        if (! (o instanceof CustomType)) {\n" +
+                "            return false;\n" +
+                "        }\n" +
+                "        CustomType other = (CustomType) o;\n" +
+                "\n" +
+                "        return\n" +
+                "                this.getField1().equals(other.getField1())\n" +
+                "                && this.getField2().equals(other.getField2())\n" +
+                "                ;\n" +
+                "    }"
+        ));
+    }
 }

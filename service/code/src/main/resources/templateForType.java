@@ -11,4 +11,16 @@ public class ClassName implements SQLData {
     public ClassName() {}
 
     // accessors
+
+    @Override
+    public boolean equals(Object o) {
+        if (! (o instanceof ClassName)) {
+            return false;
+        }
+        ClassName other = (ClassName) o;
+
+        return
+                false // EQUALS_RETURN_VALUE
+                ;
+    }
 }

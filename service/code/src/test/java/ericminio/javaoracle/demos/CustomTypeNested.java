@@ -25,7 +25,9 @@ public class CustomTypeNested implements SQLData {
         }
         CustomTypeNested other = (CustomTypeNested) o;
 
-        return this.getValue().equals(other.getValue());
+        return
+                this.getValue().equals(other.getValue())
+                ;
     }
 
     @Override
