@@ -17,7 +17,7 @@ public class BuildFieldAccessorsTest {
                 "    }\n" +
                 "    public void setAnyField(Integer anyField) {\n" +
                 "        this.anyField = anyField;\n" +
-                "    }\n"
+                "    }"
         ));
     }
 
@@ -39,7 +39,7 @@ public class BuildFieldAccessorsTest {
                 "    }\n" +
                 "    public void setAnotherField(Integer anotherField) {\n" +
                 "        this.anotherField = anotherField;\n" +
-                "    }\n"
+                "    }"
         ));
     }
 }

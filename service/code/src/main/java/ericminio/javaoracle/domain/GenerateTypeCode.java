@@ -20,7 +20,7 @@ public class GenerateTypeCode {
                 .replace("    // fields declaration", new BuildFieldDeclarationStatements().please(parameters))
                 .replace("    // fields accessors", new BuildFieldAccessors().please(parameters))
                 .replace("                false // fields equals contribution", new BuildEqualsReturnValue().please(parameters))
-                .replace("                0 // field hashCode contribution", new BuildHashcodeReturnValue().please(parameters))
+                .replace("                0 // fields hashCode contribution", new BuildHashcodeReturnValue().please(parameters))
                 .replace("                // fields toString concatenation", new BuildToStringConcatenation().please(parameters))
         ;
 

@@ -27,7 +27,7 @@ public class ClassName implements SQLData {
     @Override
     public int hashCode() {
         return
-                0 // field hashCode contribution
+                0 // fields hashCode contribution
                 ;
     }
 
