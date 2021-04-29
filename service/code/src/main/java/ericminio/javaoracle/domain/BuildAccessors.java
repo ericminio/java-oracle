@@ -1,6 +1,6 @@
 package ericminio.javaoracle.domain;
 
-public class BuildFieldAccessors extends BuildSomethingWithParameters {
+public class BuildAccessors extends BuildSomethingWithParameters {
 
     @Override
     protected String modify(String output, int index, String name, String type, boolean isLast) {
