@@ -5,16 +5,16 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class FunctionReturningString {
+public class FunctionReturningVarchar {
 
     private Connection connection;
 
-    public FunctionReturningString(Connection connection) {
+    public FunctionReturningVarchar(Connection connection) {
         this.connection = connection;
     }
 
     public String getValue() throws SQLException {
-        PreparedStatement statement = connection.prepareStatement("select function_returning_string.get_value() from dual");
+        PreparedStatement statement = connection.prepareStatement("select function_returning_varchar.get_value() from dual");
         ResultSet resultSet = statement.executeQuery();
         resultSet.next();
 
