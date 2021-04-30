@@ -7,7 +7,7 @@ public class BuildHashcodeReturnValue extends BuildSomethingWithParameters {
         return output
                 + "                "
                 + (index > 0 ? "+ ": "")
-                + "this.get" + pascalCase.please(name) + "().hashCode()"
+                + "(this.get" + pascalCase.please(name) + "() == null ? 0 : this.get" + pascalCase.please(name) + "().hashCode())"
                 + (!isLast ? "\n" : "")
                 ;
     }

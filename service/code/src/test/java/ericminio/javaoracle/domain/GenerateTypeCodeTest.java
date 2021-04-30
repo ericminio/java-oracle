@@ -100,8 +100,8 @@ public class GenerateTypeCodeTest {
                 "        CustomType other = (CustomType) o;\n" +
                 "\n" +
                 "        return\n" +
-                "                this.getField1().equals(other.getField1())\n" +
-                "                && this.getField2().equals(other.getField2())\n" +
+                "                (this.getField1() == null ? other.getField1() == null : this.getField1().equals(other.getField1()))\n" +
+                "                && (this.getField2() == null ? other.getField2() == null : this.getField2().equals(other.getField2()))\n" +
                 "                ;\n" +
                 "    }"
         ));
@@ -113,8 +113,8 @@ public class GenerateTypeCodeTest {
                 "    @Override\n" +
                 "    public int hashCode() {\n" +
                 "        return\n" +
-                "                this.getField1().hashCode()\n" +
-                "                + this.getField2().hashCode()\n" +
+                "                (this.getField1() == null ? 0 : this.getField1().hashCode())\n" +
+                "                + (this.getField2() == null ? 0 : this.getField2().hashCode())\n" +
                 "                ;\n" +
                 "    }"
         ));

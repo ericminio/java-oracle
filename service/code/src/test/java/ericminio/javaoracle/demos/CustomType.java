@@ -27,14 +27,14 @@ public class CustomType implements SQLData {
         CustomType other = (CustomType) o;
 
         return
-                this.getValue().equals(other.getValue())
+                (this.getValue() == null ? other.getValue() == null : this.getValue().equals(other.getValue()))
                 ;
     }
 
     @Override
     public int hashCode() {
         return
-                this.getValue().hashCode()
+                (this.getValue() == null ? 0 : this.getValue().hashCode())
                 ;
     }
 

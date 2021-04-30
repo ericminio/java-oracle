@@ -7,7 +7,8 @@ public class BuildEqualsReturnValue extends BuildSomethingWithParameters {
         return output
                 + "                "
                 + (index > 0 ? "&& ": "")
-                + "this.get" + pascalCase.please(name) + "().equals(other.get" + pascalCase.please(name) + "())"
+                + "(this.get" + pascalCase.please(name) + "() == null ? other.get" + pascalCase.please(name) + "() == null : "
+                + "this.get" + pascalCase.please(name) + "().equals(other.get" + pascalCase.please(name) + "()))"
                 + (!isLast ? "\n" : "")
                 ;
     }

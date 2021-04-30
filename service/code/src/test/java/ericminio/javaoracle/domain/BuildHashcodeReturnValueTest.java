@@ -12,7 +12,7 @@ public class BuildHashcodeReturnValueTest {
         Parameters parameters = new Parameters();
         parameters.add("any_field any_type");
         assertThat(new BuildHashcodeReturnValue().please(parameters), equalTo("" +
-                "                this.getAnyField().hashCode()"
+                "                (this.getAnyField() == null ? 0 : this.getAnyField().hashCode())"
         ));
     }
 
@@ -22,8 +22,8 @@ public class BuildHashcodeReturnValueTest {
         parameters.add("any_field any_type");
         parameters.add("another_field any_type");
         assertThat(new BuildHashcodeReturnValue().please(parameters), equalTo("" +
-                "                this.getAnyField().hashCode()\n" +
-                "                + this.getAnotherField().hashCode()"
+                "                (this.getAnyField() == null ? 0 : this.getAnyField().hashCode())\n" +
+                "                + (this.getAnotherField() == null ? 0 : this.getAnotherField().hashCode())"
         ));
     }
 }

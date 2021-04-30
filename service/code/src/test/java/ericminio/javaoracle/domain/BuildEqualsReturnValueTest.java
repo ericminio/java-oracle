@@ -12,7 +12,7 @@ public class BuildEqualsReturnValueTest {
         Parameters parameters = new Parameters();
         parameters.add("any_field any_type");
         assertThat(new BuildEqualsReturnValue().please(parameters), equalTo("" +
-                "                this.getAnyField().equals(other.getAnyField())"
+                "                (this.getAnyField() == null ? other.getAnyField() == null : this.getAnyField().equals(other.getAnyField()))"
         ));
     }
 
@@ -22,8 +22,8 @@ public class BuildEqualsReturnValueTest {
         parameters.add("any_field any_type");
         parameters.add("another_field any_type");
         assertThat(new BuildEqualsReturnValue().please(parameters), equalTo("" +
-                "                this.getAnyField().equals(other.getAnyField())\n" +
-                "                && this.getAnotherField().equals(other.getAnotherField())"
+                "                (this.getAnyField() == null ? other.getAnyField() == null : this.getAnyField().equals(other.getAnyField()))\n" +
+                "                && (this.getAnotherField() == null ? other.getAnotherField() == null : this.getAnotherField().equals(other.getAnotherField()))"
         ));
     }
 }
