@@ -14,12 +14,12 @@ public class TypeMapperNumber implements TypeMapper {
 
     @Override
     public String sqlInputRead() {
-        return "readBigDecimal";
+        return "stream.readBigDecimal()";
     }
 
     @Override
     public String sqlOutputWrite() {
-        return "writeBigDecimal";
+        return "stream.writeBigDecimal(this.getField());";
     }
 
     @Override

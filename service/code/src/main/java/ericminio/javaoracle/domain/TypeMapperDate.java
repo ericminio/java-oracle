@@ -14,12 +14,12 @@ public class TypeMapperDate implements TypeMapper {
 
     @Override
     public String sqlInputRead() {
-        return "readDate";
+        return "new Date(stream.readTimestamp().getTime())";
     }
 
     @Override
     public String sqlOutputWrite() {
-        return "writeDate";
+        return "stream.writeTimestamp(new java.sql.Timestamp(this.getField().getTime()));";
     }
 
     @Override

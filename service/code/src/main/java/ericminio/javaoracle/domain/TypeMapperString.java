@@ -14,12 +14,12 @@ public class TypeMapperString implements TypeMapper {
 
     @Override
     public String sqlInputRead() {
-        return "readString";
+        return "stream.readString()";
     }
 
     @Override
     public String sqlOutputWrite() {
-        return "writeString";
+        return "stream.writeString(this.getField());";
     }
 
     @Override

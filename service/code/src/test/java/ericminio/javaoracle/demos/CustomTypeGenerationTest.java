@@ -17,7 +17,9 @@ public class CustomTypeGenerationTest {
         String actual = new GenerateTypeCode().please(Arrays.asList(
                 "type custom_type as object\n",
                 "(\n",
-                "   value number\n",
+                "   id number,\n" +
+                "   label varchar2(15),\n" +
+                "   creation_date date\n" +
                 ")"
         ));
         assertThat(actual, equalTo(contentMinusTwoFirstLines("src/test/java/ericminio/javaoracle/demos/CustomType.java")));

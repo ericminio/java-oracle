@@ -19,7 +19,7 @@ public class FunctionReturningCustomTypeNestingTest extends DatabaseTest {
         with(connection).execute("" +
                 "create type custom_type_nested as object" +
                 "(" +
-                "   value integer\n" +
+                "   value number\n" +
                 ");");
         with(connection).execute("" +
                 "create type custom_type_nesting as object" +

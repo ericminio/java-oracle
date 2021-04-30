@@ -8,7 +8,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class BuildReadSqlTest {
 
     @Test
-    public void integerType() {
+    public void forNumber() {
         Parameters parameters = new Parameters();
         parameters.add("any_field number");
         assertThat(new BuildReadSql().please(parameters), equalTo("" +
@@ -17,11 +17,29 @@ public class BuildReadSqlTest {
     }
 
     @Test
-    public void stringType() {
+    public void forString() {
         Parameters parameters = new Parameters();
         parameters.add("field varchar2(10)");
         assertThat(new BuildReadSql().please(parameters), equalTo("" +
                 "        this.setField(stream.readString());"
+        ));
+    }
+
+    @Test
+    public void forDate() {
+        Parameters parameters = new Parameters();
+        parameters.add("field date");
+        assertThat(new BuildReadSql().please(parameters), equalTo("" +
+                "        this.setField(new Date(stream.readTimestamp().getTime()));"
+        ));
+    }
+
+    @Test
+    public void forCustomType() {
+        Parameters parameters = new Parameters();
+        parameters.add("field custom_type");
+        assertThat(new BuildReadSql().please(parameters), equalTo("" +
+                "        this.setField(stream.readObject());"
         ));
     }
 

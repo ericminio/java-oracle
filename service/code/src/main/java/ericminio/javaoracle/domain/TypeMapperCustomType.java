@@ -22,12 +22,12 @@ public class TypeMapperCustomType implements TypeMapper {
 
     @Override
     public String sqlInputRead() {
-        return "readObject";
+        return "stream.readObject()";
     }
 
     @Override
     public String sqlOutputWrite() {
-        return "writeObject";
+        return "stream.writeObject(this.getField());";
     }
 
     @Override
