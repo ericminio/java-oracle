@@ -3,8 +3,8 @@ package ericminio.javaoracle.domain;
 public class TypeMapperString implements TypeMapper {
 
     @Override
-    public String sqlStatementSetter() {
-        return "setString";
+    public String functionParameterSettingStatement() {
+        return "statement.setString(index, field);";
     }
 
     @Override

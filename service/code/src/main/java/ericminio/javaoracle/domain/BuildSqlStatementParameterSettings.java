@@ -4,8 +4,13 @@ public class BuildSqlStatementParameterSettings extends BuildSomethingWithParame
 
     @Override
     protected String modify(String output, int index, String name, String type, boolean isLast) {
+        String statement = typeMapperFactory.of(type).functionParameterSettingStatement()
+                .replace("index", ""+(index+1))
+                .replace("field", camelCase.please(name))
+                ;
         return output
-                + "        statement."
-                + typeMapperFactory.of(type).sqlStatementSetter() + "(" + (index + 1) + ", " + name + ");\n";
+                + "        "
+                + statement
+                + "\n";
     }
 }

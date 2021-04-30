@@ -3,8 +3,8 @@ package ericminio.javaoracle.domain;
 public class TypeMapperDate implements TypeMapper {
 
     @Override
-    public String sqlStatementSetter() {
-        return "setObject";
+    public String functionParameterSettingStatement() {
+        return "statement.setTimestamp(index, new java.sql.Timestamp(field.getTime()));";
     }
 
     @Override

@@ -2,7 +2,7 @@ package ericminio.javaoracle.domain;
 
 public interface TypeMapper {
 
-    String sqlStatementSetter();
+    String functionParameterSettingStatement();
 
     String javaType();
 

@@ -3,8 +3,8 @@ package ericminio.javaoracle.domain;
 public class TypeMapperNumber implements TypeMapper {
 
     @Override
-    public String sqlStatementSetter() {
-        return "setBigDecimal";
+    public String functionParameterSettingStatement() {
+        return "statement.setBigDecimal(index, field);";
     }
 
     @Override

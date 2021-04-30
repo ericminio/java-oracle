@@ -11,8 +11,8 @@ public class TypeMapperCustomType implements TypeMapper {
     }
 
     @Override
-    public String sqlStatementSetter() {
-        return "setObject";
+    public String functionParameterSettingStatement() {
+        return "statement.setObject(index, field);";
     }
 
     @Override
