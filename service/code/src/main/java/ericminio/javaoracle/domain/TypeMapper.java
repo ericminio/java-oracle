@@ -2,8 +2,6 @@ package ericminio.javaoracle.domain;
 
 public interface TypeMapper {
 
-    String resultSetGetter();
-
     String sqlStatementSetter();
 
     String javaType();
@@ -11,4 +9,6 @@ public interface TypeMapper {
     String sqlInputRead();
 
     String sqlOutputWrite();
+
+    String methodReturnStatement();
 }

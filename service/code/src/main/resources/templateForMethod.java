@@ -4,5 +4,5 @@
         ResultSet resultSet = statement.executeQuery();
         resultSet.next();
 
-        return (Object) resultSet.getTtt(1);
+        return (Object) resultSet.getObject(1);
     }

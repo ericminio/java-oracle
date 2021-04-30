@@ -1,29 +1,29 @@
 package ericminio.javaoracle.domain;
 
-public class TypeMapperString implements TypeMapper {
+public class TypeMapperDate implements TypeMapper {
 
     @Override
     public String sqlStatementSetter() {
-        return "setString";
+        return "setObject";
     }
 
     @Override
     public String javaType() {
-        return "String";
+        return "Date";
     }
 
     @Override
     public String sqlInputRead() {
-        return "readString";
+        return "readDate";
     }
 
     @Override
     public String sqlOutputWrite() {
-        return "writeString";
+        return "writeDate";
     }
 
     @Override
     public String methodReturnStatement() {
-        return "return (String) resultSet.getObject(1);";
+        return "return new Date( ((java.sql.Timestamp) resultSet.getObject(1)).getTime() );";
     }
 }

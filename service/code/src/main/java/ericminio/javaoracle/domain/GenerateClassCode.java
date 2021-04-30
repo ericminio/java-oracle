@@ -40,6 +40,9 @@ public class GenerateClassCode {
         if (code.indexOf("BigDecimal ") != -1) {
             code = "import java.math.BigDecimal;\n" + code;
         }
+        if (code.indexOf("Date ") != -1) {
+            code = code.replace("import java.sql.SQLException;", "import java.sql.SQLException;\nimport java.util.Date;");
+        }
 
         return code;
     }

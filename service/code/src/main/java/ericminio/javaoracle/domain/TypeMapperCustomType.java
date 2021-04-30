@@ -11,11 +11,6 @@ public class TypeMapperCustomType implements TypeMapper {
     }
 
     @Override
-    public String resultSetGetter() {
-        return "getObject";
-    }
-
-    @Override
     public String sqlStatementSetter() {
         return "setObject";
     }
@@ -33,5 +28,10 @@ public class TypeMapperCustomType implements TypeMapper {
     @Override
     public String sqlOutputWrite() {
         return "writeObject";
+    }
+
+    @Override
+    public String methodReturnStatement() {
+        return "return (" + new PascalCase().please(this.type) + ") resultSet.getObject(1);";
     }
 }

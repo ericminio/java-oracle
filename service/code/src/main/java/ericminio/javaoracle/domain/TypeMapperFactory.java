@@ -10,6 +10,9 @@ public class TypeMapperFactory {
         if (normalized.startsWith("VARCHAR2")) {
             return new TypeMapperString();
         }
+        if (normalized.startsWith("DATE")) {
+            return new TypeMapperDate();
+        }
         if (isCutomType(incoming)) {
             return new TypeMapperCustomType(incoming);
         }
