@@ -14,6 +14,12 @@ public class CamelCaseTest {
     }
 
     @Test
+    public void upperCaseSnakeCaseIntoCamelCase() {
+        assertThat(new CamelCase().please("HELLO_WORLD"),
+            equalTo("helloWorld"));
+    }
+
+    @Test
     public void singleWord() {
         assertThat(new CamelCase().please("hello"),
                 equalTo("hello"));

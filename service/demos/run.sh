@@ -13,10 +13,10 @@ function execute {
 cd target
 java \
     -Doracle.host=oracle \
-    -DtypeName=example_type \
+    -DtypeNamePrefix=example_types_ \
     -DjavaPackage=company.name \
     -DoutputFolder=/usr/local/src/service/demos \
-    -cp java-oracle-1.0-jar-with-dependencies.jar ericminio.javaoracle.GenerateTypeAdapter 
+    -cp java-oracle-1.0-jar-with-dependencies.jar ericminio.javaoracle.GenerateTypeAdapters
 java \
     -Doracle.host=oracle \
     -DoraclePackage=example \
@@ -27,7 +27,8 @@ java \
 ls -la /usr/local/src/service/demos
 
 execute "select text from all_source where type='TYPE' and name='EXAMPLE_TYPE' order by line;"
-cat /usr/local/src/service/demos/ExampleType.java
+cat /usr/local/src/service/demos/ExampleTypesOne.java
+cat /usr/local/src/service/demos/ExampleTypesTwo.java
 
 execute "select text from all_source where type='PACKAGE' and name='EXAMPLE' order by line;"
 cat /usr/local/src/service/demos/Example.java

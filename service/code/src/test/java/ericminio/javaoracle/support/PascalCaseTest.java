@@ -14,6 +14,12 @@ public class PascalCaseTest {
     }
 
     @Test
+    public void upperCaseSnakeCaseIntoPascalCase() {
+        assertThat(new PascalCase().please("HELLO_WORLD"),
+                equalTo("HelloWorld"));
+    }
+
+    @Test
     public void singleWorld() {
         assertThat(new PascalCase().please("hello"),
                 equalTo("Hello"));
