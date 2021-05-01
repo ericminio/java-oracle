@@ -13,8 +13,9 @@ public class GenerateTypeAdaptersTest extends DatabaseTest {
 
     @Before
     public void createTypes() {
-        with(connection).execute("create or replace type example_types_one as object(value number);");
-        with(connection).execute("create or replace type example_types_two as object(value varchar2(15));");
+        with(connection).execute("create or replace type example_types_one as object(value number(15,4));");
+        with(connection).execute("create or replace type example_types_two as object(value varchar2(20));");
+        with(connection).execute("create or replace type example_types_three as object(value date);");
     }
 
     @Test
@@ -23,5 +24,6 @@ public class GenerateTypeAdaptersTest extends DatabaseTest {
 
         assertThat(exactContentOf("target/ExampleTypesOne.java"), containsString("public class ExampleTypesOne implements SQLData {"));
         assertThat(exactContentOf("target/ExampleTypesTwo.java"), containsString("public class ExampleTypesTwo implements SQLData {"));
+        assertThat(exactContentOf("target/ExampleTypesThree.java"), containsString("public class ExampleTypesThree implements SQLData {"));
     }
 }

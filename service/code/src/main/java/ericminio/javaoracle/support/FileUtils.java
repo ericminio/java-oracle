@@ -16,10 +16,7 @@ public class FileUtils {
         String content = "";
         for (int i=0; i<lines.size(); i++) {
             String line = lines.get(i);
-            content += line;
-            if (i != lines.size() - 1) {
-                content += "\n";
-            }
+            content += line + "\n";
         }
         return content;
     }

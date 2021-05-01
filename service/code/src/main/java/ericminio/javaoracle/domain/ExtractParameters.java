@@ -12,14 +12,33 @@ public class ExtractParameters {
             function += specification.get(i);
         }
         if (function.indexOf("(") != -1) {
-            function = function.substring(function.indexOf("(") + 1);
-            function = function.substring(0, function.lastIndexOf(")"));
-            String[] parts = function.split(",");
+            String list = function.substring(function.indexOf("(") + 1);
+            list = list.substring(0, list.lastIndexOf(")"));
 
-            for (int i = 0; i < parts.length; i++) {
-                if (parts[i].trim().length() > 0) {
-                    parameters.add(parts[i].trim());
+            String candidate = "";
+            boolean inDetails = false;
+            int current = 0;
+            while (current < list.length()) {
+                String currentChar = list.substring(current, current+1);
+                if ("(".equalsIgnoreCase(currentChar)) {
+                    inDetails = true;
                 }
+                if (")".equalsIgnoreCase(currentChar)) {
+                    inDetails = false;
+                }
+                if (",".equalsIgnoreCase(currentChar) && !inDetails) {
+                    if (candidate.trim().length() > 0) {
+                        parameters.add(candidate.trim());
+                    }
+                    candidate = "";
+                }
+                else {
+                    candidate += currentChar;
+                }
+                current ++;
+            }
+            if (candidate.trim().length() > 0) {
+                parameters.add(candidate.trim());
             }
         }
 

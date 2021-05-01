@@ -18,15 +18,19 @@ One way to see it running:
 - `/usr/local/src/service/demos/run.sh`
 
 ```
-drwxrwxrwx    1 root     root             0 Apr 29 23:52 .
+drwxrwxrwx    1 root     root          4096 May  1 00:02 .
 drwxrwxrwx    1 root     root             0 Apr 28 16:11 ..
--rwxr-xr-x    1 root     root          1414 Apr 29 23:52 Example.java
--rwxr-xr-x    1 root     root          1455 Apr 29 23:52 ExampleType.java
--rwxr-xr-x    1 root     root          1168 Apr 29 23:42 run.sh
+-rwxr-xr-x    1 root     root          2448 May  1 00:02 Example.java
+-rwxr-xr-x    1 root     root          1568 May  1 00:02 ExampleTypesOne.java
+-rwxr-xr-x    1 root     root          1608 May  1 00:02 ExampleTypesThree.java
+-rwxr-xr-x    1 root     root          1519 May  1 00:02 ExampleTypesTwo.java
+-rwxr-xr-x    1 root     root          1304 May  1 00:02 run.sh
 
 TEXT
 --------------------------------------------------------------------------------
-type example_type as object(value number);
+type example_types_one as object(value number(15,4));
+type example_types_three as object(value date);
+type example_types_two as object(value varchar2(20));
 
 package company.name;
 
@@ -36,11 +40,11 @@ import java.sql.SQLException;
 import java.sql.SQLInput;
 import java.sql.SQLOutput;
 
-public class ExampleType implements SQLData {
-    public static final String NAME = "EXAMPLE_TYPE";
+public class ExampleTypesOne implements SQLData {
+    public static final String NAME = "EXAMPLE_TYPES_ONE";
     private BigDecimal value;
 
-    public ExampleType() {}
+    public ExampleTypesOne() {}
 
     public BigDecimal getValue() {
         return this.value;
@@ -51,20 +55,20 @@ public class ExampleType implements SQLData {
 
     @Override
     public boolean equals(Object o) {
-        if (! (o instanceof ExampleType)) {
+        if (! (o instanceof ExampleTypesOne)) {
             return false;
         }
-        ExampleType other = (ExampleType) o;
+        ExampleTypesOne other = (ExampleTypesOne) o;
 
         return
-                this.getValue().equals(other.getValue())
+                (this.getValue() == null ? other.getValue() == null : this.getValue().equals(other.getValue()))
                 ;
     }
 
     @Override
     public int hashCode() {
         return
-                this.getValue().hashCode()
+                (this.getValue() == null ? 0 : this.getValue().hashCode())
                 ;
     }
 
@@ -90,16 +94,144 @@ public class ExampleType implements SQLData {
         stream.writeBigDecimal(this.getValue());
     }
 }
+package company.name;
+
+import java.sql.SQLData;
+import java.sql.SQLException;
+import java.sql.SQLInput;
+import java.sql.SQLOutput;
+
+public class ExampleTypesTwo implements SQLData {
+    public static final String NAME = "EXAMPLE_TYPES_TWO";
+    private String value;
+
+    public ExampleTypesTwo() {}
+
+    public String getValue() {
+        return this.value;
+    }
+    public void setValue(String value) {
+        this.value = value;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (! (o instanceof ExampleTypesTwo)) {
+            return false;
+        }
+        ExampleTypesTwo other = (ExampleTypesTwo) o;
+
+        return
+                (this.getValue() == null ? other.getValue() == null : this.getValue().equals(other.getValue()))
+                ;
+    }
+
+    @Override
+    public int hashCode() {
+        return
+                (this.getValue() == null ? 0 : this.getValue().hashCode())
+                ;
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName() + "["
+                + " value=" + (this.getValue() == null ? "null" : this.getValue().toString())
+                + " ]";
+    }
+
+    @Override
+    public String getSQLTypeName() {
+        return NAME;
+    }
+
+    @Override
+    public void readSQL(SQLInput stream, String typeName) throws SQLException {
+        this.setValue(stream.readString());
+    }
+
+    @Override
+    public void writeSQL(SQLOutput stream) throws SQLException {
+        stream.writeString(this.getValue());
+    }
+}
+package company.name;
+
+import java.sql.SQLData;
+import java.sql.SQLException;
+import java.sql.SQLInput;
+import java.sql.SQLOutput;
+import java.util.Date;
+
+public class ExampleTypesThree implements SQLData {
+    public static final String NAME = "EXAMPLE_TYPES_THREE";
+    private Date value;
+
+    public ExampleTypesThree() {}
+
+    public Date getValue() {
+        return this.value;
+    }
+    public void setValue(Date value) {
+        this.value = value;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (! (o instanceof ExampleTypesThree)) {
+            return false;
+        }
+        ExampleTypesThree other = (ExampleTypesThree) o;
+
+        return
+                (this.getValue() == null ? other.getValue() == null : this.getValue().equals(other.getValue()))
+                ;
+    }
+
+    @Override
+    public int hashCode() {
+        return
+                (this.getValue() == null ? 0 : this.getValue().hashCode())
+                ;
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName() + "["
+                + " value=" + (this.getValue() == null ? "null" : this.getValue().toString())
+                + " ]";
+    }
+
+    @Override
+    public String getSQLTypeName() {
+        return NAME;
+    }
+
+    @Override
+    public void readSQL(SQLInput stream, String typeName) throws SQLException {
+        this.setValue(new Date(stream.readTimestamp().getTime()));
+    }
+
+    @Override
+    public void writeSQL(SQLOutput stream) throws SQLException {
+        stream.writeTimestamp(new java.sql.Timestamp(this.getValue().getTime()));
+    }
+}
+
 TEXT
 --------------------------------------------------------------------------------
 PACKAGE example
 AS
     FUNCTION hello(value1 varchar2) RETURN number;
     FUNCTION world(value2 number) RETURN varchar2;
-    FUNCTION yop RETURN example_type;
+    FUNCTION given(value3 date) RETURN date;
+    FUNCTION when(value4 example_types_one) RETURN example_types_one;
+    FUNCTION then(value5 example_types_one, value6 example_types_two) RETURN exa
+mple_types_two;
+
 END example
 
-6 rows selected.
+8 rows selected.
 
 package company.name;
 
@@ -108,6 +240,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 
 public class Example {
 
@@ -115,7 +248,8 @@ public class Example {
 
     public Example(Connection connection) throws SQLException {
         this.connection = connection;
-        connection.getTypeMap().put(ExampleType.NAME, ExampleType.class);
+        connection.getTypeMap().put(ExampleTypesOne.NAME, ExampleTypesOne.class);
+        connection.getTypeMap().put(ExampleTypesTwo.NAME, ExampleTypesTwo.class);
     }
 
     public BigDecimal hello(String value1) throws SQLException {
@@ -136,12 +270,32 @@ public class Example {
         return (String) resultSet.getObject(1);
     }
 
-    public ExampleType yop() throws SQLException {
-        PreparedStatement statement = connection.prepareStatement("select example.yop() from dual");
+    public Date given(Date value3) throws SQLException {
+        PreparedStatement statement = connection.prepareStatement("select example.given(?) from dual");
+        statement.setTimestamp(1, new java.sql.Timestamp(value3.getTime()));
         ResultSet resultSet = statement.executeQuery();
         resultSet.next();
 
-        return (ExampleType) resultSet.getObject(1);
+        return new Date( ((java.sql.Timestamp) resultSet.getObject(1)).getTime() );
+    }
+
+    public ExampleTypesOne when(ExampleTypesOne value4) throws SQLException {
+        PreparedStatement statement = connection.prepareStatement("select example.when(?) from dual");
+        statement.setObject(1, value4);
+        ResultSet resultSet = statement.executeQuery();
+        resultSet.next();
+
+        return (ExampleTypesOne) resultSet.getObject(1);
+    }
+
+    public ExampleTypesTwo then(ExampleTypesOne value5, ExampleTypesTwo value6) throws SQLException {
+        PreparedStatement statement = connection.prepareStatement("select example.then(?, ?) from dual");
+        statement.setObject(1, value5);
+        statement.setObject(2, value6);
+        ResultSet resultSet = statement.executeQuery();
+        resultSet.next();
+
+        return (ExampleTypesTwo) resultSet.getObject(1);
     }
 
 }
