@@ -1,8 +1,6 @@
 #!/bin/bash
 
-function execute {
-    docker exec oracle bash -c "export ORACLE_HOME=/u01/app/oracle/product/11.2.0/xe && echo \"$1\" | /u01/app/oracle/product/11.2.0/xe/bin/sqlplus -S SYSTEM/oracle@localhost"
-}
+source /usr/local/src/oracle/utils.sh
 
 ready=0
 while [ "$ready" != "1" ]

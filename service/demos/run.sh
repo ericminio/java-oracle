@@ -1,14 +1,11 @@
 #!/bin/bash
 
+source /usr/local/src/oracle/utils.sh
+
 rm /usr/local/src/service/demos/*.java
 
 cd /usr/local/src/service/code
 mvn clean package -Doracle.host=oracle
-
-function execute {
-    docker exec oracle bash -c "export ORACLE_HOME=/u01/app/oracle/product/11.2.0/xe && echo \"$1\" | /u01/app/oracle/product/11.2.0/xe/bin/sqlplus -S SYSTEM/oracle@localhost"
-}
-
 
 cd target
 java \
