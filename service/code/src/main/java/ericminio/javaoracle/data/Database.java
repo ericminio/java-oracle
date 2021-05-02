@@ -20,9 +20,10 @@ public class Database {
     private OracleDataSource getDataSource() throws SQLException {
         if (this.dataSource == null) {
             this.dataSource = new OracleDataSource();
-            this.dataSource.setURL("jdbc:oracle:thin:@" + new Environment().getOracleHost() + ":1521:XE");
-            this.dataSource.setUser("system");
-            this.dataSource.setPassword("oracle");
+            Environment environment = new Environment();
+            this.dataSource.setURL(environment.getOracleUrl());
+            this.dataSource.setUser(environment.getOracleUsername());
+            this.dataSource.setPassword(environment.getOraclePassword());
         }
         return dataSource;
     }

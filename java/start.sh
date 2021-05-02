@@ -14,4 +14,7 @@ echo "Oracle is ready";
 
 java -version
 mvn -v
-mvn clean test -Doracle.host=oracle
+mvn clean test \
+    -Doracle.url=jdbc:oracle:thin:@oracle:1521:XE \
+    -Doracle.username=system \
+    -Doracle.password=oracle

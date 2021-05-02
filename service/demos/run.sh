@@ -3,7 +3,10 @@
 source /usr/local/src/oracle/utils.sh
 
 cd /usr/local/src/service/code
-mvn clean package -Doracle.host=oracle
+mvn clean package \
+    -Doracle.url=jdbc:oracle:thin:@oracle:1521:XE \
+    -Doracle.username=system \
+    -Doracle.password=oracle
 
 rm /usr/local/src/service/demos/*.java
 executeFile /usr/local/src/service/demos/clean.sql
@@ -15,13 +18,17 @@ execute "select text from all_source where type='PACKAGE' and name='EXAMPLE' ord
 
 cd target
 java \
-    -Doracle.host=oracle \
+    -Doracle.url=jdbc:oracle:thin:@oracle:1521:XE \
+    -Doracle.username=system \
+    -Doracle.password=oracle \
     -DtypeNamePrefix=example_type_ \
     -DjavaPackage=company.name \
     -DoutputFolder=/usr/local/src/service/demos \
     -cp java-oracle-1.0-jar-with-dependencies.jar ericminio.javaoracle.GenerateTypeAdapters
 java \
-    -Doracle.host=oracle \
+    -Doracle.url=jdbc:oracle:thin:@oracle:1521:XE \
+    -Doracle.username=system \
+    -Doracle.password=oracle \
     -DoraclePackage=example \
     -DjavaPackage=company.name \
     -DoutputFolder=/usr/local/src/service/demos \
