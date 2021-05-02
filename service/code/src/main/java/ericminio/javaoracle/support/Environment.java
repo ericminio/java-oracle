@@ -3,7 +3,7 @@ package ericminio.javaoracle.support;
 public class Environment {
 
     public String getOracleUrl() {
-        return getPropertyOr("oracle.url", "dbc:oracle:thin:@localhost:1521:XE");
+        return getPropertyOr("oracle.url", "jdbc:oracle:thin:@localhost:1521:XE");
     }
 
     public String getOracleUsername() {
@@ -21,6 +21,7 @@ public class Environment {
         if (value == null || value.trim().length() == 0) {
             value = defaultValue;
         }
+        System.out.println(key + "=" + value);
         return value;
     }
 }

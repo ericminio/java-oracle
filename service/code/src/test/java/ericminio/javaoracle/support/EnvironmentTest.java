@@ -18,7 +18,7 @@ public class EnvironmentTest {
     @Test
     public void defaultOracleUrl() {
         assertThat(new Environment().getOracleUrl(),
-                equalTo("dbc:oracle:thin:@localhost:1521:XE"));
+                equalTo("jdbc:oracle:thin:@localhost:1521:XE"));
     }
     @Test
     public void oracleUrl() {
