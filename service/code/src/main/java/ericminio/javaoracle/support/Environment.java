@@ -21,7 +21,6 @@ public class Environment {
         if (value == null || value.trim().length() == 0) {
             value = defaultValue;
         }
-        System.out.println(key + "=" + value);
         return value;
     }
 }
