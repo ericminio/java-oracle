@@ -1,7 +1,5 @@
-package ericminio.javaoracle.demos;
+package ericminio.javaoracle.domain;
 
-import ericminio.javaoracle.domain.BuildSomethingWithParameters;
-import ericminio.javaoracle.domain.Parameters;
 import org.junit.Before;
 import org.junit.Test;
 
