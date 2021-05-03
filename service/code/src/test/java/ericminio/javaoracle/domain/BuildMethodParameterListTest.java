@@ -35,4 +35,11 @@ public class BuildMethodParameterListTest {
         parameters.add("field2 varchar2(5)");
         assertThat(new BuildMethodParameterList().please(parameters), equalTo("BigDecimal field1, String field2"));
     }
+
+    @Test
+    public void camelCase() {
+        Parameters parameters = new Parameters();
+        parameters.add("any_field any_type");
+        assertThat(new BuildMethodParameterList().please(parameters), equalTo("AnyType anyField"));
+    }
 }

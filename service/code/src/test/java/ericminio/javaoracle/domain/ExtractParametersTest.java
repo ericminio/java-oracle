@@ -46,6 +46,15 @@ public class ExtractParametersTest {
     }
 
     @Test
+    public void withOneNumberParameterIncludingInKeyword() {
+        Parameters parameters = new ExtractParameters().please(Arrays.asList(
+                "FUNCTION any(param IN number(15,4)) RETURN number;"
+        ));
+        assertThat(parameters.count(), equalTo(1));
+        assertThat(parameters.all(), equalTo(Arrays.asList("param IN number(15,4)")));
+    }
+
+    @Test
     public void withOneNumberParameterIncludingDetailsWithSpace() {
         Parameters parameters = new ExtractParameters().please(Arrays.asList(
                 "FUNCTION any(param number(15, 4)) RETURN number;"

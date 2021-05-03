@@ -20,7 +20,10 @@ public class GeneratePackageAdapterTest extends DatabaseTest {
                 "    FUNCTION world(value2 number) RETURN varchar2;\n" +
                 "    FUNCTION given(value3 date) RETURN date;\n" +
                 "    FUNCTION when(value4 example_types_one) RETURN example_types_one;\n" +
-                "    FUNCTION then(value5 example_types_one, value6 example_types_two) RETURN example_types_two;\n" +
+                "    FUNCTION then(" +
+                "       value5 in example_types_one,\n" +
+                "        value6 in example_types_two\n" +
+                "    ) RETURN example_types_two;\n" +
                 "END example";
         with(connection).execute(creation);
     }
