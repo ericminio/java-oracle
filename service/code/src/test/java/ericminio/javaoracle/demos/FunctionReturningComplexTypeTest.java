@@ -16,12 +16,6 @@ public class FunctionReturningComplexTypeTest extends DatabaseTest {
 
     @Before
     public void createStructure() {
-        with(connection).executeIgnoringFailure("drop package body returning_complex_type");
-        with(connection).executeIgnoringFailure("drop package returning_complex_type");
-        with(connection).executeIgnoringFailure("drop type complex_type");
-        with(connection).executeIgnoringFailure("drop type array_of_custom_type");
-        with(connection).executeIgnoringFailure("drop type custom_type");
-
         with(connection).execute("create or replace type custom_type as object(id number, label varchar2(15), creation_date date);");
         with(connection).execute("create or replace type array_of_custom_type as varray(15) of custom_type;");
         with(connection).execute("" +
