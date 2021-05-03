@@ -13,48 +13,57 @@ import static ericminio.javaoracle.data.Query.with;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
 
-public class FunctionReturningCustomTypeTest extends DatabaseTest {
+public class FunctionReturningComplexTypeTest extends DatabaseTest {
 
     @Before
     public void createStructure() {
+        with(connection).executeIgnoringFailure("drop package body returning_complex_type");
+        with(connection).executeIgnoringFailure("drop package returning_complex_type");
         with(connection).executeIgnoringFailure("drop type complex_type");
         with(connection).executeIgnoringFailure("drop type custom_type");
 
         with(connection).execute("" +
-                "create or replace type custom_type as object" +
+                "create type custom_type as object" +
                 "(" +
                 "   id number,\n" +
                 "   label varchar2(15),\n" +
                 "   creation_date date\n" +
                 ");");
         with(connection).execute("" +
-                "CREATE OR REPLACE PACKAGE function_returning_custom_type\n" +
-                "AS\n" +
-                "    FUNCTION get_value RETURN custom_type;\n" +
-                "\n" +
-                "END function_returning_custom_type;");
+                "create type complex_type as object" +
+                "(" +
+                "   field custom_type\n" +
+                ");");
         with(connection).execute("" +
-                "create or replace package body function_returning_custom_type\n" +
+                "create or replace package returning_complex_type\n" +
+                "AS\n" +
+                "    FUNCTION get_field RETURN complex_type;\n" +
+                "\n" +
+                "END returning_complex_type;");
+        with(connection).execute("" +
+                "create or replace package body returning_complex_type\n" +
                 "AS\n" +
                 "\n" +
-                "    function get_value return custom_type\n" +
+                "    function get_field return complex_type\n" +
                 "    as\n" +
                 "    begin\n" +
-                "        return custom_type(15, 'hello', to_date('2015/01/15 19:15:42', 'YYYY/MM/DD HH24:MI:SS'));\n" +
+                "        return complex_type(custom_type(15, 'hello', to_date('2015/01/15 19:15:42', 'YYYY/MM/DD HH24:MI:SS')));\n" +
                 "    end;\n" +
                 "\n" +
-                "END function_returning_custom_type;");
+                "END returning_complex_type;");
     }
 
     @Test
-    public void customTypeCanBeFetched() throws SQLException, ParseException {
-        FunctionReturningCustomType functionReturningCustomType = new FunctionReturningCustomType(connection);
+    public void complexTypeCanBeFetched() throws SQLException, ParseException {
+        FunctionReturningComplexType functionReturningComplexType = new FunctionReturningComplexType(connection);
         SimpleDateFormat dateformat = new SimpleDateFormat("yyyy/M/dd hh:mm:ss");
         CustomType customType = new CustomType();
         customType.setId(new BigDecimal(15));
         customType.setLabel("hello");
         customType.setCreationDate(dateformat.parse("2015/01/15 19:15:42"));
+        ComplexType complexType = new ComplexType();
+        complexType.setValue(customType);
 
-        assertThat(functionReturningCustomType.getValue(), equalTo(customType));
+        assertThat(functionReturningComplexType.getField(), equalTo(complexType));
     }
 }

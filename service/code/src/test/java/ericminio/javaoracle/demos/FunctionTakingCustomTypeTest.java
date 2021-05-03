@@ -17,6 +17,9 @@ public class FunctionTakingCustomTypeTest extends DatabaseTest {
 
     @Before
     public void seeds() {
+        with(connection).executeIgnoringFailure("drop type complex_type");
+        with(connection).executeIgnoringFailure("drop type custom_type");
+
         with(connection).execute("" +
                 "create or replace type custom_type as object" +
                 "(" +

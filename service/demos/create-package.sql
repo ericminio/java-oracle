@@ -1,4 +1,4 @@
-CREATE OR REPLACE PACKAGE example
+CREATE PACKAGE example
 AS
     FUNCTION hello(value1 varchar2) RETURN number;
     FUNCTION world(value2 number) RETURN varchar2;

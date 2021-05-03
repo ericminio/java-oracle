@@ -5,25 +5,25 @@ import java.sql.SQLException;
 import java.sql.SQLInput;
 import java.sql.SQLOutput;
 
-public class CustomTypeNesting implements SQLData {
-    public static final String NAME = "CUSTOM_TYPE_NESTING";
-    private CustomTypeNested value;
+public class ComplexType implements SQLData {
+    public static final String NAME = "COMPLEX_TYPE";
+    private CustomType value;
 
-    public CustomTypeNesting() {}
+    public ComplexType() {}
 
-    public CustomTypeNested getValue() {
+    public CustomType getValue() {
         return this.value;
     }
-    public void setValue(CustomTypeNested value) {
+    public void setValue(CustomType value) {
         this.value = value;
     }
 
     @Override
     public boolean equals(Object o) {
-        if (! (o instanceof CustomTypeNesting)) {
+        if (! (o instanceof ComplexType)) {
             return false;
         }
-        CustomTypeNesting other = (CustomTypeNesting) o;
+        ComplexType other = (ComplexType) o;
 
         return
                 this.getValue().equals(other.getValue())
@@ -51,7 +51,7 @@ public class CustomTypeNesting implements SQLData {
 
     @Override
     public void readSQL(SQLInput stream, String typeName) throws SQLException {
-        this.setValue((CustomTypeNested) stream.readObject());
+        this.setValue((CustomType) stream.readObject());
     }
 
     @Override
