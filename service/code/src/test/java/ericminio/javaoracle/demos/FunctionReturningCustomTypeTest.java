@@ -17,6 +17,7 @@ public class FunctionReturningCustomTypeTest extends DatabaseTest {
 
     @Before
     public void createStructure() {
+        with(connection).executeIgnoringFailure("drop type array_of_custom_type");
         with(connection).executeIgnoringFailure("drop type complex_type");
         with(connection).executeIgnoringFailure("drop type custom_type");
 
