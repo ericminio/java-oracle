@@ -27,4 +27,42 @@ public class ArrayOfCustomType {
     public CustomType getElement(long index) {
         return array[(int) index];
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (! (o instanceof ArrayOfCustomType)) {
+            return false;
+        }
+        ArrayOfCustomType other = (ArrayOfCustomType) o;
+        if (! (this.length() == other.length() )) {
+            return false;
+        }
+        boolean ok = true;
+        for (int i=0; i<this.length(); i++) {
+            ok = ok && (this.getElement(i).equals(other.getElement(i)));
+            if (!ok) {
+                break;
+            }
+        }
+
+        return ok;
+    }
+
+    @Override
+    public int hashCode() {
+        int value = 0;
+        for (int i=0; i<this.length(); i++) {
+            value += this.getElement(i).hashCode();
+        }
+        return value;
+    }
+
+    @Override
+    public String toString() {
+        String collectionToString = "";
+        for (int i=0; i<this.length(); i++) {
+            collectionToString += this.getElement(i).toString();
+        }
+        return this.getClass().getSimpleName() + "{ " + collectionToString + " }";
+    }
 }
