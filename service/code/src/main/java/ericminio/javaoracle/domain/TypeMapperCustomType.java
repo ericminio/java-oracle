@@ -22,7 +22,7 @@ public class TypeMapperCustomType implements TypeMapper {
 
     @Override
     public String sqlInputRead() {
-        return "stream.readObject()";
+        return "(" + new PascalCase().please(this.type) + ") stream.readObject()";
     }
 
     @Override

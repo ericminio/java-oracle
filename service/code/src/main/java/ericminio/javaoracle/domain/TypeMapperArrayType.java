@@ -22,7 +22,7 @@ public class TypeMapperArrayType implements TypeMapper {
 
     @Override
     public String sqlInputRead() {
-        return "stream.readObject()";
+        return new PascalCase().please(this.type) + ".with((Object[]) stream.readArray().getArray())";
     }
 
     @Override

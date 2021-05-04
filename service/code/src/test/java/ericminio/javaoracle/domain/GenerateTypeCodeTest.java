@@ -20,11 +20,20 @@ public class GenerateTypeCodeTest {
                 "type custom_type as object\n",
                 "(\n",
                 "   field1 number,\n",
-                "   field2 varchar2(10)\n",
+                "   field2 varchar2(10),\n",
+                "   field3 array_type\n",
                 ")"
         );
+        List<List<String>> typeSpecifications = Arrays.asList(
+                Arrays.asList(
+                        "create or replace type record_type as object(\n",
+                        "   value number\n",
+                        ");\n"),
+                Arrays.asList("create or replace type array_type as table of record_type;")
+        );
+        TypeMapperFactory typeMapperFactory = new TypeMapperFactory(typeSpecifications);
         GenerateTypeCode generateTypeCode = new GenerateTypeCode();
-        code = generateTypeCode.please(typeSpecification);
+        code = generateTypeCode.please(typeSpecification, typeMapperFactory);
     }
 
     @Test
@@ -71,6 +80,11 @@ public class GenerateTypeCodeTest {
     }
 
     @Test
+    public void arrayField() {
+        assertThat(code, containsString("private ArrayType field3;"));
+    }
+
+    @Test
     public void accessors() {
         assertThat(code, containsString(""
                 + "    public BigDecimal getField1() {\n"
@@ -102,6 +116,7 @@ public class GenerateTypeCodeTest {
                 "        return\n" +
                 "                (this.getField1() == null ? other.getField1() == null : this.getField1().equals(other.getField1()))\n" +
                 "                && (this.getField2() == null ? other.getField2() == null : this.getField2().equals(other.getField2()))\n" +
+                "                && (this.getField3() == null ? other.getField3() == null : this.getField3().equals(other.getField3()))\n" +
                 "                ;\n" +
                 "    }"
         ));
@@ -115,6 +130,7 @@ public class GenerateTypeCodeTest {
                 "        return\n" +
                 "                (this.getField1() == null ? 0 : this.getField1().hashCode())\n" +
                 "                + (this.getField2() == null ? 0 : this.getField2().hashCode())\n" +
+                "                + (this.getField3() == null ? 0 : this.getField3().hashCode())\n" +
                 "                ;\n" +
                 "    }"
         ));
@@ -128,6 +144,7 @@ public class GenerateTypeCodeTest {
                 "        return this.getClass().getSimpleName() + \"[\"\n" +
                 "                + \" field1=\" + (this.getField1() == null ? \"null\" : this.getField1().toString())\n" +
                 "                + \", field2=\" + (this.getField2() == null ? \"null\" : this.getField2().toString())\n" +
+                "                + \", field3=\" + (this.getField3() == null ? \"null\" : this.getField3().toString())\n" +
                 "                + \" ]\";\n" +
                 "    }"
         ));
@@ -140,6 +157,7 @@ public class GenerateTypeCodeTest {
                 "    public void readSQL(SQLInput stream, String typeName) throws SQLException {\n" +
                 "        this.setField1(stream.readBigDecimal());\n" +
                 "        this.setField2(stream.readString());\n" +
+                "        this.setField3(ArrayType.with((Object[]) stream.readArray().getArray()));\n" +
                 "    }"
         ));
     }
@@ -151,6 +169,7 @@ public class GenerateTypeCodeTest {
                 "    public void writeSQL(SQLOutput stream) throws SQLException {\n" +
                 "        stream.writeBigDecimal(this.getField1());\n" +
                 "        stream.writeString(this.getField2());\n" +
+                "        // ignore field3\n" +
                 "    }"
         ));
     }

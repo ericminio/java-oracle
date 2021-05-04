@@ -1,6 +1,9 @@
 package ericminio.javaoracle.demos;
 
-import java.sql.*;
+import java.sql.SQLData;
+import java.sql.SQLException;
+import java.sql.SQLInput;
+import java.sql.SQLOutput;
 
 public class ComplexType implements SQLData {
     public static final String NAME = "COMPLEX_TYPE";
@@ -48,7 +51,7 @@ public class ComplexType implements SQLData {
     public String toString() {
         return this.getClass().getSimpleName() + "["
                 + " value=" + (this.getValue() == null ? "null" : this.getValue().toString())
-                + " collection=" + (this.getCollection() == null ? "null" : this.getCollection().toString())
+                + ", collection=" + (this.getCollection() == null ? "null" : this.getCollection().toString())
                 + " ]";
     }
 
@@ -66,5 +69,6 @@ public class ComplexType implements SQLData {
     @Override
     public void writeSQL(SQLOutput stream) throws SQLException {
         stream.writeObject(this.getValue());
+        // ignore collection
     }
 }

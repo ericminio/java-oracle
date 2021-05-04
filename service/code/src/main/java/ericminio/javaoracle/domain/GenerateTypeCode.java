@@ -9,6 +9,10 @@ import java.util.List;
 public class GenerateTypeCode {
 
     public String please(List<String> typeSpecification) throws IOException {
+        return please(typeSpecification, new TypeMapperFactory());
+    }
+
+    public String please(List<String> typeSpecification, TypeMapperFactory typeMapperFactory) throws IOException {
         String typeTemplate = new Stringify().inputStream(this.getClass().getClassLoader().getResourceAsStream("templateForType.java"));
 
         String typeName = new ExtractTypeName().please(typeSpecification);
@@ -21,8 +25,8 @@ public class GenerateTypeCode {
                 .replace("                false // fields equals contribution", new BuildEqualsReturnValue().please(parameters))
                 .replace("                0 // fields hashCode contribution", new BuildHashcodeReturnValue().please(parameters))
                 .replace("                // fields toString contribution", new BuildToStringConcatenation().please(parameters))
-                .replace("        // fields readSQL contribution", new BuildReadSql().please(parameters))
-                .replace("        // fields writeSQL contribution", new BuildWriteSql().please(parameters))
+                .replace("        // fields readSQL contribution", new BuildReadSql(typeMapperFactory).please(parameters))
+                .replace("        // fields writeSQL contribution", new BuildWriteSql(typeMapperFactory).please(parameters))
         ;
 
         if (code.indexOf("BigDecimal ") != -1) {

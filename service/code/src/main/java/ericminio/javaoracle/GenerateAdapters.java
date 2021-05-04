@@ -16,6 +16,20 @@ import java.util.List;
 
 public class GenerateAdapters {
 
+    public static void main(String[] args) {
+        GenerateAdapters generateAdapters = new GenerateAdapters();
+        try {
+            generateAdapters.go(
+                    System.getProperty("oraclePackage"),
+                    System.getProperty("typeNamePrefix"),
+                    System.getProperty("javaPackage"),
+                    System.getProperty("outputFolder")
+            );
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public void go(String oraclePackage, String typeNamePrefix, String javaPackage, String outputFolder) throws SQLException, IOException {
         List<String> packageSpecification = new Database().selectPackageDefinition(oraclePackage);
         List<String> types = new Database().selectDistinctTypeNamesWithPrefix(typeNamePrefix);
@@ -41,7 +55,7 @@ public class GenerateAdapters {
             }
             else {
                 GenerateTypeCode generateTypeCode = new GenerateTypeCode();
-                typeCode = generateTypeCode.please(typeSpecification);
+                typeCode = generateTypeCode.please(typeSpecification, typeMapperFactory);
             }
             typeCode = "package " + javaPackage + ";\n\n" + typeCode;
             Files.write(Paths.get(outputFolder, new PascalCase().please(typeName)+".java"), typeCode.getBytes());

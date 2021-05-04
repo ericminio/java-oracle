@@ -8,6 +8,10 @@ AS
         value5 in example_type_one, 
         value6 in example_type_two
     ) RETURN example_type_two;
+    FUNCTION search(
+        id      number,
+        page    number
+    ) RETURN example_type_partial;
 END example;
 /
 show errors;

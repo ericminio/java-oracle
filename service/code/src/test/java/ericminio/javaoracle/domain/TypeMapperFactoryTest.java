@@ -111,7 +111,7 @@ public class TypeMapperFactoryTest {
     public void knowsAboutCustomType() {
         assertThat(typeMapperFactory.of("any_type").functionParameterSettingStatement(), equalTo("statement.setObject(index, field);"));
         assertThat(typeMapperFactory.of("any_type").javaType(), equalTo("AnyType"));
-        assertThat(typeMapperFactory.of("any_type").sqlInputRead(), equalTo("stream.readObject()"));
+        assertThat(typeMapperFactory.of("any_type").sqlInputRead(), equalTo("(AnyType) stream.readObject()"));
         assertThat(typeMapperFactory.of("any_type").sqlOutputWrite(), equalTo("stream.writeObject(this.getField());"));
         assertThat(typeMapperFactory.of("any_type").methodReturnStatement(), equalTo("return (AnyType) resultSet.getObject(1);"));
     }
@@ -120,7 +120,7 @@ public class TypeMapperFactoryTest {
     public void knowsAboutArrayType() {
         assertThat(typeMapperFactory.of("any_table_type").functionParameterSettingStatement(), equalTo("statement.setObject(index, field);"));
         assertThat(typeMapperFactory.of("any_table_type").javaType(), equalTo("AnyTableType"));
-        assertThat(typeMapperFactory.of("any_table_type").sqlInputRead(), equalTo("stream.readObject()"));
+        assertThat(typeMapperFactory.of("any_table_type").sqlInputRead(), equalTo("AnyTableType.with((Object[]) stream.readArray().getArray())"));
         assertThat(typeMapperFactory.of("any_table_type").sqlOutputWrite(), equalTo("stream.writeObject(this.getField());"));
         assertThat(typeMapperFactory.of("any_table_type").methodReturnStatement(), equalTo("return AnyTableType.with((Object[]) resultSet.getArray(1).getArray());"));
     }

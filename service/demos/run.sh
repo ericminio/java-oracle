@@ -21,18 +21,11 @@ java \
     -Doracle.url=jdbc:oracle:thin:@oracle:1521:XE \
     -Doracle.username=system \
     -Doracle.password=oracle \
+    -DoraclePackage=example \
     -DtypeNamePrefix=example_type_ \
     -DjavaPackage=company.name \
     -DoutputFolder=/usr/local/src/service/demos \
-    -cp java-oracle-1.0-jar-with-dependencies.jar ericminio.javaoracle.GenerateTypeAdapters
-java \
-    -Doracle.url=jdbc:oracle:thin:@oracle:1521:XE \
-    -Doracle.username=system \
-    -Doracle.password=oracle \
-    -DoraclePackage=example \
-    -DjavaPackage=company.name \
-    -DoutputFolder=/usr/local/src/service/demos \
-    -cp java-oracle-1.0-jar-with-dependencies.jar ericminio.javaoracle.GeneratePackageAdapter 
+    -cp java-oracle-1.0-jar-with-dependencies.jar ericminio.javaoracle.GenerateAdapters 
 
 cd /usr/local/src/service/demos
 ls -la
