@@ -36,6 +36,11 @@ public class TypeMapperFactoryTest {
     }
 
     @Test
+    public void isArrayTypeResistsUpperCaseIncoming() {
+        assertThat(typeMapperFactory.isArrayType("ANY_TABLE_TYPE"), equalTo(true));
+    }
+
+    @Test
     public void knowsTheVarrayTypeIsArrayType() {
         assertThat(typeMapperFactory.isArrayType("any_varray_type"), equalTo(true));
     }
@@ -60,14 +65,19 @@ public class TypeMapperFactoryTest {
         typeMapperFactory.recordTypeOfArrayType("unknown");
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test
     public void recordTypeGetterResistsMissingSemicolon() {
         assertThat(typeMapperFactory.recordTypeOfArrayType("missing_semicolon"), equalTo("any_type"));
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test
     public void recordTypeGetterResistsExtraSpaces() {
         assertThat(typeMapperFactory.recordTypeOfArrayType("extra_spaces"), equalTo("any_type"));
+    }
+
+    @Test
+    public void recordTypeGetterResistsUpperCase() {
+        assertThat(typeMapperFactory.recordTypeOfArrayType("EXTRA_SPACES"), equalTo("any_type"));
     }
 
     @Test

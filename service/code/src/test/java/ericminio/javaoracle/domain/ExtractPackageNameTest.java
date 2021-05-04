@@ -1,12 +1,11 @@
 package ericminio.javaoracle.domain;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertThat;
+import org.junit.Test;
 
 import java.util.Arrays;
 
-import ericminio.javaoracle.domain.ExtractPackageName;
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertThat;
 
 public class ExtractPackageNameTest {
 
@@ -26,5 +25,23 @@ public class ExtractPackageNameTest {
             "AS\n",
             "END EXPLORATION;"
         )), equalTo("exploration"));
+    }
+
+    @Test
+    public void resistsLowerCase() {
+        assertThat(new ExtractPackageName().please(Arrays.asList(
+                "package beautiful\n",
+                "AS\n",
+                "END beautiful;"
+        )), equalTo("beautiful"));
+    }
+
+    @Test
+    public void resistsNameContainingPackage() {
+        assertThat(new ExtractPackageName().please(Arrays.asList(
+                "package any_package\n",
+                "AS\n",
+                "END any_package;"
+        )), equalTo("any_package"));
     }
 }

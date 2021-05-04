@@ -6,9 +6,10 @@ public class ExtractFunctionName {
 
     public String please(List<String> specification) {
         for (int i=0; i < specification.size(); i++) {
-            String line = specification.get(i).trim();
-            if (line.startsWith("FUNCTION")) {
-                String tmp = line.replace("FUNCTION", "").trim();
+            String line = specification.get(i).trim().toLowerCase();
+            if (line.startsWith("function")) {
+                int space = line.indexOf(" ");
+                String tmp = line.substring(space).trim();
                 int firstSpace = tmp.indexOf(" ");
                 if (firstSpace == -1) { firstSpace = tmp.length(); }
                 int firstParenthesis = tmp.indexOf("(");

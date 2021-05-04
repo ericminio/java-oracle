@@ -44,8 +44,8 @@ public class TypeMapperFactory {
 
     public boolean isArrayType(String type) {
         for (int i=0; i<typeSpecifications.size(); i++) {
-            String statement = getTypeSpecification(i);
-            if (statement.indexOf("type " + type) != -1) {
+            String statement = getTypeSpecification(i).toLowerCase();
+            if (statement.indexOf("type " + type.toLowerCase()) != -1) {
                 if (statement.indexOf("as object") != -1) {
                     return false;
                 }
@@ -57,6 +57,20 @@ public class TypeMapperFactory {
         return false;
     }
 
+    public String recordTypeOfArrayType(String type) {
+        Pattern pattern = Pattern.compile("of (.*)");
+        for (int i=0; i<typeSpecifications.size(); i++) {
+            String statement = getTypeSpecification(i).toLowerCase();
+            if (statement.indexOf("type " + type.toLowerCase()) != -1) {
+                Matcher matcher = pattern.matcher(statement);
+                if (matcher.find()) {
+                    return matcher.group(1).replace(";", "");
+                }
+            }
+        }
+        throw new RuntimeException("Not an array type or unknwn type " + type);
+    }
+
     private String getTypeSpecification(int i) {
         List<String> typeSpecification = typeSpecifications.get(i);
         String statement = "";
@@ -66,19 +80,5 @@ public class TypeMapperFactory {
         }
         statement = statement.trim();
         return statement.toLowerCase();
-    }
-
-    public String recordTypeOfArrayType(String type) {
-        Pattern pattern = Pattern.compile("of (.*);");
-        for (int i=0; i<typeSpecifications.size(); i++) {
-            String statement = getTypeSpecification(i);
-            if (statement.indexOf("type " + type) != -1) {
-                Matcher matcher = pattern.matcher(statement);
-                if (matcher.find()) {
-                    return matcher.group(1);
-                }
-            }
-        }
-        throw new RuntimeException("Not an array type or unknwn type " + type);
     }
 }

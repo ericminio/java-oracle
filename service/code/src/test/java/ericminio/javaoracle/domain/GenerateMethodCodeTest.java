@@ -22,42 +22,42 @@ public class GenerateMethodCodeTest {
 
     @Test
     public void disclosesReturnedType() throws IOException {
-        generator.please(Arrays.asList("FUNCTION any_method RETURN any_type;"), "any_package");
+        generator.please(Arrays.asList("FUNCTION any_method RETURN any_type;"), "any_package", new TypeMapperFactory());
 
         assertThat(generator.getReturnType(), equalTo("any_type"));
     }
 
     @Test
     public void canCallFunctionWithoutParameter() throws IOException {
-        String code = new GenerateMethodCode().please(Arrays.asList("FUNCTION any_method RETURN varchar2;"), "any_package");
+        String code = new GenerateMethodCode().please(Arrays.asList("FUNCTION any_method RETURN varchar2;"), "any_package", new TypeMapperFactory());
         assertThat(code, containsString("public String anyMethod() throws SQLException {\n"));
         assertThat(code, containsString("connection.prepareStatement(\"select any_package.any_method() from dual\");\n"));
     }
 
     @Test
     public void canReturnInteger() throws IOException {
-        String code = new GenerateMethodCode().please(Arrays.asList("FUNCTION any_method RETURN varchar2;"), "any_package");
+        String code = new GenerateMethodCode().please(Arrays.asList("FUNCTION any_method RETURN varchar2;"), "any_package", new TypeMapperFactory());
         assertThat(code, containsString("public String anyMethod() throws SQLException {\n"));
         assertThat(code, containsString("    return (String) resultSet.getObject(1);\n"));
     }
 
     @Test
     public void canReturnString() throws IOException {
-        String code = new GenerateMethodCode().please(Arrays.asList("FUNCTION any_method RETURN number;"), "any_package");
+        String code = new GenerateMethodCode().please(Arrays.asList("FUNCTION any_method RETURN number;"), "any_package", new TypeMapperFactory());
         assertThat(code, containsString("public BigDecimal anyMethod() throws SQLException {\n"));
         assertThat(code, containsString("    return (BigDecimal) resultSet.getObject(1);\n"));
     }
 
     @Test
     public void canReturnCustomType() throws IOException {
-        String code = new GenerateMethodCode().please(Arrays.asList("FUNCTION any_method RETURN any_type;"), "any_package");
+        String code = new GenerateMethodCode().please(Arrays.asList("FUNCTION any_method RETURN any_type;"), "any_package", new TypeMapperFactory());
         assertThat(code, containsString("public AnyType anyMethod() throws SQLException {\n"));
         assertThat(code, containsString("    return (AnyType) resultSet.getObject(1);\n"));
     }
 
     @Test
     public void canCallFunctionWithParameters() throws IOException {
-        String code = new GenerateMethodCode().please(Arrays.asList("FUNCTION any_method(any_field1 number, any_field2 varchar2) RETURN any_type;"), "any_package");
+        String code = new GenerateMethodCode().please(Arrays.asList("FUNCTION any_method(any_field1 number, any_field2 varchar2) RETURN any_type;"), "any_package", new TypeMapperFactory());
         assertThat(code, containsString("public AnyType anyMethod(BigDecimal anyField1, String anyField2) throws SQLException {\n"));
         assertThat(code, containsString("connection.prepareStatement(\"select any_package.any_method(?, ?) from dual\");\n"));
         assertThat(code, containsString("   statement.setBigDecimal(1, anyField1);\n"));
@@ -67,7 +67,7 @@ public class GenerateMethodCodeTest {
 
     @Test
     public void supportOptionalInKeyword() throws IOException {
-        String code = new GenerateMethodCode().please(Arrays.asList("FUNCTION any_method(any_field in any_type) RETURN any_type;"), "any_package");
+        String code = new GenerateMethodCode().please(Arrays.asList("FUNCTION any_method(any_field in any_type) RETURN any_type;"), "any_package", new TypeMapperFactory());
         assertThat(code, containsString("public AnyType anyMethod(AnyType anyField) throws SQLException {\n"));
     }
 

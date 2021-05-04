@@ -59,4 +59,18 @@ public class ExtractFunctionNameTest {
                 "RETURN INTEGER;"
         )), equalTo("any"));
     }
+
+    @Test
+    public void resistsLowercase() {
+        assertThat(new ExtractFunctionName().please(Arrays.asList(
+                "function get_event_count RETURN INTEGER;"
+        )), equalTo("get_event_count"));
+    }
+
+    @Test
+    public void resistsNameContainingFunction() {
+        assertThat(new ExtractFunctionName().please(Arrays.asList(
+                "function any_function RETURN INTEGER;"
+        )), equalTo("any_function"));
+    }
 }
