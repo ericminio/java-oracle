@@ -7,9 +7,9 @@ public class ArrayOfCustomType {
     public static ArrayOfCustomType with(Object[] incoming) {
         CustomType[] array = new CustomType[incoming.length];
         System.arraycopy(incoming, 0, array, 0, incoming.length);
-        ArrayOfCustomType arrayOfCustomType = new ArrayOfCustomType();
-        arrayOfCustomType.setArray(array);
-        return arrayOfCustomType;
+        ArrayOfCustomType arrayType = new ArrayOfCustomType();
+        arrayType.setArray(array);
+        return arrayType;
     }
 
     public CustomType[] getArray() {
