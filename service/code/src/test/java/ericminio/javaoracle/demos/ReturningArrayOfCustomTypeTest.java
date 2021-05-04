@@ -10,7 +10,7 @@ import static ericminio.javaoracle.data.Query.with;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class FunctionReturningArrayOfCustomTypeTest extends DatabaseTest {
+public class ReturningArrayOfCustomTypeTest extends DatabaseTest {
 
     @Before
     public void createStructure() {
@@ -40,16 +40,16 @@ public class FunctionReturningArrayOfCustomTypeTest extends DatabaseTest {
 
     @Test
     public void returnsExpectedArraySize() throws SQLException {
-        FunctionReturningArrayOfCustomType functionReturningArrayOfCustomType = new FunctionReturningArrayOfCustomType(connection);
-        ArrayOfCustomType actual = functionReturningArrayOfCustomType.getValue();
+        ReturningArrayOfCustomType returningArrayOfCustomType = new ReturningArrayOfCustomType(connection);
+        ArrayOfCustomType actual = returningArrayOfCustomType.getValue();
 
         assertThat(actual.length(), equalTo(2));
     }
 
     @Test
     public void returnsExpectedArrayContent() throws SQLException {
-        FunctionReturningArrayOfCustomType functionReturningArrayOfCustomType = new FunctionReturningArrayOfCustomType(connection);
-        ArrayOfCustomType actual = functionReturningArrayOfCustomType.getValue();
+        ReturningArrayOfCustomType returningArrayOfCustomType = new ReturningArrayOfCustomType(connection);
+        ArrayOfCustomType actual = returningArrayOfCustomType.getValue();
         CustomType[] entries = actual.getArray();
 
         assertThat(entries.length, equalTo(2));
@@ -57,8 +57,8 @@ public class FunctionReturningArrayOfCustomTypeTest extends DatabaseTest {
 
     @Test
     public void exposesElements() throws SQLException {
-        FunctionReturningArrayOfCustomType functionReturningArrayOfCustomType = new FunctionReturningArrayOfCustomType(connection);
-        ArrayOfCustomType actual = functionReturningArrayOfCustomType.getValue();
+        ReturningArrayOfCustomType returningArrayOfCustomType = new ReturningArrayOfCustomType(connection);
+        ArrayOfCustomType actual = returningArrayOfCustomType.getValue();
 
         assertThat(actual.getElement(0).getLabel(), equalTo("hello"));
         assertThat(actual.getElement(1).getLabel(), equalTo("world"));

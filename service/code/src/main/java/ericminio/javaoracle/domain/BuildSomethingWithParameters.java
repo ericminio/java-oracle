@@ -12,7 +12,7 @@ public abstract class BuildSomethingWithParameters {
     public BuildSomethingWithParameters() {
         pascalCase = new PascalCase();
         camelCase = new CamelCase();
-        typeMapperFactory = new TypeMapperFactory();
+        this.typeMapperFactory = new TypeMapperFactory();
     }
 
     public String please(Parameters parameters) {

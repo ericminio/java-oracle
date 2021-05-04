@@ -6,12 +6,25 @@ import java.util.List;
 
 public class BuildTypeMapping {
 
+    private TypeMapperFactory typeMapperFactory;
+    private PascalCase pascalCase;
+
+    public BuildTypeMapping(TypeMapperFactory typeMapperFactory) {
+        this.typeMapperFactory = typeMapperFactory;
+        this.pascalCase = new PascalCase();
+    }
+
     public String please(List<String> types) {
         String mapping = "";
         for (int i=0; i<types.size(); i++) {
             String type = types.get(i);
-            if (TypeMapperFactory.isCutomType(type)) {
-                mapping += "        connection.getTypeMap().put(" + new PascalCase().please(type) + ".NAME, " + new PascalCase().please(type) + ".class);\n";
+            if (typeMapperFactory.isCutomType(type)) {
+                String className = pascalCase.please(type);
+                if (typeMapperFactory.isArrayType(type)) {
+                    pascalCase = new PascalCase();
+                    className = pascalCase.please(typeMapperFactory.recordTypeOfArrayType(type));
+                }
+                mapping += "        connection.getTypeMap().put(" + className + ".NAME, " + className + ".class);\n";
             }
         }
         return mapping;

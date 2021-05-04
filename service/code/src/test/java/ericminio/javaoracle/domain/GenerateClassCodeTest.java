@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.List;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;
@@ -89,5 +90,31 @@ public class GenerateClassCodeTest {
                 "END EXPLORATION;"
         ));
         assertThat(code, containsString("import java.math.BigDecimal;\n"));
+    }
+
+    @Test
+    public void typeMappingIncludesRecordTypeWhenReturningArrayType() throws IOException {
+        GenerateClassCode generateClassCode = new GenerateClassCode();
+        List<String> packageSpecification = Arrays.asList(
+                "PACKAGE any_package\n",
+                "AS\n",
+                "   FUNCTION any_function RETURN array_type;\n",
+                "END EXPLORATION;"
+        );
+        List<List<String>> typeSpecifications = Arrays.asList(
+                Arrays.asList(
+                        "create or replace type record_type as object(\n",
+                        "   value number\n",
+                        ");\n"),
+                Arrays.asList("create or replace type array_type as table of record_type;")
+        );
+        TypeMapperFactory typeMapperFactory = new TypeMapperFactory(typeSpecifications);
+        String code = generateClassCode.please(packageSpecification, typeMapperFactory);
+        assertThat(code, containsString("" +
+                "    public AnyPackage(Connection connection) throws SQLException {\n" +
+                "        this.connection = connection;\n" +
+                "        connection.getTypeMap().put(RecordType.NAME, RecordType.class);\n" +
+                "    }"
+        ));
     }
 }

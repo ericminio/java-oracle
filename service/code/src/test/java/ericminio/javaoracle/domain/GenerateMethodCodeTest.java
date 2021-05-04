@@ -5,6 +5,7 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.List;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -68,5 +69,21 @@ public class GenerateMethodCodeTest {
     public void supportOptionalInKeyword() throws IOException {
         String code = new GenerateMethodCode().please(Arrays.asList("FUNCTION any_method(any_field in any_type) RETURN any_type;"), "any_package");
         assertThat(code, containsString("public AnyType anyMethod(AnyType anyField) throws SQLException {\n"));
+    }
+
+    @Test
+    public void canReturnArrayType() throws IOException {
+        List<String> functionSpecification = Arrays.asList("FUNCTION any_method RETURN array_type;");
+        List<List<String>> typeSpecifications = Arrays.asList(
+                Arrays.asList(
+                        "create or replace type record_type as object(\n",
+                        "   value number\n",
+                        ");\n"),
+                Arrays.asList("create or replace type array_type as table of record_type;")
+        );
+        TypeMapperFactory typeMapperFactory = new TypeMapperFactory(typeSpecifications);
+        String code = new GenerateMethodCode().please(functionSpecification, "any_package", typeMapperFactory);
+        assertThat(code, containsString("public ArrayType anyMethod() throws SQLException {\n"));
+        assertThat(code, containsString("    return ArrayType.with((Object[]) resultSet.getArray(1).getArray());\n"));
     }
 }

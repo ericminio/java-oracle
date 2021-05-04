@@ -12,6 +12,10 @@ public class GenerateClassCode {
     private String packageName;
 
     public String please(List<String> packageSpecification) throws IOException {
+        return please(packageSpecification, new TypeMapperFactory());
+    }
+
+    public String please(List<String> packageSpecification, TypeMapperFactory typeMapperFactory) throws IOException {
         String classTemplate = new Stringify().inputStream(this.getClass().getClassLoader().getResourceAsStream("templateForClass.java"));
         this.packageName = new ExtractPackageName().please(packageSpecification);
 
@@ -21,14 +25,14 @@ public class GenerateClassCode {
         for (int i=0; i < functionSpecifications.size(); i++){
             List<String> functionSpecification = functionSpecifications.get(i);
             GenerateMethodCode generator = new GenerateMethodCode();
-            String methodCode = generator.please(functionSpecification, packageName);
+            String methodCode = generator.please(functionSpecification, packageName, typeMapperFactory);
             methodsCode += methodCode + "\n";
             if (i != functionSpecifications.size()-1) {
                 methodsCode += "\n";
             }
             returnTypes.add(generator.getReturnType());
         }
-        String typeMapping = new BuildTypeMapping().please(returnTypes);
+        String typeMapping = new BuildTypeMapping(typeMapperFactory).please(returnTypes);
         if (typeMapping.length() > 0) {
             classTemplate = classTemplate.replace("ClassName(Connection connection) {", "ClassName(Connection connection) throws SQLException {");
         }

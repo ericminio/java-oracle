@@ -8,14 +8,13 @@ import java.util.List;
 
 public class GenerateMethodCode {
 
-    private final TypeMapperFactory typeMapperFactory;
     private String returnType;
 
-    public GenerateMethodCode() {
-        typeMapperFactory = new TypeMapperFactory();
+    public String please(List<String> functionSpecification, String packageName) throws IOException {
+        return please(functionSpecification, packageName, new TypeMapperFactory());
     }
 
-    public String please(List<String> functionSpecification, String packageName) throws IOException {
+    public String please(List<String> functionSpecification, String packageName, TypeMapperFactory typeMapperFactory) throws IOException {
         String methodTemplate = new Stringify().inputStream(this.getClass().getClassLoader().getResourceAsStream("templateForMethod.java"));
 
         String functionName = new ExtractFunctionName().please(functionSpecification);
