@@ -22,8 +22,11 @@ public class DatabaseTest {
     public void newConnection() throws Exception {
         connection = new Database().connection();
         dropPackages();
-        dropTypes();
-        dropTypes();
+        Integer count = 0;
+        do {
+            dropTypes();
+            count = with(connection).selectInt("select count(1) from user_types");
+        } while (count > 0);
         dateformat = new SimpleDateFormat("yyyy/M/dd hh:mm:ss");
     }
 
