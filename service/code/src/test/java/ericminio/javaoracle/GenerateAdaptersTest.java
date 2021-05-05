@@ -30,6 +30,7 @@ public class GenerateAdaptersTest extends DatabaseTest {
         assertThat(code, containsString("       connection.getTypeMap().put(ExampleAnyType.NAME, ExampleAnyType.class);"));
 
         assertThat(code, containsString("   public ExampleArrayType anyFunction()"));
+        assertThat(code, containsString("       PreparedStatement statement = connection.prepareStatement(\"select any_package.any_function() from dual\");"));
         assertThat(code, containsString("       return ExampleArrayType.with((Object[]) resultSet.getArray(1).getArray());"));
     }
 
@@ -47,6 +48,7 @@ public class GenerateAdaptersTest extends DatabaseTest {
         String code = exactContentOf("target/ExampleAnyType.java");
 
         assertThat(code, containsString("public class ExampleAnyType implements SQLData {"));
+        assertThat(code, containsString("    public static final String NAME = \"EXAMPLE_ANY_TYPE\";"));
     }
 
     @Test
