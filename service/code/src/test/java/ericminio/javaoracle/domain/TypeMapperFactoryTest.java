@@ -90,12 +90,21 @@ public class TypeMapperFactoryTest {
     }
 
     @Test
-    public void knowsAboutString() {
+    public void knowsAboutVarchar2() {
         assertThat(typeMapperFactory.of("VARCHAR2").functionParameterSettingStatement(), equalTo("statement.setString(index, field);"));
         assertThat(typeMapperFactory.of("VARCHAR2").javaType(), equalTo("String"));
         assertThat(typeMapperFactory.of("VARCHAR2").sqlInputRead(), equalTo("stream.readString()"));
         assertThat(typeMapperFactory.of("VARCHAR2").sqlOutputWrite(), equalTo("stream.writeString(this.getField());"));
         assertThat(typeMapperFactory.of("VARCHAR2").methodReturnStatement(), equalTo("return (String) resultSet.getObject(1);"));
+    }
+
+    @Test
+    public void knowsAboutVarchar() {
+        assertThat(typeMapperFactory.of("VARCHAR").functionParameterSettingStatement(), equalTo("statement.setString(index, field);"));
+        assertThat(typeMapperFactory.of("VARCHAR").javaType(), equalTo("String"));
+        assertThat(typeMapperFactory.of("VARCHAR").sqlInputRead(), equalTo("stream.readString()"));
+        assertThat(typeMapperFactory.of("VARCHAR").sqlOutputWrite(), equalTo("stream.writeString(this.getField());"));
+        assertThat(typeMapperFactory.of("VARCHAR").methodReturnStatement(), equalTo("return (String) resultSet.getObject(1);"));
     }
 
     @Test

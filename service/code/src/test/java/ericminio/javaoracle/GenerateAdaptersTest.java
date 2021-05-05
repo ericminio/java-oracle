@@ -64,8 +64,8 @@ public class GenerateAdaptersTest extends DatabaseTest {
         generator.go("any_package", "example_", "examples", "target");
 
         assertThat(generator.getLog(), containsString("INFO: Generating classes for types"));
-        assertThat(generator.getLog(), containsString("INFO: -> examples.ExampleArrayType"));
-        assertThat(generator.getLog(), containsString("INFO: -> examples.ExampleAnyType"));
+        assertThat(generator.getLog(), containsString("INFO: -> generating examples.ExampleArrayType"));
+        assertThat(generator.getLog(), containsString("INFO: -> generating examples.ExampleAnyType"));
     }
 
     @Test

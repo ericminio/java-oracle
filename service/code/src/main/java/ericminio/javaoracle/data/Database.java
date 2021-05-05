@@ -47,7 +47,7 @@ public class Database {
     public List<String> selectDistinctTypeNamesWithPrefix(String typeNamePrefix) throws SQLException {
         Connection connection = connection();
         List<String> names = with(connection).selectStrings(
-                "select distinct name from all_source where type='TYPE' and name like ?", typeNamePrefix.toUpperCase()+"%");
+                "select type_name from user_types where type_name like ? order by type_name", typeNamePrefix.toUpperCase()+"%");
         connection.close();
         return names;
     }

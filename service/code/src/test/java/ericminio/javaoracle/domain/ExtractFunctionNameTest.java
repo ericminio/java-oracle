@@ -73,4 +73,29 @@ public class ExtractFunctionNameTest {
                 "function any_function RETURN INTEGER;"
         )), equalTo("any_function"));
     }
+
+    @Test
+    public void ignoresComment() {
+        assertThat(new ExtractFunctionName().please(Arrays.asList(
+                "function any_function\n",
+                "--ignore me",
+                "RETURN INTEGER;"
+        )), equalTo("any_function"));
+    }
+
+    @Test
+    public void ignoresCommentAfterName() {
+        assertThat(new ExtractFunctionName().please(Arrays.asList(
+                "function any_function --ignore me\n",
+                "RETURN INTEGER;"
+        )), equalTo("any_function"));
+    }
+
+    @Test
+    public void ignoresCommentImmediatelyAfterName() {
+        assertThat(new ExtractFunctionName().please(Arrays.asList(
+                "function any_function--ignore me\n",
+                "RETURN INTEGER;"
+        )), equalTo("any_function"));
+    }
 }

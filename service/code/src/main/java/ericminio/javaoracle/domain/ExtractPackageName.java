@@ -9,7 +9,11 @@ public class ExtractPackageName {
             String line = specification.get(i).trim().toLowerCase();
             if (line.startsWith("package")) {
                 int space = line.indexOf(" ");
-                return line.substring(space).trim().toLowerCase();
+                String after = line.substring(space + 1).trim();
+                if (after.indexOf(" ") != -1) {
+                    after = after.substring(0, after.indexOf(" ")).trim();
+                }
+                return after.toLowerCase();
             }
         }
         return null;

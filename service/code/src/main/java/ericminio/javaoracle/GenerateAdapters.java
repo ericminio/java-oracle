@@ -62,6 +62,8 @@ public class GenerateAdapters {
         logger.log(Level.INFO, "Generating classes for types");
         for (int i=0; i<types.size(); i++) {
             String typeName = types.get(i);
+            String typeClassName = new PascalCase().please(typeName);
+            logger.log(Level.INFO, "-> generating " + javaPackage + "." + typeClassName);
             List<String> typeSpecification = typeSpecifications.get(i);
             String typeCode = "";
             if (typeMapperFactory.isArrayType(typeName)) {
@@ -73,9 +75,7 @@ public class GenerateAdapters {
                 typeCode = generateTypeCode.please(typeSpecification, typeMapperFactory);
             }
             typeCode = "package " + javaPackage + ";\n\n" + typeCode;
-            String typeClassName = new PascalCase().please(typeName);
             Files.write(Paths.get(outputFolder, typeClassName +".java"), typeCode.getBytes());
-            logger.log(Level.INFO, "-> " + javaPackage + "." + typeClassName);
         }
     }
 

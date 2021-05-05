@@ -9,7 +9,11 @@ public class ExtractParameters {
 
         String function = "";
         for (int i=0; i<specification.size(); i++) {
-            function += specification.get(i);
+            String line = specification.get(i);
+            if (line.indexOf("--") != -1) {
+                line = line.substring(0, line.indexOf("--"));
+            }
+            function += line;
         }
         if (function.indexOf("(") != -1) {
             String list = function.substring(function.indexOf("(") + 1);

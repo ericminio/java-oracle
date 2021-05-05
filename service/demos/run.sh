@@ -9,12 +9,13 @@ mvn clean package \
     -Doracle.password=oracle
 
 rm /usr/local/src/service/demos/*.java
-executeFile /usr/local/src/service/demos/clean.sql
+executeFile /usr/local/src/work/drop-packages.sql
+executeFile /usr/local/src/work/drop-types.sql
 executeFile /usr/local/src/service/demos/create-types.sql
 executeFile /usr/local/src/service/demos/create-package.sql
 
-execute "select text from all_source where type='TYPE' and name like 'EXAMPLE_%' order by name, line;"
-execute "select text from all_source where type='PACKAGE' and name='EXAMPLE' order by line;"
+execute "select type_name from user_types order by type_name;"
+execute "select object_name from user_objects where object_type='PACKAGE';"
 
 cd target
 java \

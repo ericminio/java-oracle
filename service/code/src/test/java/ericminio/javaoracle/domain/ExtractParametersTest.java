@@ -153,4 +153,41 @@ public class ExtractParametersTest {
         ));
         assertThat(parameters.all(), equalTo(Arrays.asList("param1 number", "param2 number")));
     }
+
+    @Test
+    public void ignoresComment() {
+        Parameters parameters = new ExtractParameters().please(Arrays.asList(
+                "FUNCTION any",
+                "(",
+                "   -- ignore me",
+                "   param number",
+                ")",
+                "RETURN number;"
+        ));
+        assertThat(parameters.all(), equalTo(Arrays.asList("param number")));
+    }
+
+    @Test
+    public void ignoresCommentAfterField() {
+        Parameters parameters = new ExtractParameters().please(Arrays.asList(
+                "FUNCTION any",
+                "(",
+                "   param number -- ignore me",
+                ")",
+                "RETURN number;"
+        ));
+        assertThat(parameters.all(), equalTo(Arrays.asList("param number")));
+    }
+
+    @Test
+    public void ignoresCommentImmediatelyAfterField() {
+        Parameters parameters = new ExtractParameters().please(Arrays.asList(
+                "FUNCTION any",
+                "(",
+                "   param number-- ignore me",
+                ")",
+                "RETURN number;"
+        ));
+        assertThat(parameters.all(), equalTo(Arrays.asList("param number")));
+    }
 }

@@ -22,7 +22,7 @@ public class TypeMapperFactory {
         if (normalized.startsWith("NUMBER")) {
             return new TypeMapperNumber();
         }
-        if (normalized.startsWith("VARCHAR2")) {
+        if (normalized.startsWith("VARCHAR")) {
             return new TypeMapperString();
         }
         if (normalized.startsWith("DATE")) {

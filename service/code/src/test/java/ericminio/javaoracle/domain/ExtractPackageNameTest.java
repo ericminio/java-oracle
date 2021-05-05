@@ -44,4 +44,20 @@ public class ExtractPackageNameTest {
                 "END any_package;"
         )), equalTo("any_package"));
     }
+
+    @Test
+    public void resistsAsOnCreationLine() {
+        assertThat(new ExtractPackageName().please(Arrays.asList(
+                "package any_package AS\n",
+                "END any_package;"
+        )), equalTo("any_package"));
+    }
+
+    @Test
+    public void resistsIsOnCreationLine() {
+        assertThat(new ExtractPackageName().please(Arrays.asList(
+                "package any_package IS\n",
+                "END any_package;"
+        )), equalTo("any_package"));
+    }
 }

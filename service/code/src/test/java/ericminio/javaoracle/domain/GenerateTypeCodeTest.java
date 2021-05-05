@@ -173,4 +173,30 @@ public class GenerateTypeCodeTest {
                 "    }"
         ));
     }
+
+    @Test
+    public void ignoresCommentsInDefinition() throws IOException {
+        List<String> typeSpecification = Arrays.asList(
+                "type custom_type as object(\n",
+                "   \n",
+                "   -- this comment should be ignored\n\n",
+                "   \n",
+                "   field1 number, -- that comment too\n",
+                "   field2 varchar2(10),\n",
+                "   field3 array_type\n",
+                ")"
+        );
+        List<List<String>> typeSpecifications = Arrays.asList(
+                Arrays.asList(
+                        "create or replace type record_type as object(\n",
+                        "   value number\n",
+                        ");\n"),
+                Arrays.asList("create or replace type array_type as table of record_type;")
+        );
+        TypeMapperFactory typeMapperFactory = new TypeMapperFactory(typeSpecifications);
+        GenerateTypeCode generateTypeCode = new GenerateTypeCode();
+        code = generateTypeCode.please(typeSpecification, typeMapperFactory);
+
+        assertThat(code, containsString("public class CustomType implements SQLData {"));
+    }
 }
