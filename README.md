@@ -20,9 +20,29 @@ One way to see it running:
 ```
 TEXT
 --------------------------------------------------------------------------------
+type example_any_type as object(value number(15,4))
+type example_array_type as table of example_any_type
+type example_type_array as table of example_type_record
 type example_type_one as object(value number(15,4))
+type example_type_partial as object (
+    page                number(6),
+    records_per_page    number(6),
+    records_in_page     number(6),
+    total_records       number(6),
+    results             example_type_array
+)
+
+TEXT
+--------------------------------------------------------------------------------
+type example_type_record as object (
+    id          number,
+    label       varchar2(15),
+    creation    date
+)
 type example_type_three as object(value date)
 type example_type_two as object(value varchar2(10))
+
+18 rows selected.
 
 
 TEXT
@@ -34,22 +54,41 @@ AS
     FUNCTION one(value3 date) RETURN date;
     FUNCTION two(value4 example_type_one) RETURN example_type_one;
     FUNCTION three(
-	value5 example_type_one,
-	value6 example_type_two
+        value5 in example_type_one,
+        value6 in example_type_two
     ) RETURN example_type_two;
+    FUNCTION search(
+
+TEXT
+--------------------------------------------------------------------------------
+        id      number,
+        page    number
+    ) RETURN example_type_partial;
 END example;
 
-11 rows selected.
+15 rows selected.
 
-total 32
-drwxr-xr-x   10 root     root           340 May  1 21:47 .
-drwxr-xr-x    4 root     root           136 May  1 15:28 ..
--rw-r--r--    1 root     root          2433 May  1 21:47 Example.java
--rw-r--r--    1 root     root          1562 May  1 21:47 ExampleTypeOne.java
--rw-r--r--    1 root     root          1602 May  1 21:47 ExampleTypeThree.java
--rw-r--r--    1 root     root          1513 May  1 21:47 ExampleTypeTwo.java
--rw-r--r--    1 root     root           399 May  1 21:45 clean.sql
--rw-r--r--    1 root     root           393 May  1 21:30 create-package.sql
--rw-r--r--    1 root     root           425 May  1 21:35 create-types.sql
--rwxr-xr-x    1 root     root          1067 May  1 21:46 run.sh
+INFO: Generating class for package
+INFO: -> company.name.Example
+INFO: Generating classes for types
+INFO: -> company.name.ExampleTypeRecord
+INFO: -> company.name.ExampleTypeOne
+INFO: -> company.name.ExampleTypeTwo
+INFO: -> company.name.ExampleTypePartial
+INFO: -> company.name.ExampleTypeArray
+INFO: -> company.name.ExampleTypeThree
+total 26
+drwxrwxrwx    1 root     root          4096 May  5 18:25 .
+drwxrwxrwx    1 root     root             0 Apr 28 16:11 ..
+-rwxr-xr-x    1 root     root          2952 May  5 18:25 Example.java
+-rwxr-xr-x    1 root     root          1770 May  5 18:25 ExampleTypeArray.java
+-rwxr-xr-x    1 root     root          1562 May  5 18:25 ExampleTypeOne.java
+-rwxr-xr-x    1 root     root          4317 May  5 18:25 ExampleTypePartial.java
+-rwxr-xr-x    1 root     root          2741 May  5 18:25 ExampleTypeRecord.java
+-rwxr-xr-x    1 root     root          1602 May  5 18:25 ExampleTypeThree.java
+-rwxr-xr-x    1 root     root          1513 May  5 18:25 ExampleTypeTwo.java
+-rwxr-xr-x    1 root     root           553 May  3 17:05 clean.sql
+-rwxr-xr-x    1 root     root           491 May  4 23:47 create-package.sql
+-rwxr-xr-x    1 root     root           609 May  4 22:41 create-types.sql
+-rwxr-xr-x    1 root     root          1032 May  4 22:33 run.sh
 ```

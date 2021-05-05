@@ -5,6 +5,7 @@ import ericminio.javaoracle.domain.GenerateArrayTypeCode;
 import ericminio.javaoracle.domain.GenerateClassCode;
 import ericminio.javaoracle.domain.GenerateTypeCode;
 import ericminio.javaoracle.domain.TypeMapperFactory;
+import ericminio.javaoracle.support.LogSink;
 import ericminio.javaoracle.support.PascalCase;
 
 import java.io.IOException;
@@ -13,8 +14,18 @@ import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class GenerateAdapters {
+
+    private final LogSink logSink;
+    private final Logger logger;
+
+    public GenerateAdapters() {
+        this.logSink = new LogSink(true);
+        this.logger = logSink.getLogger();
+    }
 
     public static void main(String[] args) {
         GenerateAdapters generateAdapters = new GenerateAdapters();
@@ -40,11 +51,15 @@ public class GenerateAdapters {
         }
         TypeMapperFactory typeMapperFactory = new TypeMapperFactory(typeSpecifications);
 
+        logger.log(Level.INFO, "Generating class for package");
         GenerateClassCode generateClassCode = new GenerateClassCode();
         String packageCode = generateClassCode.please(packageSpecification, typeMapperFactory);
         packageCode = "package " + javaPackage + ";\n\n" + packageCode;
-        Files.write(Paths.get(outputFolder, new PascalCase().please(generateClassCode.getPackageName())+".java"), packageCode.getBytes());
+        String packageClassName = new PascalCase().please(generateClassCode.getPackageName());
+        Files.write(Paths.get(outputFolder, packageClassName +".java"), packageCode.getBytes());
+        logger.log(Level.INFO, "-> " + javaPackage + "." + packageClassName);
 
+        logger.log(Level.INFO, "Generating classes for types");
         for (int i=0; i<types.size(); i++) {
             String typeName = types.get(i);
             List<String> typeSpecification = typeSpecifications.get(i);
@@ -58,7 +73,17 @@ public class GenerateAdapters {
                 typeCode = generateTypeCode.please(typeSpecification, typeMapperFactory);
             }
             typeCode = "package " + javaPackage + ";\n\n" + typeCode;
-            Files.write(Paths.get(outputFolder, new PascalCase().please(typeName)+".java"), typeCode.getBytes());
+            String typeClassName = new PascalCase().please(typeName);
+            Files.write(Paths.get(outputFolder, typeClassName +".java"), typeCode.getBytes());
+            logger.log(Level.INFO, "-> " + javaPackage + "." + typeClassName);
         }
+    }
+
+    public String getLog() {
+        return logSink.getLog();
+    }
+
+    public LogSink getLogSink() {
+        return logSink;
     }
 }

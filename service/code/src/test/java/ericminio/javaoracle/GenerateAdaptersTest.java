@@ -5,9 +5,11 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import static ericminio.javaoracle.support.FileUtils.exactContentOf;
 import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
 
 public class GenerateAdaptersTest extends DatabaseTest {
@@ -45,5 +47,30 @@ public class GenerateAdaptersTest extends DatabaseTest {
         String code = exactContentOf("target/ExampleAnyType.java");
 
         assertThat(code, containsString("public class ExampleAnyType implements SQLData {"));
+    }
+
+    @Test
+    public void logsPackageGeneration() throws SQLException, IOException {
+        GenerateAdapters generator = new GenerateAdapters();
+        generator.go("any_package", "example_", "examples", "target");
+
+        assertThat(generator.getLog(), containsString("INFO: Generating class for package"));
+        assertThat(generator.getLog(), containsString("INFO: -> examples.AnyPackage"));
+    }
+
+    @Test
+    public void logsTypeGeneration() throws SQLException, IOException {
+        GenerateAdapters generator = new GenerateAdapters();
+        generator.go("any_package", "example_", "examples", "target");
+
+        assertThat(generator.getLog(), containsString("INFO: Generating classes for types"));
+        assertThat(generator.getLog(), containsString("INFO: -> examples.ExampleArrayType"));
+        assertThat(generator.getLog(), containsString("INFO: -> examples.ExampleAnyType"));
+    }
+
+    @Test
+    public void logsToConsole() {
+        GenerateAdapters generator = new GenerateAdapters();
+        assertThat(generator.getLogSink().logsToConsole(), equalTo(true));
     }
 }
