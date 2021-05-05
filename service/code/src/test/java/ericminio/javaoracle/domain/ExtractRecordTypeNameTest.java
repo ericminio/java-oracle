@@ -44,4 +44,28 @@ public class ExtractRecordTypeNameTest {
         assertThat(new ExtractRecordTypeName().please(Arrays.asList("create or replace type beautiful_type is table of number")),
                 equalTo("number"));
     }
+
+    @Test
+    public void resistsTrailingSemicolon() {
+        assertThat(new ExtractRecordTypeName().please(Arrays.asList("create or replace type beautiful_type is table of number;")),
+                equalTo("number"));
+    }
+
+    @Test
+    public void resistsExtraSpaceAfterTrailingSemicolon() {
+        assertThat(new ExtractRecordTypeName().please(Arrays.asList("create or replace type beautiful_type is table of number;  ")),
+                equalTo("number"));
+    }
+
+    @Test
+    public void ignoresComment() {
+        assertThat(new ExtractRecordTypeName().please(Arrays.asList("create or replace type beautiful_type is table of number;-- ignore me")),
+                equalTo("number"));
+    }
+
+    @Test
+    public void ignoresCommentAfterSpace() {
+        assertThat(new ExtractRecordTypeName().please(Arrays.asList("create or replace type beautiful_type is table of number; -- ignore me")),
+                equalTo("number"));
+    }
 }

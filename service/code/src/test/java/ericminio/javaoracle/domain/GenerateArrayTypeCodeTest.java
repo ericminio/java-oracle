@@ -16,7 +16,7 @@ public class GenerateArrayTypeCodeTest {
 
     @Before
     public void generateCode() throws IOException {
-        List<String> typeSpecification = Arrays.asList("type array_of_any_type as varray(15) of random_type");
+        List<String> typeSpecification = Arrays.asList("type array_of_any_type as varray(15) of random_type;");
         GenerateArrayTypeCode generateArrayTypeCode = new GenerateArrayTypeCode();
         code = generateArrayTypeCode.please(typeSpecification);
     }
@@ -24,6 +24,11 @@ public class GenerateArrayTypeCodeTest {
     @Test
     public void className() {
         assertThat(code, containsString("public class ArrayOfAnyType {"));
+    }
+
+    @Test
+    public void fieldDeclaration() {
+        assertThat(code, containsString("private RandomType[] array"));
     }
 
     @Test

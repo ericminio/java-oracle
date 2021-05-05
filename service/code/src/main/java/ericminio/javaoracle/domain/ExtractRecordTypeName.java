@@ -27,7 +27,14 @@ public class ExtractRecordTypeName {
         for (int i=0; i < patterns.size(); i++) {
             Matcher matcher = patterns.get(i).matcher(statement);
             if (matcher.find()) {
-                return matcher.group(1);
+                String candidate = matcher.group(1).trim();
+                if (candidate.indexOf("--") != -1) {
+                    candidate = candidate.substring(0, candidate.indexOf("--")).trim();
+                }
+                if (candidate.endsWith(";")) {
+                    candidate = candidate.substring(0, candidate.length()-1);
+                }
+                return candidate;
             }
         }
         return null;
