@@ -48,7 +48,7 @@ public class GenerateAdapters {
         logger.log(Level.INFO, "Generating class for package");
         String packageClassName = new PascalCase().please(new ExtractPackageName().please(incoming.getPackageSpecification()));
         String packageClassCode = new AddPackageStatement(javaPackage).to(
-                new GenerateClassCode().please(incoming.getPackageSpecification(), typeMapperFactory));
+                new GeneratePackageCode().please(incoming.getPackageSpecification(), typeMapperFactory));
         save(outputFolder, packageClassName, packageClassCode);
         logger.log(Level.INFO, "-> " + javaPackage + "." + packageClassName);
 

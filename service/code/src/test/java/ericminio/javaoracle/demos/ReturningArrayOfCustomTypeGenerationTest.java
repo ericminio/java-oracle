@@ -1,6 +1,6 @@
 package ericminio.javaoracle.demos;
 
-import ericminio.javaoracle.domain.GenerateClassCode;
+import ericminio.javaoracle.domain.GeneratePackageCode;
 import ericminio.javaoracle.domain.TypeMapperFactory;
 import org.junit.Test;
 
@@ -30,7 +30,7 @@ public class ReturningArrayOfCustomTypeGenerationTest {
                 Arrays.asList("create or replace type array_of_custom_type as table of custom_type;")
         );
         TypeMapperFactory typeMapperFactory = new TypeMapperFactory(typeSpecifications);
-        String actual = new GenerateClassCode().please(packageSpecification, typeMapperFactory);
+        String actual = new GeneratePackageCode().please(packageSpecification, typeMapperFactory);
         
         assertThat(actual, equalTo(contentMinusTwoFirstLines("src/test/java/ericminio/javaoracle/demos/ReturningArrayOfCustomType.java")));
     }

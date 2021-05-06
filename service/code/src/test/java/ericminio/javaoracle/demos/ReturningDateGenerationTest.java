@@ -1,6 +1,6 @@
 package ericminio.javaoracle.demos;
 
-import ericminio.javaoracle.domain.GenerateClassCode;
+import ericminio.javaoracle.domain.GeneratePackageCode;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -14,7 +14,7 @@ public class ReturningDateGenerationTest {
 
     @Test
     public void works() throws IOException {
-        String actual = new GenerateClassCode().please(Arrays.asList(
+        String actual = new GeneratePackageCode().please(Arrays.asList(
                 "PACKAGE returning_date\n",
                 "AS\n",
                 "   FUNCTION get_value RETURN date;\n",

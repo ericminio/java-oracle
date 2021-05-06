@@ -9,24 +9,24 @@ import java.util.List;
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;
 
-public class GenerateClassCodeTest {
+public class GeneratePackageCodeTest {
 
     @Test
     public void disclosesPackageName() throws IOException {
-        GenerateClassCode generateClassCode = new GenerateClassCode();
-        generateClassCode.please(Arrays.asList(
+        GeneratePackageCode generatePackageCode = new GeneratePackageCode();
+        generatePackageCode.please(Arrays.asList(
                 "PACKAGE EXPLORATION\n",
                 "AS\n",
                 "   FUNCTION get_event_count RETURN number;\n",
                 "END EXPLORATION;"
         ));
-        assertThat(generateClassCode.getPackageName(), equalTo("exploration"));
+        assertThat(generatePackageCode.getPackageName(), equalTo("exploration"));
     }
 
     @Test
     public void generatesExpectedConstructor() throws IOException {
-        GenerateClassCode generateClassCode = new GenerateClassCode();
-        String code = generateClassCode.please(Arrays.asList(
+        GeneratePackageCode generatePackageCode = new GeneratePackageCode();
+        String code = generatePackageCode.please(Arrays.asList(
                 "PACKAGE any_package\n",
                 "AS\n",
                 "   FUNCTION any_function RETURN number;\n",
@@ -41,8 +41,8 @@ public class GenerateClassCodeTest {
 
     @Test
     public void generatesTypeMappingWhenFunctionReturnsCustomType() throws IOException {
-        GenerateClassCode generateClassCode = new GenerateClassCode();
-        String code = generateClassCode.please(Arrays.asList(
+        GeneratePackageCode generatePackageCode = new GeneratePackageCode();
+        String code = generatePackageCode.please(Arrays.asList(
                 "PACKAGE any_package\n",
                 "AS\n",
                 "   FUNCTION any_function RETURN any_type;\n",
@@ -58,8 +58,8 @@ public class GenerateClassCodeTest {
 
     @Test
     public void importsArePreservedByDefault() throws IOException {
-        GenerateClassCode generateClassCode = new GenerateClassCode();
-        String code = generateClassCode.please(Arrays.asList(
+        GeneratePackageCode generatePackageCode = new GeneratePackageCode();
+        String code = generatePackageCode.please(Arrays.asList(
                 "PACKAGE any_package\n",
                 "AS\n",
                 "   FUNCTION any_function RETURN any_type;\n",
@@ -70,8 +70,8 @@ public class GenerateClassCodeTest {
 
     @Test
     public void importsAreUpdatedIfBigDecimalIsUsedAsReturnType() throws IOException {
-        GenerateClassCode generateClassCode = new GenerateClassCode();
-        String code = generateClassCode.please(Arrays.asList(
+        GeneratePackageCode generatePackageCode = new GeneratePackageCode();
+        String code = generatePackageCode.please(Arrays.asList(
                 "PACKAGE any_package\n",
                 "AS\n",
                 "   FUNCTION any_function RETURN number;\n",
@@ -82,8 +82,8 @@ public class GenerateClassCodeTest {
 
     @Test
     public void importsAreUpdatedIfBigDecimalIsUsedAsParameter() throws IOException {
-        GenerateClassCode generateClassCode = new GenerateClassCode();
-        String code = generateClassCode.please(Arrays.asList(
+        GeneratePackageCode generatePackageCode = new GeneratePackageCode();
+        String code = generatePackageCode.please(Arrays.asList(
                 "PACKAGE any_package\n",
                 "AS\n",
                 "   FUNCTION any_function(param number) RETURN any_type;\n",
@@ -94,7 +94,7 @@ public class GenerateClassCodeTest {
 
     @Test
     public void typeMappingIncludesRecordTypeWhenReturningArrayType() throws IOException {
-        GenerateClassCode generateClassCode = new GenerateClassCode();
+        GeneratePackageCode generatePackageCode = new GeneratePackageCode();
         List<String> packageSpecification = Arrays.asList(
                 "PACKAGE any_package\n",
                 "AS\n",
@@ -109,7 +109,7 @@ public class GenerateClassCodeTest {
                 Arrays.asList("create or replace type array_type as table of record_type;")
         );
         TypeMapperFactory typeMapperFactory = new TypeMapperFactory(typeSpecifications);
-        String code = generateClassCode.please(packageSpecification, typeMapperFactory);
+        String code = generatePackageCode.please(packageSpecification, typeMapperFactory);
         assertThat(code, containsString("" +
                 "    public AnyPackage(Connection connection) throws SQLException {\n" +
                 "        this.connection = connection;\n" +

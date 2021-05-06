@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GenerateClassCode {
+public class GeneratePackageCode {
 
     private String packageName;
 
@@ -16,7 +16,7 @@ public class GenerateClassCode {
     }
 
     public String please(List<String> packageSpecification, TypeMapperFactory typeMapperFactory) throws IOException {
-        String classTemplate = new Stringify().inputStream(this.getClass().getClassLoader().getResourceAsStream("templateForClass.java"));
+        String classTemplate = new Stringify().inputStream(this.getClass().getClassLoader().getResourceAsStream("templateForPackage.java"));
         this.packageName = new ExtractPackageName().please(packageSpecification);
 
         List<String> returnTypes = new ArrayList<>();

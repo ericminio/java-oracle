@@ -1,6 +1,6 @@
 package ericminio.javaoracle.demos;
 
-import ericminio.javaoracle.domain.GenerateClassCode;
+import ericminio.javaoracle.domain.GeneratePackageCode;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -14,7 +14,7 @@ public class TakingNoParameterGenerationTest {
 
     @Test
     public void works() throws IOException {
-        String actual = new GenerateClassCode().please(Arrays.asList(
+        String actual = new GeneratePackageCode().please(Arrays.asList(
                 "PACKAGE taking_no_parameter\n",
                 "AS\n",
                 "   FUNCTION get_value RETURN number;\n",
