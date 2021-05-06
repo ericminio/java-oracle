@@ -12,6 +12,9 @@ public class RemoveComments {
             if (line.indexOf("--") != -1) {
                 line = line.substring(0, line.indexOf("--"));
             }
+            if (line.indexOf("/**") != -1) {
+                line = line.substring(0, line.indexOf("/**"));
+            }
             clean.add(line);
         }
         return clean;

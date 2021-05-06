@@ -19,7 +19,7 @@ public class ExtractRecordTypeName {
 
     public String please(List<String> specification) {
         List<String> clean = new RemoveComments().please(specification);
-        String statement = new JoinWith(" ").please(clean).trim();
+        String statement = new JoinWith(" ").please(clean).trim().toLowerCase();
         for (int i=0; i < patterns.size(); i++) {
             Matcher matcher = patterns.get(i).matcher(statement);
             if (matcher.find()) {

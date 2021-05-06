@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 import static ericminio.javaoracle.support.FileUtils.exactContentOf;
+import static ericminio.javaoracle.support.FileUtils.safeDelete;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
@@ -18,6 +19,9 @@ public class GenerateAdaptersFromFilesTest extends DatabaseTest {
 
     @Before
     public void generateAdapters() throws SQLException, IOException {
+        safeDelete("target/AnyPackage.java");
+        safeDelete("target/ExampleArrayType.java");
+        safeDelete("target/ExampleAnyType.java");
         generateAdaptersFromFiles = new GenerateAdaptersFromFiles();
         generateAdaptersFromFiles.fromFiles(
                 "src/test/resources/create-package.sql",
@@ -67,8 +71,8 @@ public class GenerateAdaptersFromFilesTest extends DatabaseTest {
     @Test
     public void logsTypeGeneration() throws SQLException, IOException {
         assertThat(generateAdaptersFromFiles.getLog(), containsString("INFO: Generating classes for types"));
-        assertThat(generateAdaptersFromFiles.getLog(), containsString("INFO: -> generating examples.ExampleArrayType"));
-        assertThat(generateAdaptersFromFiles.getLog(), containsString("INFO: -> generating examples.ExampleAnyType"));
+        assertThat(generateAdaptersFromFiles.getLog(), containsString("INFO: -> generating class for type example_array_type"));
+        assertThat(generateAdaptersFromFiles.getLog(), containsString("INFO: -> generating class for type example_any_type"));
     }
 
     @Test

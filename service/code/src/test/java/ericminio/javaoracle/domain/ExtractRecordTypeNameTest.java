@@ -28,6 +28,18 @@ public class ExtractRecordTypeNameTest {
     }
 
     @Test
+    public void supportsIsVarrayOfCustomType() {
+        assertThat(new ExtractRecordTypeName().please(Arrays.asList("create or replace type beautiful_type is varray(30) of custom_type")),
+                equalTo("custom_type"));
+    }
+
+    @Test
+    public void supportsIsVarrayOfCustomTypeWithTrailingSemicolon() {
+        assertThat(new ExtractRecordTypeName().please(Arrays.asList("create or replace type beautiful_type is varray(30) of custom_type;")),
+                equalTo("custom_type"));
+    }
+
+    @Test
     public void supportsIsVarrayWithoutSize() {
         assertThat(new ExtractRecordTypeName().please(Arrays.asList("create or replace type beautiful_type is varray of number")),
                 equalTo("number"));
@@ -67,5 +79,11 @@ public class ExtractRecordTypeNameTest {
     public void ignoresCommentAfterSpace() {
         assertThat(new ExtractRecordTypeName().please(Arrays.asList("create or replace type beautiful_type is table of number; -- ignore me")),
                 equalTo("number"));
+    }
+
+    @Test
+    public void supportsUpperCaseKeywords() {
+        assertThat(new ExtractRecordTypeName().please(Arrays.asList("TYPE array_type IS varray(20) of custom_type;")),
+                equalTo("custom_type"));
     }
 }

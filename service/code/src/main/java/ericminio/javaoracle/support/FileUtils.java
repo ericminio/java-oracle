@@ -1,5 +1,6 @@
 package ericminio.javaoracle.support;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -37,5 +38,12 @@ public class FileUtils {
 
     public static void save(String outputFolder, String name, String code) throws IOException {
         Files.write(Paths.get(outputFolder, name +".java"), code.getBytes());
+    }
+
+    public static void safeDelete(String filename) {
+        try {
+            new File(filename).delete();
+        }
+        catch (Exception ignored) {}
     }
 }

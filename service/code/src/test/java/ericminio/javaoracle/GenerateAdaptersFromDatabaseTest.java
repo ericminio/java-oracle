@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 import static ericminio.javaoracle.support.FileUtils.exactContentOf;
+import static ericminio.javaoracle.support.FileUtils.safeDelete;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
@@ -18,6 +19,9 @@ public class GenerateAdaptersFromDatabaseTest extends DatabaseTest {
 
     @Before
     public void initDatabase() throws IOException, SQLException {
+        safeDelete("target/AnyPackage.java");
+        safeDelete("target/ExampleArrayType.java");
+        safeDelete("target/ExampleAnyType.java");
         executeFromResource("create-types.sql");
         executeFromResource("create-package.sql");
         generateAdaptersFromDatabase = new GenerateAdaptersFromDatabase();
@@ -65,8 +69,8 @@ public class GenerateAdaptersFromDatabaseTest extends DatabaseTest {
     @Test
     public void logsTypeGeneration() throws SQLException, IOException {
         assertThat(generateAdaptersFromDatabase.getLog(), containsString("INFO: Generating classes for types"));
-        assertThat(generateAdaptersFromDatabase.getLog(), containsString("INFO: -> generating examples.ExampleArrayType"));
-        assertThat(generateAdaptersFromDatabase.getLog(), containsString("INFO: -> generating examples.ExampleAnyType"));
+        assertThat(generateAdaptersFromDatabase.getLog(), containsString("INFO: -> generating class for type EXAMPLE_ARRAY_TYPE"));
+        assertThat(generateAdaptersFromDatabase.getLog(), containsString("INFO: -> generating class for type EXAMPLE_ANY_TYPE"));
     }
 
     @Test
