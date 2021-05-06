@@ -8,3 +8,4 @@ target
 output
 service/demos/*.java
 work
+generated-*

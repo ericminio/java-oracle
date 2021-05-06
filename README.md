@@ -45,18 +45,13 @@ INFO: -> generating company.name.ExampleTypeRecord
 INFO: -> generating company.name.ExampleTypeThree
 INFO: -> generating company.name.ExampleTypeTwo
 total 26
-drwxrwxrwx    1 root     root          4096 May  5 20:43 .
-drwxrwxrwx    1 root     root             0 Apr 28 16:11 ..
--rwxr-xr-x    1 root     root          2952 May  5 20:43 Example.java
--rwxr-xr-x    1 root     root          1770 May  5 20:43 ExampleTypeArray.java
--rwxr-xr-x    1 root     root          1562 May  5 20:43 ExampleTypeOne.java
--rwxr-xr-x    1 root     root          4317 May  5 20:43 ExampleTypePartial.java
--rwxr-xr-x    1 root     root          2741 May  5 20:43 ExampleTypeRecord.java
--rwxr-xr-x    1 root     root          1602 May  5 20:43 ExampleTypeThree.java
--rwxr-xr-x    1 root     root          1513 May  5 20:43 ExampleTypeTwo.java
--rwxr-xr-x    1 root     root           491 May  4 23:47 create-package.sql
--rwxr-xr-x    1 root     root           609 May  4 22:41 create-types.sql
--rwxr-xr-x    1 root     root           383 May  5 18:40 drop-packages.sql
--rwxr-xr-x    1 root     root           564 May  5 18:59 drop-types.sql
--rwxr-xr-x    1 root     root          1021 May  5 20:41 run.sh
+drwxrwxrwx    1 root     root          4096 May  6 18:42 .
+drwxrwxrwx    1 root     root          4096 May  6 18:39 ..
+-rwxr-xr-x    1 root     root          2952 May  6 18:42 Example.java
+-rwxr-xr-x    1 root     root          1770 May  6 18:42 ExampleTypeArray.java
+-rwxr-xr-x    1 root     root          1562 May  6 18:42 ExampleTypeOne.java
+-rwxr-xr-x    1 root     root          4317 May  6 18:42 ExampleTypePartial.java
+-rwxr-xr-x    1 root     root          2741 May  6 18:42 ExampleTypeRecord.java
+-rwxr-xr-x    1 root     root          1602 May  6 18:42 ExampleTypeThree.java
+-rwxr-xr-x    1 root     root          1513 May  6 18:42 ExampleTypeTwo.java
 ```
