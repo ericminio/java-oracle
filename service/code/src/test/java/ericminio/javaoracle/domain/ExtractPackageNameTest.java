@@ -60,4 +60,38 @@ public class ExtractPackageNameTest {
                 "END any_package;"
         )), equalTo("any_package"));
     }
+
+    @Test
+    public void resistsCreateStatement() {
+        assertThat(new ExtractPackageName().please(Arrays.asList(
+                "create package any_package IS\n",
+                "END any_package;"
+        )), equalTo("any_package"));
+    }
+
+    @Test
+    public void resistscreateOrReplaceStatement() {
+        assertThat(new ExtractPackageName().please(Arrays.asList(
+                "create or replace package any_package IS\n",
+                "END any_package;"
+        )), equalTo("any_package"));
+    }
+
+    @Test
+    public void resistsPackageNameOnNewLine() {
+        assertThat(new ExtractPackageName().please(Arrays.asList(
+                "create or replace package\n",
+                "any_package IS\n",
+                "END any_package;"
+        )), equalTo("any_package"));
+    }
+
+    @Test
+    public void resistsComments() {
+        assertThat(new ExtractPackageName().please(Arrays.asList(
+                "create or replace package\n -- ignore this",
+                "any_package-- ignore that\n",
+                "IS END any_package;"
+        )), equalTo("any_package"));
+    }
 }

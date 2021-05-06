@@ -1,4 +1,4 @@
-package ericminio.javaoracle.support;
+package ericminio.javaoracle.data;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -13,7 +13,8 @@ public class DatabaseTestReadyTest extends DatabaseTest {
 
     @Before
     public void createTypes() throws IOException {
-        executeFromResource("create.sql");
+        executeFromResource("create-types.sql");
+        executeFromResource("create-package.sql");
     }
 
     @Test

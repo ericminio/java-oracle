@@ -1,6 +1,6 @@
-package ericminio.javaoracle.support;
+package ericminio.javaoracle.data;
 
-import ericminio.javaoracle.data.Database;
+import ericminio.javaoracle.support.Stringify;
 import org.junit.After;
 import org.junit.Before;
 

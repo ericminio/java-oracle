@@ -1,6 +1,6 @@
 package ericminio.javaoracle.demos;
 
-import ericminio.javaoracle.support.DatabaseTest;
+import ericminio.javaoracle.data.DatabaseTest;
 import org.junit.Before;
 import org.junit.Test;
 

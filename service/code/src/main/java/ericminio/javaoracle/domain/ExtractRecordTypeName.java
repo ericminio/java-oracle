@@ -18,19 +18,12 @@ public class ExtractRecordTypeName {
     }
 
     public String please(List<String> specification) {
-        String statement = "";
-        for (int i=0; i < specification.size(); i++) {
-            statement += specification.get(i).trim().toLowerCase();
-            statement += " ";
-        }
-        statement = statement.trim();
+        List<String> clean = new RemoveComments().please(specification);
+        String statement = new JoinWith(" ").please(clean).trim();
         for (int i=0; i < patterns.size(); i++) {
             Matcher matcher = patterns.get(i).matcher(statement);
             if (matcher.find()) {
                 String candidate = matcher.group(1).trim();
-                if (candidate.indexOf("--") != -1) {
-                    candidate = candidate.substring(0, candidate.indexOf("--")).trim();
-                }
                 if (candidate.endsWith(";")) {
                     candidate = candidate.substring(0, candidate.length()-1);
                 }

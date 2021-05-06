@@ -14,4 +14,3 @@ AS
     ) RETURN example_type_partial;
 END example;
 /
-show errors;

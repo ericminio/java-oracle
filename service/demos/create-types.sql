@@ -20,4 +20,3 @@ create type example_type_partial as object (
     results             example_type_array
 )
 /
-show errors;

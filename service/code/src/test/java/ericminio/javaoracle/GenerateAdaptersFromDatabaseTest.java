@@ -1,6 +1,6 @@
 package ericminio.javaoracle;
 
-import ericminio.javaoracle.support.DatabaseTest;
+import ericminio.javaoracle.data.DatabaseTest;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -12,16 +12,20 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
 
-public class GenerateAdaptersTest extends DatabaseTest {
+public class GenerateAdaptersFromDatabaseTest extends DatabaseTest {
+
+    private GenerateAdaptersFromDatabase generateAdaptersFromDatabase;
 
     @Before
-    public void initDatabase() throws IOException {
-        executeFromResource("create.sql");
+    public void initDatabase() throws IOException, SQLException {
+        executeFromResource("create-types.sql");
+        executeFromResource("create-package.sql");
+        generateAdaptersFromDatabase = new GenerateAdaptersFromDatabase();
+        generateAdaptersFromDatabase.fromDatabase("any_package", "example_", "examples", "target");
     }
 
     @Test
     public void createsPackageFile() throws Exception {
-        new GenerateAdapters().fromDatabase("any_package", "example_", "examples", "target");
         String code = exactContentOf("target/AnyPackage.java");
 
         assertThat(code, containsString("package examples;\n\n"));
@@ -37,7 +41,6 @@ public class GenerateAdaptersTest extends DatabaseTest {
 
     @Test
     public void createsArrayTypeFile() throws Exception {
-        new GenerateAdapters().fromDatabase("any_package", "example_", "examples", "target");
         String code = exactContentOf("target/ExampleArrayType.java");
 
         assertThat(code, containsString("package examples;\n\n"));
@@ -46,7 +49,6 @@ public class GenerateAdaptersTest extends DatabaseTest {
 
     @Test
     public void createsRecordTypeFile() throws Exception {
-        new GenerateAdapters().fromDatabase("any_package", "example_", "examples", "target");
         String code = exactContentOf("target/ExampleAnyType.java");
 
         assertThat(code, containsString("package examples;\n\n"));
@@ -56,26 +58,20 @@ public class GenerateAdaptersTest extends DatabaseTest {
 
     @Test
     public void logsPackageGeneration() throws SQLException, IOException {
-        GenerateAdapters generator = new GenerateAdapters();
-        generator.fromDatabase("any_package", "example_", "examples", "target");
-
-        assertThat(generator.getLog(), containsString("INFO: Generating class for package"));
-        assertThat(generator.getLog(), containsString("INFO: -> examples.AnyPackage"));
+        assertThat(generateAdaptersFromDatabase.getLog(), containsString("INFO: Generating class for package"));
+        assertThat(generateAdaptersFromDatabase.getLog(), containsString("INFO: -> examples.AnyPackage"));
     }
 
     @Test
     public void logsTypeGeneration() throws SQLException, IOException {
-        GenerateAdapters generator = new GenerateAdapters();
-        generator.fromDatabase("any_package", "example_", "examples", "target");
-
-        assertThat(generator.getLog(), containsString("INFO: Generating classes for types"));
-        assertThat(generator.getLog(), containsString("INFO: -> generating examples.ExampleArrayType"));
-        assertThat(generator.getLog(), containsString("INFO: -> generating examples.ExampleAnyType"));
+        assertThat(generateAdaptersFromDatabase.getLog(), containsString("INFO: Generating classes for types"));
+        assertThat(generateAdaptersFromDatabase.getLog(), containsString("INFO: -> generating examples.ExampleArrayType"));
+        assertThat(generateAdaptersFromDatabase.getLog(), containsString("INFO: -> generating examples.ExampleAnyType"));
     }
 
     @Test
     public void logsToConsole() {
-        GenerateAdapters generator = new GenerateAdapters();
+        GenerateAdaptersFromDatabase generator = new GenerateAdaptersFromDatabase();
         assertThat(generator.getLogSink().logsToConsole(), equalTo(true));
     }
 }

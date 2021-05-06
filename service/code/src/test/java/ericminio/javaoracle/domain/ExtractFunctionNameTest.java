@@ -98,4 +98,13 @@ public class ExtractFunctionNameTest {
                 "RETURN INTEGER;"
         )), equalTo("any_function"));
     }
+
+    @Test
+    public void resistsFunctionNameOnNewLine() {
+        assertThat(new ExtractFunctionName().please(Arrays.asList(
+                "function",
+                "any_function",
+                "RETURN INTEGER;"
+        )), equalTo("any_function"));
+    }
 }

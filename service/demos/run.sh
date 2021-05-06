@@ -10,6 +10,7 @@ mvn clean package \
 
 cd target
 
+mkdir -p /usr/local/src/service/demos/generated-from-database
 rm /usr/local/src/service/demos/generated-from-database/*.java
 executeFile /usr/local/src/work/drop-packages.sql
 executeFile /usr/local/src/work/drop-types.sql
@@ -25,7 +26,15 @@ java \
     -DtypeNamePrefix=example_type_ \
     -DjavaPackage=company.name \
     -DoutputFolder=/usr/local/src/service/demos/generated-from-database \
-    -cp java-oracle-1.0-jar-with-dependencies.jar ericminio.javaoracle.GenerateAdapters 
+    -cp java-oracle-1.0-jar-with-dependencies.jar ericminio.javaoracle.GenerateAdaptersFromDatabase 
+ls -la /usr/local/src/service/demos/generated-from-database
 
-cd /usr/local/src/service/demos/generated-from-database
-ls -la
+mkdir -p /usr/local/src/service/demos/generated-from-files
+rm /usr/local/src/service/demos/generated-from-files/*.java
+java \
+    -DpackageFile=/usr/local/src/service/demos/create-package.sql \
+    -DtypesFile=/usr/local/src/service/demos/create-types.sql \
+    -DjavaPackage=company.name \
+    -DoutputFolder=/usr/local/src/service/demos/generated-from-files \
+    -cp java-oracle-1.0-jar-with-dependencies.jar ericminio.javaoracle.GenerateAdaptersFromFiles 
+ls -la /usr/local/src/service/demos/generated-from-files

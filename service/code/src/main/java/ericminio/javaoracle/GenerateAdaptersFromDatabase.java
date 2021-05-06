@@ -13,20 +13,20 @@ import java.util.logging.Logger;
 
 import static ericminio.javaoracle.support.FileUtils.save;
 
-public class GenerateAdapters {
+public class GenerateAdaptersFromDatabase {
 
     private final LogSink logSink;
     private final Logger logger;
 
-    public GenerateAdapters() {
+    public GenerateAdaptersFromDatabase() {
         this.logSink = new LogSink(true);
         this.logger = logSink.getLogger();
     }
 
     public static void main(String[] args) {
-        GenerateAdapters generateAdapters = new GenerateAdapters();
+        GenerateAdaptersFromDatabase generateAdaptersFromDatabase = new GenerateAdaptersFromDatabase();
         try {
-            generateAdapters.fromDatabase(
+            generateAdaptersFromDatabase.fromDatabase(
                     System.getProperty("oraclePackage"),
                     System.getProperty("typeNamePrefix"),
                     System.getProperty("javaPackage"),
