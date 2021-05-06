@@ -24,6 +24,7 @@ public class GenerateAdaptersTest extends DatabaseTest {
         new GenerateAdapters().fromDatabase("any_package", "example_", "examples", "target");
         String code = exactContentOf("target/AnyPackage.java");
 
+        assertThat(code, containsString("package examples;\n\n"));
         assertThat(code, containsString("public class AnyPackage {"));
         assertThat(code, containsString("   private Connection connection;"));
         assertThat(code, containsString("   public AnyPackage(Connection connection) throws SQLException {"));
@@ -39,6 +40,7 @@ public class GenerateAdaptersTest extends DatabaseTest {
         new GenerateAdapters().fromDatabase("any_package", "example_", "examples", "target");
         String code = exactContentOf("target/ExampleArrayType.java");
 
+        assertThat(code, containsString("package examples;\n\n"));
         assertThat(code, containsString("public class ExampleArrayType {"));
     }
 
@@ -47,6 +49,7 @@ public class GenerateAdaptersTest extends DatabaseTest {
         new GenerateAdapters().fromDatabase("any_package", "example_", "examples", "target");
         String code = exactContentOf("target/ExampleAnyType.java");
 
+        assertThat(code, containsString("package examples;\n\n"));
         assertThat(code, containsString("public class ExampleAnyType implements SQLData {"));
         assertThat(code, containsString("    public static final String NAME = \"EXAMPLE_ANY_TYPE\";"));
     }

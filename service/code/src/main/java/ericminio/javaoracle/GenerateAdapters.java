@@ -1,14 +1,13 @@
 package ericminio.javaoracle;
 
-import ericminio.javaoracle.data.Incoming;
 import ericminio.javaoracle.data.GetDataFromDatabase;
+import ericminio.javaoracle.data.Incoming;
 import ericminio.javaoracle.domain.*;
 import ericminio.javaoracle.support.LogSink;
 import ericminio.javaoracle.support.PascalCase;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -57,11 +56,10 @@ public class GenerateAdapters {
             String typeName = incoming.getTypeNames().get(i);
             String typeClassName = new PascalCase().please(typeName);
             logger.log(Level.INFO, "-> generating " + javaPackage + "." + typeClassName);
-            List<String> typeSpecification = incoming.getTypeSpecifications().get(i);
             String typeClassCode = new AddPackageStatement(javaPackage).to(
                     (typeMapperFactory.isArrayType(typeName)) ?
-                            new GenerateArrayTypeCode().please(typeSpecification) :
-                            new GenerateTypeCode().please(typeSpecification, typeMapperFactory));
+                            new GenerateArrayTypeCode().please(incoming.getTypeSpecifications().get(i)) :
+                            new GenerateTypeCode().please(incoming.getTypeSpecifications().get(i), typeMapperFactory));
             save(outputFolder, typeClassName, typeClassCode);
         }
     }
