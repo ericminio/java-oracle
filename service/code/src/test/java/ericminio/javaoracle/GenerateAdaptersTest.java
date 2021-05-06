@@ -21,7 +21,7 @@ public class GenerateAdaptersTest extends DatabaseTest {
 
     @Test
     public void createsPackageFile() throws Exception {
-        new GenerateAdapters().go("any_package", "example_", "examples", "target");
+        new GenerateAdapters().fromDatabase("any_package", "example_", "examples", "target");
         String code = exactContentOf("target/AnyPackage.java");
 
         assertThat(code, containsString("public class AnyPackage {"));
@@ -36,7 +36,7 @@ public class GenerateAdaptersTest extends DatabaseTest {
 
     @Test
     public void createsArrayTypeFile() throws Exception {
-        new GenerateAdapters().go("any_package", "example_", "examples", "target");
+        new GenerateAdapters().fromDatabase("any_package", "example_", "examples", "target");
         String code = exactContentOf("target/ExampleArrayType.java");
 
         assertThat(code, containsString("public class ExampleArrayType {"));
@@ -44,7 +44,7 @@ public class GenerateAdaptersTest extends DatabaseTest {
 
     @Test
     public void createsRecordTypeFile() throws Exception {
-        new GenerateAdapters().go("any_package", "example_", "examples", "target");
+        new GenerateAdapters().fromDatabase("any_package", "example_", "examples", "target");
         String code = exactContentOf("target/ExampleAnyType.java");
 
         assertThat(code, containsString("public class ExampleAnyType implements SQLData {"));
@@ -54,7 +54,7 @@ public class GenerateAdaptersTest extends DatabaseTest {
     @Test
     public void logsPackageGeneration() throws SQLException, IOException {
         GenerateAdapters generator = new GenerateAdapters();
-        generator.go("any_package", "example_", "examples", "target");
+        generator.fromDatabase("any_package", "example_", "examples", "target");
 
         assertThat(generator.getLog(), containsString("INFO: Generating class for package"));
         assertThat(generator.getLog(), containsString("INFO: -> examples.AnyPackage"));
@@ -63,7 +63,7 @@ public class GenerateAdaptersTest extends DatabaseTest {
     @Test
     public void logsTypeGeneration() throws SQLException, IOException {
         GenerateAdapters generator = new GenerateAdapters();
-        generator.go("any_package", "example_", "examples", "target");
+        generator.fromDatabase("any_package", "example_", "examples", "target");
 
         assertThat(generator.getLog(), containsString("INFO: Generating classes for types"));
         assertThat(generator.getLog(), containsString("INFO: -> generating examples.ExampleArrayType"));

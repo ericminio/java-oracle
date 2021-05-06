@@ -1,21 +1,18 @@
 package ericminio.javaoracle;
 
-import ericminio.javaoracle.data.Database;
-import ericminio.javaoracle.domain.GenerateArrayTypeCode;
-import ericminio.javaoracle.domain.GenerateClassCode;
-import ericminio.javaoracle.domain.GenerateTypeCode;
-import ericminio.javaoracle.domain.TypeMapperFactory;
+import ericminio.javaoracle.data.Incoming;
+import ericminio.javaoracle.data.GetDataFromDatabase;
+import ericminio.javaoracle.domain.*;
 import ericminio.javaoracle.support.LogSink;
 import ericminio.javaoracle.support.PascalCase;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import static ericminio.javaoracle.support.FileUtils.save;
 
 public class GenerateAdapters {
 
@@ -30,7 +27,7 @@ public class GenerateAdapters {
     public static void main(String[] args) {
         GenerateAdapters generateAdapters = new GenerateAdapters();
         try {
-            generateAdapters.go(
+            generateAdapters.fromDatabase(
                     System.getProperty("oraclePackage"),
                     System.getProperty("typeNamePrefix"),
                     System.getProperty("javaPackage"),
@@ -41,41 +38,31 @@ public class GenerateAdapters {
         }
     }
 
-    public void go(String oraclePackage, String typeNamePrefix, String javaPackage, String outputFolder) throws SQLException, IOException {
-        List<String> packageSpecification = new Database().selectPackageDefinition(oraclePackage);
-        List<String> types = new Database().selectDistinctTypeNamesWithPrefix(typeNamePrefix);
-        List<List<String>> typeSpecifications = new ArrayList<>();
-        for (String type:types) {
-            List<String> typeSpecification = new Database().selectTypeDefinition(type);
-            typeSpecifications.add(typeSpecification);
-        }
-        TypeMapperFactory typeMapperFactory = new TypeMapperFactory(typeSpecifications);
+    public void fromDatabase(String oraclePackage, String typeNamePrefix, String javaPackage, String outputFolder) throws SQLException, IOException {
+        now(new GetDataFromDatabase().please(oraclePackage, typeNamePrefix), javaPackage, outputFolder);
+    }
+
+    public void now(Incoming incoming, String javaPackage, String outputFolder) throws IOException {
+        TypeMapperFactory typeMapperFactory = new TypeMapperFactory(incoming.getTypeSpecifications());
 
         logger.log(Level.INFO, "Generating class for package");
-        GenerateClassCode generateClassCode = new GenerateClassCode();
-        String packageCode = generateClassCode.please(packageSpecification, typeMapperFactory);
-        packageCode = "package " + javaPackage + ";\n\n" + packageCode;
-        String packageClassName = new PascalCase().please(generateClassCode.getPackageName());
-        Files.write(Paths.get(outputFolder, packageClassName +".java"), packageCode.getBytes());
+        String packageClassName = new PascalCase().please(new ExtractPackageName().please(incoming.getPackageSpecification()));
+        String packageClassCode = new AddPackageStatement(javaPackage).to(
+                new GenerateClassCode().please(incoming.getPackageSpecification(), typeMapperFactory));
+        save(outputFolder, packageClassName, packageClassCode);
         logger.log(Level.INFO, "-> " + javaPackage + "." + packageClassName);
 
         logger.log(Level.INFO, "Generating classes for types");
-        for (int i=0; i<types.size(); i++) {
-            String typeName = types.get(i);
+        for (int i = 0; i< incoming.getTypeNames().size(); i++) {
+            String typeName = incoming.getTypeNames().get(i);
             String typeClassName = new PascalCase().please(typeName);
             logger.log(Level.INFO, "-> generating " + javaPackage + "." + typeClassName);
-            List<String> typeSpecification = typeSpecifications.get(i);
-            String typeCode = "";
-            if (typeMapperFactory.isArrayType(typeName)) {
-                GenerateArrayTypeCode generateArrayTypeCode = new GenerateArrayTypeCode();
-                typeCode = generateArrayTypeCode.please(typeSpecification);
-            }
-            else {
-                GenerateTypeCode generateTypeCode = new GenerateTypeCode();
-                typeCode = generateTypeCode.please(typeSpecification, typeMapperFactory);
-            }
-            typeCode = "package " + javaPackage + ";\n\n" + typeCode;
-            Files.write(Paths.get(outputFolder, typeClassName +".java"), typeCode.getBytes());
+            List<String> typeSpecification = incoming.getTypeSpecifications().get(i);
+            String typeClassCode = new AddPackageStatement(javaPackage).to(
+                    (typeMapperFactory.isArrayType(typeName)) ?
+                            new GenerateArrayTypeCode().please(typeSpecification) :
+                            new GenerateTypeCode().please(typeSpecification, typeMapperFactory));
+            save(outputFolder, typeClassName, typeClassCode);
         }
     }
 

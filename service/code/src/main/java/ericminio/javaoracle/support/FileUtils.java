@@ -34,4 +34,8 @@ public class FileUtils {
         }
         return content;
     }
+
+    public static void save(String outputFolder, String name, String code) throws IOException {
+        Files.write(Paths.get(outputFolder, name +".java"), code.getBytes());
+    }
 }
