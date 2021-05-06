@@ -12,7 +12,7 @@ import static ericminio.javaoracle.data.Query.with;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
 
-public class FunctionReturningComplexTypeTest extends DatabaseTest {
+public class ReturningComplexTypeTest extends DatabaseTest {
 
     @Before
     public void createStructure() {
@@ -51,19 +51,19 @@ public class FunctionReturningComplexTypeTest extends DatabaseTest {
 
     @Test
     public void nestedCustomTypeISAvailable() throws SQLException, ParseException {
-        FunctionReturningComplexType functionReturningComplexType = new FunctionReturningComplexType(connection);
+        ReturningComplexType returningComplexType = new ReturningComplexType(connection);
         CustomType customType = new CustomType();
         customType.setId(new BigDecimal(15));
         customType.setLabel("hello");
         customType.setCreationDate(dateformat.parse("2015/01/15 19:15:42"));
 
-        assertThat(functionReturningComplexType.getField().getValue(), equalTo(customType));
+        assertThat(returningComplexType.getField().getValue(), equalTo(customType));
     }
 
     @Test
     public void nestedArrayOfCustomTypeIsAvailable() throws SQLException, ParseException {
-        FunctionReturningComplexType functionReturningComplexType = new FunctionReturningComplexType(connection);
-        ComplexType field = functionReturningComplexType.getField();
+        ReturningComplexType returningComplexType = new ReturningComplexType(connection);
+        ComplexType field = returningComplexType.getField();
 
         assertThat(field.getCollection().length(), equalTo(2));
         assertThat(field.getCollection().getElement(0).getLabel(), equalTo("one"));
@@ -72,7 +72,7 @@ public class FunctionReturningComplexTypeTest extends DatabaseTest {
 
     @Test
     public void exploreComplexTypeComparison() throws SQLException, ParseException {
-        FunctionReturningComplexType functionReturningComplexType = new FunctionReturningComplexType(connection);
+        ReturningComplexType returningComplexType = new ReturningComplexType(connection);
         ComplexType complexType = new ComplexType();
 
         CustomType customType = new CustomType();
@@ -91,6 +91,6 @@ public class FunctionReturningComplexTypeTest extends DatabaseTest {
         two.setCreationDate(dateformat.parse("2002/02/02 02:02:02"));
         complexType.setCollection(ArrayOfCustomType.with(new CustomType[] { one, two }));
 
-        assertThat(functionReturningComplexType.getField(), equalTo(complexType));
+        assertThat(returningComplexType.getField(), equalTo(complexType));
     }
 }

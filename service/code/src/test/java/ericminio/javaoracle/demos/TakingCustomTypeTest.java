@@ -13,7 +13,7 @@ import static ericminio.javaoracle.data.Query.with;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
 
-public class FunctionTakingCustomTypeTest extends DatabaseTest {
+public class TakingCustomTypeTest extends DatabaseTest {
 
     @Before
     public void seeds() {
@@ -25,13 +25,13 @@ public class FunctionTakingCustomTypeTest extends DatabaseTest {
                 ");");
 
         with(connection).execute("" +
-                "CREATE OR REPLACE PACKAGE function_taking_custom_type\n" +
+                "CREATE OR REPLACE PACKAGE taking_custom_type\n" +
                 "AS\n" +
                 "    FUNCTION get_value(input custom_type) RETURN custom_type;\n" +
                 "\n" +
-                "END function_taking_custom_type;");
+                "END taking_custom_type;");
         with(connection).execute("" +
-                "create or replace package body function_taking_custom_type\n" +
+                "create or replace package body taking_custom_type\n" +
                 "AS\n" +
                 "\n" +
                 "    function get_value(input custom_type) return custom_type\n" +
@@ -40,12 +40,12 @@ public class FunctionTakingCustomTypeTest extends DatabaseTest {
                 "        return custom_type(input.id + 1, 'Hello ' || input.label, input.creation_date + 1);\n" +
                 "    end;\n" +
                 "\n" +
-                "END function_taking_custom_type;");
+                "END taking_custom_type;");
     }
 
     @Test
     public void getValue() throws SQLException, ParseException {
-        FunctionTakingCustomType functionTakingCustomType = new FunctionTakingCustomType(connection);
+        TakingCustomType takingCustomType = new TakingCustomType(connection);
         SimpleDateFormat dateformat = new SimpleDateFormat("yyyy/M/dd hh:mm:ss");
         CustomType input = new CustomType();
         input.setId(new BigDecimal(15));
@@ -57,6 +57,6 @@ public class FunctionTakingCustomTypeTest extends DatabaseTest {
         expected.setLabel("Hello Bob");
         expected.setCreationDate(dateformat.parse("2015/01/15 19:15:42"));
 
-        assertThat(functionTakingCustomType.getValue(input), equalTo(expected));
+        assertThat(takingCustomType.getValue(input), equalTo(expected));
     }
 }

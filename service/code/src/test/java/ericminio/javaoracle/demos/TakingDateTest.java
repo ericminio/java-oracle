@@ -13,19 +13,19 @@ import static ericminio.javaoracle.data.Query.with;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
 
-public class FunctionTakingDateTest extends DatabaseTest {
+public class TakingDateTest extends DatabaseTest {
 
     @Before
     public void seeds() {
-        with(connection).execute("CREATE OR REPLACE PACKAGE function_taking_date\n" +
+        with(connection).execute("CREATE OR REPLACE PACKAGE taking_date\n" +
                 "AS\n" +
                 "\n" +
                 "    FUNCTION get_value(\n" +
                 "        input date\n" +
                 "    ) RETURN date;\n" +
                 "\n" +
-                "END function_taking_date;");
-        with(connection).execute("create or replace package body function_taking_date\n" +
+                "END taking_date;");
+        with(connection).execute("create or replace package body taking_date\n" +
                 "AS\n" +
                 "\n" +
                 "    function get_value(\n" +
@@ -36,16 +36,16 @@ public class FunctionTakingDateTest extends DatabaseTest {
                 "        return input + 1;\n" +
                 "    end;\n" +
                 "\n" +
-                "END function_taking_date;");
+                "END taking_date;");
     }
 
     @Test
     public void getValue() throws SQLException, ParseException {
-        FunctionTakingDate functionTakingDate = new FunctionTakingDate(connection);
+        TakingDate takingDate = new TakingDate(connection);
         SimpleDateFormat dateformat = new SimpleDateFormat("yyyy/M/dd hh:mm:ss");
         Date input = dateformat.parse("2015/01/14 19:15:42");
         Date expected = dateformat.parse("2015/01/15 19:15:42");
 
-        assertThat(functionTakingDate.getValue(input), equalTo(expected));
+        assertThat(takingDate.getValue(input), equalTo(expected));
     }
 }

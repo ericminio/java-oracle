@@ -5,17 +5,17 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class FunctionTakingCustomType {
+public class TakingCustomType {
 
     private Connection connection;
 
-    public FunctionTakingCustomType(Connection connection) throws SQLException {
+    public TakingCustomType(Connection connection) throws SQLException {
         this.connection = connection;
         connection.getTypeMap().put(CustomType.NAME, CustomType.class);
     }
 
     public CustomType getValue(CustomType input) throws SQLException {
-        PreparedStatement statement = connection.prepareStatement("select function_taking_custom_type.get_value(?) from dual");
+        PreparedStatement statement = connection.prepareStatement("select taking_custom_type.get_value(?) from dual");
         statement.setObject(1, input);
         ResultSet resultSet = statement.executeQuery();
         resultSet.next();

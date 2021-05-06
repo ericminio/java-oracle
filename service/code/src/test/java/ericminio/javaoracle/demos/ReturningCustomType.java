@@ -5,17 +5,17 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class FunctionReturningCustomType {
+public class ReturningCustomType {
 
     private Connection connection;
 
-    public FunctionReturningCustomType(Connection connection) throws SQLException {
+    public ReturningCustomType(Connection connection) throws SQLException {
         this.connection = connection;
         connection.getTypeMap().put(CustomType.NAME, CustomType.class);
     }
 
     public CustomType getValue() throws SQLException {
-        PreparedStatement statement = connection.prepareStatement("select function_returning_custom_type.get_value() from dual");
+        PreparedStatement statement = connection.prepareStatement("select returning_custom_type.get_value() from dual");
         ResultSet resultSet = statement.executeQuery();
         resultSet.next();
 

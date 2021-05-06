@@ -10,17 +10,17 @@ import static ericminio.javaoracle.data.Query.with;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
 
-public class FunctionReturningVarcharTest extends DatabaseTest {
+public class ReturningVarcharTest extends DatabaseTest {
 
     @Before
     public void seeds() {
-        with(connection).execute("CREATE OR REPLACE PACKAGE function_returning_varchar\n" +
+        with(connection).execute("CREATE OR REPLACE PACKAGE returning_varchar\n" +
                 "AS\n" +
                 "\n" +
                 "    FUNCTION get_value RETURN varchar2;\n" +
                 "\n" +
-                "END function_returning_varchar;");
-        with(connection).execute("create or replace package body function_returning_varchar\n" +
+                "END returning_varchar;");
+        with(connection).execute("create or replace package body returning_varchar\n" +
                 "AS\n" +
                 "\n" +
                 "    function get_value return varchar2\n" +
@@ -29,13 +29,13 @@ public class FunctionReturningVarcharTest extends DatabaseTest {
                 "        return '42';\n" +
                 "    end;\n" +
                 "\n" +
-                "END function_returning_varchar;");
+                "END returning_varchar;");
     }
 
     @Test
     public void works() throws SQLException {
-        FunctionReturningVarchar functionReturningVarchar = new FunctionReturningVarchar(connection);
+        ReturningVarchar returningVarchar = new ReturningVarchar(connection);
         
-        assertThat(functionReturningVarchar.getValue(), equalTo("42"));
+        assertThat(returningVarchar.getValue(), equalTo("42"));
     }
 }

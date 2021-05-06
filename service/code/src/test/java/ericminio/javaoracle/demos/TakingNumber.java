@@ -6,16 +6,17 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class FunctionReturningNumber {
+public class TakingNumber {
 
     private Connection connection;
 
-    public FunctionReturningNumber(Connection connection) {
+    public TakingNumber(Connection connection) {
         this.connection = connection;
     }
 
-    public BigDecimal getValue() throws SQLException {
-        PreparedStatement statement = connection.prepareStatement("select function_returning_number.get_value() from dual");
+    public BigDecimal getValue(BigDecimal input) throws SQLException {
+        PreparedStatement statement = connection.prepareStatement("select taking_number.get_value(?) from dual");
+        statement.setBigDecimal(1, input);
         ResultSet resultSet = statement.executeQuery();
         resultSet.next();
 

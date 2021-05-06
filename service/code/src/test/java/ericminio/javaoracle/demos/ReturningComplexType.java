@@ -5,11 +5,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class FunctionReturningComplexType {
+public class ReturningComplexType {
 
     private Connection connection;
 
-    public FunctionReturningComplexType(Connection connection) throws SQLException {
+    public ReturningComplexType(Connection connection) throws SQLException {
         this.connection = connection;
         connection.getTypeMap().put(ComplexType.NAME, ComplexType.class);
         connection.getTypeMap().put(CustomType.NAME, CustomType.class);

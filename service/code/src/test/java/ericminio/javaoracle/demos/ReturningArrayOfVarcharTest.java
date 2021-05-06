@@ -10,7 +10,7 @@ import static ericminio.javaoracle.data.Query.with;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class FunctionReturningArrayOfVarcharTest extends DatabaseTest {
+public class ReturningArrayOfVarcharTest extends DatabaseTest {
 
     @Before
     public void createStructure() {
@@ -39,16 +39,16 @@ public class FunctionReturningArrayOfVarcharTest extends DatabaseTest {
 
     @Test
     public void returnsExpectedArraySize() throws SQLException {
-        FunctionReturningArrayOfVarchar functionReturningArrayOfVarchar = new FunctionReturningArrayOfVarchar(connection);
-        ArrayOfVarchar actual = functionReturningArrayOfVarchar.getValue();
+        ReturningArrayOfVarchar returningArrayOfVarchar = new ReturningArrayOfVarchar(connection);
+        ArrayOfVarchar actual = returningArrayOfVarchar.getValue();
 
         assertThat(actual.length(), equalTo(2));
     }
 
     @Test
     public void returnsExpectedArrayContent() throws SQLException {
-        FunctionReturningArrayOfVarchar functionReturningArrayOfVarchar = new FunctionReturningArrayOfVarchar(connection);
-        ArrayOfVarchar actual = functionReturningArrayOfVarchar.getValue();
+        ReturningArrayOfVarchar returningArrayOfVarchar = new ReturningArrayOfVarchar(connection);
+        ArrayOfVarchar actual = returningArrayOfVarchar.getValue();
         String[] entries = actual.getArray();
 
         assertThat(entries.length, equalTo(2));
@@ -56,8 +56,8 @@ public class FunctionReturningArrayOfVarcharTest extends DatabaseTest {
 
     @Test
     public void exposesElements() throws SQLException {
-        FunctionReturningArrayOfVarchar functionReturningArrayOfVarchar = new FunctionReturningArrayOfVarchar(connection);
-        ArrayOfVarchar actual = functionReturningArrayOfVarchar.getValue();
+        ReturningArrayOfVarchar returningArrayOfVarchar = new ReturningArrayOfVarchar(connection);
+        ArrayOfVarchar actual = returningArrayOfVarchar.getValue();
 
         assertThat(actual.getElement(0), equalTo("hello"));
         assertThat(actual.getElement(1), equalTo("world"));

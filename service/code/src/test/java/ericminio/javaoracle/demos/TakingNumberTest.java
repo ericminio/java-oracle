@@ -11,19 +11,19 @@ import static ericminio.javaoracle.data.Query.with;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
 
-public class FunctionTakingNumberTest extends DatabaseTest {
+public class TakingNumberTest extends DatabaseTest {
 
     @Before
     public void seeds() {
-        with(connection).execute("CREATE OR REPLACE PACKAGE function_taking_number\n" +
+        with(connection).execute("CREATE OR REPLACE PACKAGE taking_number\n" +
                 "AS\n" +
                 "\n" +
                 "    FUNCTION get_value(\n" +
                 "        input number\n" +
                 "    ) RETURN number;\n" +
                 "\n" +
-                "END function_taking_number;");
-        with(connection).execute("create or replace package body function_taking_number\n" +
+                "END taking_number;");
+        with(connection).execute("create or replace package body taking_number\n" +
                 "AS\n" +
                 "\n" +
                 "    function get_value(\n" +
@@ -34,13 +34,13 @@ public class FunctionTakingNumberTest extends DatabaseTest {
                 "        return input + 1;\n" +
                 "    end;\n" +
                 "\n" +
-                "END function_taking_number;");
+                "END taking_number;");
     }
 
     @Test
     public void getValue() throws SQLException {
-        FunctionTakingNumber functionTakingNumber = new FunctionTakingNumber(connection);
+        TakingNumber takingNumber = new TakingNumber(connection);
 
-        assertThat(functionTakingNumber.getValue(new BigDecimal(41)), equalTo(new BigDecimal(42)));
+        assertThat(takingNumber.getValue(new BigDecimal(41)), equalTo(new BigDecimal(42)));
     }
 }

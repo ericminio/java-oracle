@@ -10,22 +10,22 @@ import static ericminio.javaoracle.support.FileUtils.contentMinusTwoFirstLines;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
 
-public class FunctionTakingDateGenerationTest {
+public class TakingNumberGenerationTest {
 
     @Test
     public void works() throws IOException {
         String actual = new GenerateClassCode().please(Arrays.asList(
-                "PACKAGE function_taking_date\n",
+                "PACKAGE taking_number\n",
                 "AS\n",
                 "\n",
                 "   FUNCTION get_value(\n",
-                "       input date\n",
-                "   ) RETURN date;\n",
+                "       input number\n",
+                "   ) RETURN number;\n",
                 "\n",
-                "END function_taking_date;"
+                "END taking_number;"
         ));
         
-        assertThat(actual, equalTo(contentMinusTwoFirstLines("src/test/java/ericminio/javaoracle/demos/FunctionTakingDate.java")));
+        assertThat(actual, equalTo(contentMinusTwoFirstLines("src/test/java/ericminio/javaoracle/demos/TakingNumber.java")));
     }
 
 }

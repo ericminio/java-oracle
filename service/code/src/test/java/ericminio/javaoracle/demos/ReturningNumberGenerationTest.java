@@ -10,18 +10,18 @@ import static ericminio.javaoracle.support.FileUtils.contentMinusTwoFirstLines;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
 
-public class FunctionReturningCustomTypeGenerationTest {
+public class ReturningNumberGenerationTest {
 
     @Test
     public void works() throws IOException {
         String actual = new GenerateClassCode().please(Arrays.asList(
-                "PACKAGE function_returning_custom_type\n",
+                "PACKAGE returning_number\n",
                 "AS\n",
-                "   FUNCTION get_value RETURN custom_type;\n",
-                "END function_returning_custom_type;"
+                "   FUNCTION get_value RETURN number;\n",
+                "END returning_number;"
         ));
         
-        assertThat(actual, equalTo(contentMinusTwoFirstLines("src/test/java/ericminio/javaoracle/demos/FunctionReturningCustomType.java")));
+        assertThat(actual, equalTo(contentMinusTwoFirstLines("src/test/java/ericminio/javaoracle/demos/ReturningNumber.java")));
     }
 
 }

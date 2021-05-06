@@ -6,16 +6,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 
-public class FunctionReturningDate {
+public class ReturningDate {
 
     private Connection connection;
 
-    public FunctionReturningDate(Connection connection) {
+    public ReturningDate(Connection connection) {
         this.connection = connection;
     }
 
     public Date getValue() throws SQLException {
-        PreparedStatement statement = connection.prepareStatement("select function_returning_date.get_value() from dual");
+        PreparedStatement statement = connection.prepareStatement("select returning_date.get_value() from dual");
         ResultSet resultSet = statement.executeQuery();
         resultSet.next();
 

@@ -6,16 +6,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 
-public class FunctionTakingDate {
+public class TakingDate {
 
     private Connection connection;
 
-    public FunctionTakingDate(Connection connection) {
+    public TakingDate(Connection connection) {
         this.connection = connection;
     }
 
     public Date getValue(Date input) throws SQLException {
-        PreparedStatement statement = connection.prepareStatement("select function_taking_date.get_value(?) from dual");
+        PreparedStatement statement = connection.prepareStatement("select taking_date.get_value(?) from dual");
         statement.setTimestamp(1, new java.sql.Timestamp(input.getTime()));
         ResultSet resultSet = statement.executeQuery();
         resultSet.next();

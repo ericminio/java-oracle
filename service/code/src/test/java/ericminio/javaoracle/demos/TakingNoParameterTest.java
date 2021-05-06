@@ -11,17 +11,17 @@ import static ericminio.javaoracle.data.Query.with;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
 
-public class FunctionWithoutParameterTest extends DatabaseTest {
+public class TakingNoParameterTest extends DatabaseTest {
 
     @Before
     public void seeds() {
-        with(connection).execute("CREATE OR REPLACE PACKAGE function_without_parameter\n" +
+        with(connection).execute("CREATE OR REPLACE PACKAGE taking_no_parameter\n" +
                 "AS\n" +
                 "\n" +
                 "    FUNCTION get_value RETURN number;\n" +
                 "\n" +
-                "END function_without_parameter;");
-        with(connection).execute("create or replace package body function_without_parameter\n" +
+                "END taking_no_parameter;");
+        with(connection).execute("create or replace package body taking_no_parameter\n" +
                 "AS\n" +
                 "\n" +
                 "    function get_value return number\n" +
@@ -30,13 +30,13 @@ public class FunctionWithoutParameterTest extends DatabaseTest {
                 "        return 42;\n" +
                 "    end;\n" +
                 "\n" +
-                "END function_without_parameter;");
+                "END taking_no_parameter;");
     }
 
     @Test
     public void works() throws SQLException {
-        FunctionWithoutParameter functionWithoutParameter = new FunctionWithoutParameter(connection);
+        TakingNoParameter takingNoParameter = new TakingNoParameter(connection);
         
-        assertThat(functionWithoutParameter.getValue(), equalTo(new BigDecimal(42)));
+        assertThat(takingNoParameter.getValue(), equalTo(new BigDecimal(42)));
     }
 }

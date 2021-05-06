@@ -2,11 +2,11 @@ package ericminio.javaoracle.demos;
 
 import java.sql.*;
 
-public class FunctionReturningArrayOfVarchar {
+public class ReturningArrayOfVarchar {
 
     private Connection connection;
 
-    public FunctionReturningArrayOfVarchar(Connection connection) {
+    public ReturningArrayOfVarchar(Connection connection) {
         this.connection = connection;
     }
 

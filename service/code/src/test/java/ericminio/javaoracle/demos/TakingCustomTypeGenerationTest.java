@@ -10,18 +10,22 @@ import static ericminio.javaoracle.support.FileUtils.contentMinusTwoFirstLines;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
 
-public class FunctionReturningVarcharGenerationTest {
+public class TakingCustomTypeGenerationTest {
 
     @Test
     public void works() throws IOException {
         String actual = new GenerateClassCode().please(Arrays.asList(
-                "PACKAGE function_returning_varchar\n",
+                "PACKAGE taking_custom_type\n",
                 "AS\n",
-                "   FUNCTION get_value RETURN varchar2;\n",
-                "END function_returning_varchar;"
+                "\n",
+                "   FUNCTION get_value(\n",
+                "       input custom_type\n",
+                "   ) RETURN custom_type;\n",
+                "\n",
+                "END taking_custom_type;"
         ));
         
-        assertThat(actual, equalTo(contentMinusTwoFirstLines("src/test/java/ericminio/javaoracle/demos/FunctionReturningVarchar.java")));
+        assertThat(actual, equalTo(contentMinusTwoFirstLines("src/test/java/ericminio/javaoracle/demos/TakingCustomType.java")));
     }
 
 }
