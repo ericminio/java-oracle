@@ -8,10 +8,6 @@ import java.util.List;
 
 public class GenerateTypeCode {
 
-    public String please(List<String> typeSpecification) throws IOException {
-        return please(typeSpecification, new TypeMapperFactory());
-    }
-
     public String please(List<String> typeSpecification, TypeMapperFactory typeMapperFactory) throws IOException {
         String typeTemplate = new Stringify().inputStream(this.getClass().getClassLoader().getResourceAsStream("templateForType.java"));
 

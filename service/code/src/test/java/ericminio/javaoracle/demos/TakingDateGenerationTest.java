@@ -1,6 +1,7 @@
 package ericminio.javaoracle.demos;
 
 import ericminio.javaoracle.domain.GeneratePackageCode;
+import ericminio.javaoracle.domain.TypeMapperFactory;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -23,7 +24,7 @@ public class TakingDateGenerationTest {
                 "   ) RETURN date;\n",
                 "\n",
                 "END taking_date;"
-        ));
+        ), new TypeMapperFactory());
         
         assertThat(actual, equalTo(contentMinusTwoFirstLines("src/test/java/ericminio/javaoracle/demos/TakingDate.java")));
     }

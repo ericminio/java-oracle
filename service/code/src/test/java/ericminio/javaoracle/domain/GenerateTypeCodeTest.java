@@ -50,7 +50,7 @@ public class GenerateTypeCodeTest {
                 ")"
         );
         GenerateTypeCode generateTypeCode = new GenerateTypeCode();
-        code = generateTypeCode.please(typeSpecification);
+        code = generateTypeCode.please(typeSpecification, new TypeMapperFactory());
         assertThat(code, not(containsString("import java.math.BigDecimal;")));
     }
 

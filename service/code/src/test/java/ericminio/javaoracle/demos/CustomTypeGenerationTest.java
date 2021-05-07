@@ -1,6 +1,7 @@
 package ericminio.javaoracle.demos;
 
 import ericminio.javaoracle.domain.GenerateTypeCode;
+import ericminio.javaoracle.domain.TypeMapperFactory;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -21,7 +22,7 @@ public class CustomTypeGenerationTest {
                 "   label varchar2(15),\n" +
                 "   creation_date date\n" +
                 ")"
-        ));
+        ), new TypeMapperFactory());
         assertThat(actual, equalTo(contentMinusTwoFirstLines("src/test/java/ericminio/javaoracle/demos/CustomType.java")));
     }
 }

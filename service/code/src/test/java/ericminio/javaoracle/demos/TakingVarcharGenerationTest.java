@@ -1,6 +1,7 @@
 package ericminio.javaoracle.demos;
 
 import ericminio.javaoracle.domain.GeneratePackageCode;
+import ericminio.javaoracle.domain.TypeMapperFactory;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -23,7 +24,7 @@ public class TakingVarcharGenerationTest {
                 "   ) RETURN varchar2;\n",
                 "\n",
                 "END taking_varchar;"
-        ));
+        ), new TypeMapperFactory());
         
         assertThat(actual, equalTo(contentMinusTwoFirstLines("src/test/java/ericminio/javaoracle/demos/TakingVarchar.java")));
     }

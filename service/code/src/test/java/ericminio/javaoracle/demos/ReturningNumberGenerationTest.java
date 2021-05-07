@@ -1,6 +1,7 @@
 package ericminio.javaoracle.demos;
 
 import ericminio.javaoracle.domain.GeneratePackageCode;
+import ericminio.javaoracle.domain.TypeMapperFactory;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -19,7 +20,7 @@ public class ReturningNumberGenerationTest {
                 "AS\n",
                 "   FUNCTION get_value RETURN number;\n",
                 "END returning_number;"
-        ));
+        ), new TypeMapperFactory());
         
         assertThat(actual, equalTo(contentMinusTwoFirstLines("src/test/java/ericminio/javaoracle/demos/ReturningNumber.java")));
     }

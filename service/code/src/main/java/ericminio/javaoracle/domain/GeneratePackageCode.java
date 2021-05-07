@@ -11,10 +11,6 @@ public class GeneratePackageCode {
 
     private String packageName;
 
-    public String please(List<String> packageSpecification) throws IOException {
-        return please(packageSpecification, new TypeMapperFactory());
-    }
-
     public String please(List<String> packageSpecification, TypeMapperFactory typeMapperFactory) throws IOException {
         String classTemplate = new Stringify().inputStream(this.getClass().getClassLoader().getResourceAsStream("templateForPackage.java"));
         this.packageName = new ExtractPackageName().please(packageSpecification);

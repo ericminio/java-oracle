@@ -1,6 +1,7 @@
 package ericminio.javaoracle.demos;
 
 import ericminio.javaoracle.domain.GenerateTypeCode;
+import ericminio.javaoracle.domain.TypeMapperFactory;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -19,7 +20,7 @@ public class CustomTypeNestingGenerationTest {
                 "(\n",
                 "   nested custom_type\n" +
                 ")"
-        ));
+        ), new TypeMapperFactory());
         assertThat(actual, equalTo(contentMinusTwoFirstLines("src/test/java/ericminio/javaoracle/demos/CustomTypeNesting.java")));
     }
 }
