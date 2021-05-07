@@ -1,6 +1,7 @@
 package ericminio.javaoracle.demos;
 
 import ericminio.javaoracle.domain.GeneratePackageCode;
+import ericminio.javaoracle.domain.TypeMapperFactory;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -23,7 +24,9 @@ public class TakingCustomTypeGenerationTest {
                 "   ) RETURN custom_type;\n",
                 "\n",
                 "END taking_custom_type;"
-        ));
+        ), new TypeMapperFactory(Arrays.asList(
+                Arrays.asList("create type custom_type as object(value number)")
+        )));
         
         assertThat(actual, equalTo(contentMinusTwoFirstLines("src/test/java/ericminio/javaoracle/demos/TakingCustomType.java")));
     }

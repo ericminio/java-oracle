@@ -17,10 +17,12 @@ public class TypeMapperFactoryTest {
     public void initTypes() {
         List<List<String>> typeSpecifications = Arrays.asList(
                 Arrays.asList("create or replace type any_type as object (value number);"),
+                Arrays.asList("create or replace type another_type as object (value number);"),
                 Arrays.asList("create or replace type any_table_type as table of any_type;"),
                 Arrays.asList("create or replace type any_varray_type as varray(15) of any_type;"),
                 Arrays.asList("create or replace type missing_semicolon as table of any_type"),
-                Arrays.asList("create or replace type extra_spaces as table of any_type    ")
+                Arrays.asList("create or replace type extra_spaces as table of any_type    "),
+                Arrays.asList("create or replace type any_type_nesting as object (one any_type, two another_type, three number)")
                 );
         typeMapperFactory = new TypeMapperFactory(typeSpecifications);
     }
@@ -132,5 +134,17 @@ public class TypeMapperFactoryTest {
         assertThat(typeMapperFactory.of("any_table_type").sqlInputRead(), equalTo("AnyTableType.with((Object[]) stream.readArray().getArray())"));
         assertThat(typeMapperFactory.of("any_table_type").sqlOutputWrite(), equalTo("stream.writeObject(this.getField());"));
         assertThat(typeMapperFactory.of("any_table_type").methodReturnStatement(), equalTo("return AnyTableType.with((Object[]) resultSet.getArray(1).getArray());"));
+    }
+
+    @Test
+    public void customTypesOfFieldIsEmptyWhenTypeHasNoCustomTypeField() {
+        assertThat(typeMapperFactory.customTypesOfFields("any_type").size(), equalTo(0));
+    }
+
+    @Test
+    public void customTypesOfFieldIgnoresNativeType() {
+        assertThat(typeMapperFactory.customTypesOfFields("any_type_nesting").size(), equalTo(2));
+        assertThat(typeMapperFactory.customTypesOfFields("any_type_nesting").get(0), equalTo("any_type"));
+        assertThat(typeMapperFactory.customTypesOfFields("any_type_nesting").get(1), equalTo("another_type"));
     }
 }

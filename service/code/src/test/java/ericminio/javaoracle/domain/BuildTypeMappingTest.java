@@ -18,8 +18,14 @@ public class BuildTypeMappingTest {
     public void initTypes() {
         List<List<String>> typeSpecifications = Arrays.asList(
                 Arrays.asList("create or replace type record_type as object (value number);"),
-                Arrays.asList("create or replace type any_table_type as table of record_type;")
-        );
+                Arrays.asList("create or replace type any_table_type as table of record_type;"),
+                Arrays.asList("create or replace type table_type_of_varchar as table of varchar2(15);"),
+                Arrays.asList("create or replace type any_type_nesting as object (nested any_type_nested);"),
+                Arrays.asList("create or replace type any_type_nested as object (id number);"),
+                Arrays.asList("create or replace type any_type_nesting_twice as object (one any_type_nested, two any_type_nested);"),
+                Arrays.asList("create or replace type any_type as object (value number);"),
+                Arrays.asList("create or replace type another_type as object (value number);")
+                );
         TypeMapperFactory typeMapperFactory = new TypeMapperFactory(typeSpecifications);
         buildTypeMapping = new BuildTypeMapping(typeMapperFactory);
     }
@@ -50,9 +56,10 @@ public class BuildTypeMappingTest {
     }
 
     @Test
-    public void neededForCustomType() {
-        assertThat(buildTypeMapping.please(Arrays.asList("any_type")), equalTo("" +
-                "        connection.getTypeMap().put(AnyType.NAME, AnyType.class);\n"
+    public void neededForCustomTypes() {
+        assertThat(buildTypeMapping.please(Arrays.asList("any_type", "another_type")), equalTo("" +
+                "        connection.getTypeMap().put(AnyType.NAME, AnyType.class);\n" +
+                "        connection.getTypeMap().put(AnotherType.NAME, AnotherType.class);\n"
         ));
     }
 
@@ -60,6 +67,27 @@ public class BuildTypeMappingTest {
     public void declaresRecordTypeForArrayType() {
         assertThat(buildTypeMapping.please(Arrays.asList("any_table_type")), equalTo("" +
                 "        connection.getTypeMap().put(RecordType.NAME, RecordType.class);\n"
+        ));
+    }
+
+    @Test
+    public void declaresRecordTypeForArrayTypeExceptForNativeTypes() {
+        assertThat(buildTypeMapping.please(Arrays.asList("table_type_of_varchar")), equalTo(""));
+    }
+
+    @Test
+    public void declaresNestedType() {
+        assertThat(buildTypeMapping.please(Arrays.asList("any_type_nesting")), equalTo("" +
+                "        connection.getTypeMap().put(AnyTypeNesting.NAME, AnyTypeNesting.class);\n" +
+                "        connection.getTypeMap().put(AnyTypeNested.NAME, AnyTypeNested.class);\n"
+        ));
+    }
+
+    @Test
+    public void declaresNestedTypeOnlyOnce() {
+        assertThat(buildTypeMapping.please(Arrays.asList("any_type_nesting_twice")), equalTo("" +
+                "        connection.getTypeMap().put(AnyTypeNestingTwice.NAME, AnyTypeNestingTwice.class);\n" +
+                "        connection.getTypeMap().put(AnyTypeNested.NAME, AnyTypeNested.class);\n"
         ));
     }
 }
