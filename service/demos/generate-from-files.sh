@@ -17,6 +17,6 @@ java \
     -DtypesFile=/usr/local/src/service/demos/create-types.sql \
     -DjavaPackage=company.name \
     -DoutputFolder=/usr/local/src/service/demos/generated-from-files \
-    -cp java-oracle-1.0-jar-with-dependencies.jar ericminio.javaoracle.GenerateAdaptersFromFiles 
+    -cp java-oracle-1.0.jar ericminio.javaoracle.GenerateAdaptersFromFiles 
 
 ls -la /usr/local/src/service/demos/generated-from-files

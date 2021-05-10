@@ -46,3 +46,14 @@ services:
       - .:/usr/local/src 
       - /var/run/docker.sock:/var/run/docker.sock
     working_dir: /usr/local/src/service/code
+
+  web:
+    build: service
+    image: javaoracle:web
+    container_name: web
+    volumes:
+      - .:/usr/local/src 
+    working_dir: /usr/local/src/service/code
+    ports: 
+      - 8015:8015
+    
