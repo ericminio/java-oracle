@@ -11,9 +11,16 @@ docker-compose up java11
 
 # Usage
 
+## from console
 Study [service/demos/generate-from-*.sh](service/demos).
 
 One way to see it running:
 - `docker-compose run java8 bash` 
 - `/usr/local/src/service/demos/generate-from-database.sh`
 - `/usr/local/src/service/demos/generate-from-files.sh`
+
+## from web
+```
+docker-compose up web
+```
+open http://localhost:8015
