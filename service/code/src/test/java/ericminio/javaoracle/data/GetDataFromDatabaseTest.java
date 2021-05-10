@@ -42,7 +42,7 @@ public class GetDataFromDatabaseTest extends DatabaseTest {
     public void exposesTypeNames() {
         List<String> names = incoming.getTypeNames();
         assertThat(names.size(), equalTo(2));
-        assertThat(names.get(0), equalTo("EXAMPLE_ANY_TYPE"));
-        assertThat(names.get(1), equalTo("EXAMPLE_ARRAY_TYPE"));
+        assertThat(names.get(0), equalTo("example_any_type"));
+        assertThat(names.get(1), equalTo("example_array_type"));
     }
 }

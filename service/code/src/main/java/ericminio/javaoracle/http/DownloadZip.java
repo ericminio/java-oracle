@@ -2,7 +2,7 @@ package ericminio.javaoracle.http;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import ericminio.javaoracle.data.BuildIncoming;
+import ericminio.javaoracle.data.GenerateDataFromWeb;
 import ericminio.javaoracle.data.Incoming;
 import ericminio.javaoracle.domain.FileSet;
 import ericminio.javaoracle.domain.GenerateClasses;
@@ -28,7 +28,7 @@ public class DownloadZip implements HttpHandler {
         logger.log(Level.INFO, "incoming:\n" + incomingBody);
         FormDataSet formDataSet = new FormDataProtocol().parse(incomingBody);
         String javaPackage = formDataSet.getByName("javaPackage").getValue();
-        Incoming incoming = new BuildIncoming().from(formDataSet);
+        Incoming incoming = new GenerateDataFromWeb().please(formDataSet);
         FileSet fileSet = new GenerateClasses().from(incoming, javaPackage);
         byte[] bytes = new Zip().please(fileSet);
         exchange.getResponseHeaders().add("content-type", "application/zip");
