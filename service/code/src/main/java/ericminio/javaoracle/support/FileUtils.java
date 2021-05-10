@@ -37,7 +37,7 @@ public class FileUtils {
     }
 
     public static void save(String outputFolder, String name, String code) throws IOException {
-        Files.write(Paths.get(outputFolder, name +".java"), code.getBytes());
+        Files.write(Paths.get(outputFolder, name), code.getBytes());
     }
 
     public static void safeDelete(String filename) {

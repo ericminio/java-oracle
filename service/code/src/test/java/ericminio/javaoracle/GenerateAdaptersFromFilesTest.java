@@ -1,5 +1,6 @@
 package ericminio.javaoracle;
 
+import ericminio.javaoracle.main.GenerateAdaptersFromFiles;
 import org.junit.Before;
 import org.junit.Test;
 

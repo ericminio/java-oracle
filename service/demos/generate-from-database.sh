@@ -26,6 +26,6 @@ java \
     -DtypeNamePrefix=example_type_ \
     -DjavaPackage=company.name \
     -DoutputFolder=/usr/local/src/service/demos/generated-from-database \
-    -cp java-oracle-1.0-jar-with-dependencies.jar ericminio.javaoracle.GenerateAdaptersFromDatabase 
+    -cp java-oracle-1.0-jar-with-dependencies.jar ericminio.javaoracle.main.GenerateAdaptersFromDatabase 
 
 ls -la /usr/local/src/service/demos/generated-from-database

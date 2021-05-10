@@ -1,4 +1,4 @@
-package ericminio.javaoracle;
+package ericminio.javaoracle.main;
 
 import ericminio.javaoracle.data.GetDataFromFiles;
 

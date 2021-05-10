@@ -1,6 +1,7 @@
 package ericminio.javaoracle;
 
 import ericminio.javaoracle.data.DatabaseTest;
+import ericminio.javaoracle.main.GenerateAdaptersFromDatabase;
 import org.junit.Before;
 import org.junit.Test;
 
