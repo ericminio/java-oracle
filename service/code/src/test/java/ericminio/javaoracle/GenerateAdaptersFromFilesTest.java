@@ -1,6 +1,5 @@
 package ericminio.javaoracle;
 
-import ericminio.javaoracle.data.DatabaseTest;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -13,7 +12,7 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
 
-public class GenerateAdaptersFromFilesTest extends DatabaseTest {
+public class GenerateAdaptersFromFilesTest {
 
     private GenerateAdaptersFromFiles generateAdaptersFromFiles;
 
