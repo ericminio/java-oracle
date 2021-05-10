@@ -56,4 +56,6 @@ services:
     working_dir: /usr/local/src/service/code
     ports: 
       - 8015:8015
+    environment: 
+      - PORT=8015
     
