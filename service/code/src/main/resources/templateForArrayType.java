@@ -10,6 +10,12 @@ public class ArrayType {
         return arrayType;
     }
 
+    public RecordType[] getArray(long index, int count) {
+        RecordType[] slice = new RecordType[count];
+        System.arraycopy(array, (int) index, slice, 0, count);
+        return slice;
+    }
+
     public RecordType[] getArray() {
         return array;
     }

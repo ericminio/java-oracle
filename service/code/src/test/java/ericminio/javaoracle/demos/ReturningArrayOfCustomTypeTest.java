@@ -33,6 +33,14 @@ public class ReturningArrayOfCustomTypeTest extends DatabaseTest {
                 "        R(1) := custom_type(15, 'hello', to_date('2015/01/15 19:15:42', 'YYYY/MM/DD HH24:MI:SS'));\n" +
                 "        R.extend;\n" +
                 "        R(2) := custom_type(42, 'world', to_date('2015/01/15 19:15:42', 'YYYY/MM/DD HH24:MI:SS'));\n" +
+                "        R.extend;\n" +
+                "        R(3) := custom_type(51, 'item-1', to_date('2015/01/15 19:15:42', 'YYYY/MM/DD HH24:MI:SS'));\n" +
+                "        R.extend;\n" +
+                "        R(4) := custom_type(52, 'item-2', to_date('2015/01/15 19:15:42', 'YYYY/MM/DD HH24:MI:SS'));\n" +
+                "        R.extend;\n" +
+                "        R(5) := custom_type(53, 'item-3', to_date('2015/01/15 19:15:42', 'YYYY/MM/DD HH24:MI:SS'));\n" +
+                "        R.extend;\n" +
+                "        R(6) := custom_type(54, 'item-4', to_date('2015/01/15 19:15:42', 'YYYY/MM/DD HH24:MI:SS'));\n" +
                 "        return R;\n" +
                 "    end;\n" +
                 "END returning_array_of_custom_type;");
@@ -43,7 +51,7 @@ public class ReturningArrayOfCustomTypeTest extends DatabaseTest {
         ReturningArrayOfCustomType returningArrayOfCustomType = new ReturningArrayOfCustomType(connection);
         ArrayOfCustomType actual = returningArrayOfCustomType.getValue();
 
-        assertThat(actual.length(), equalTo(2));
+        assertThat(actual.length(), equalTo(6));
     }
 
     @Test
@@ -52,7 +60,7 @@ public class ReturningArrayOfCustomTypeTest extends DatabaseTest {
         ArrayOfCustomType actual = returningArrayOfCustomType.getValue();
         CustomType[] entries = actual.getArray();
 
-        assertThat(entries.length, equalTo(2));
+        assertThat(entries.length, equalTo(6));
     }
 
     @Test
@@ -62,5 +70,17 @@ public class ReturningArrayOfCustomTypeTest extends DatabaseTest {
 
         assertThat(actual.getElement(0).getLabel(), equalTo("hello"));
         assertThat(actual.getElement(1).getLabel(), equalTo("world"));
+    }
+
+    @Test
+    public void exposesSliceOfElements() throws SQLException {
+        ReturningArrayOfCustomType returningArrayOfCustomType = new ReturningArrayOfCustomType(connection);
+        ArrayOfCustomType actual = returningArrayOfCustomType.getValue();
+        CustomType[] entries = actual.getArray(2, 3);
+
+        assertThat(entries.length, equalTo(3));
+        assertThat(entries[0].getLabel(), equalTo("item-1"));
+        assertThat(entries[1].getLabel(), equalTo("item-2"));
+        assertThat(entries[2].getLabel(), equalTo("item-3"));
     }
 }

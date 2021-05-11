@@ -12,6 +12,12 @@ public class ArrayOfCustomType {
         return arrayType;
     }
 
+    public CustomType[] getArray(long index, int count) {
+        CustomType[] slice = new CustomType[count];
+        System.arraycopy(array, (int) index, slice, 0, count);
+        return slice;
+    }
+
     public CustomType[] getArray() {
         return array;
     }
