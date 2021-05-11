@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-<body>
-    <head>
-        <meta charset="utf-8"/>
-        <script>
+<head>
+    <meta charset="utf-8"/>
+    <script>
             function getFilename(disposition) {
                 let token = "filename=";
                 let filename = disposition.substring(disposition.indexOf(token) + token.length);
@@ -28,7 +27,8 @@
                     });
             };
         </script>
-    </head>
+</head>
+<body>
     <form id="data" method="post" enctype="multipart/form-data">
         <p>
             Package file:
