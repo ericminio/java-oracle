@@ -86,4 +86,10 @@ public class ExtractRecordTypeNameTest {
         assertThat(new ExtractRecordTypeName().please(Arrays.asList("TYPE array_type IS varray(20) of custom_type;")),
                 equalTo("custom_type"));
     }
+
+    @Test
+    public void supportsMissingSpaceBeforeOf() {
+        assertThat(new ExtractRecordTypeName().please(Arrays.asList("TYPE array_type IS varray(20)of custom_type;")), equalTo("custom_type"));
+        assertThat(new ExtractRecordTypeName().please(Arrays.asList("TYPE array_type AS varray(20)of custom_type;")), equalTo("custom_type"));
+    }
 }

@@ -8,6 +8,9 @@ public class ExtractParameters {
         Parameters parameters = new Parameters();
         List<String> clean = new RemoveComments().please(specification);
         String function = new JoinWith("").please(clean);
+        if (function.toLowerCase().indexOf("varray") != -1) {
+            return parameters;
+        }
         if (function.indexOf("(") != -1) {
             String list = function.substring(function.indexOf("(") + 1);
             list = list.substring(0, list.lastIndexOf(")"));

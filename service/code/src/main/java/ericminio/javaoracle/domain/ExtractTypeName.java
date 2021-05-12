@@ -27,7 +27,15 @@ public class ExtractTypeName {
         for (int i=0; i < patterns.size(); i++) {
             Matcher matcher = patterns.get(i).matcher(statement);
             if (matcher.find()) {
-                return matcher.group(1);
+                String candidate = matcher.group(1).trim();
+                if (candidate.startsWith("\"")) {
+                    candidate = candidate.substring(1);
+                }
+                if (candidate.endsWith("\"")) {
+                    candidate = candidate.substring(0, candidate.length()-1);
+                }
+
+                return candidate.trim();
             }
         }
         return null;

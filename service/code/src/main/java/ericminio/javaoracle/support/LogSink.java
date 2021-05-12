@@ -46,7 +46,7 @@ public class LogSink {
 
         @Override
         public String format(LogRecord record) {
-            return record.getLevel().getName() + ": " + record.getMessage() + "\n";
+            return "[" + record.getLevel().getName() + "] " + record.getMessage() + "\n";
         }
     }
 }

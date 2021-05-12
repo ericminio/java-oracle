@@ -105,21 +105,6 @@ public class ExtractParametersTest {
     }
 
     @Test
-    public void canBeUsedToParseType() {
-        Parameters parameters = new ExtractParameters().please(Arrays.asList(
-                "TYPE any_type as object (",
-                "   field1 NUMBER,",
-                "   field2 number,",
-                "   field3 varchar2(10),",
-                "   field4 VARCHAR2",
-                ") RETURN number;"
-        ));
-        assertThat(parameters.all(), equalTo(Arrays.asList(
-                "field1 NUMBER", "field2 number", "field3 varchar2(10)", "field4 VARCHAR2"
-        )));
-    }
-
-    @Test
     public void resistsOpeningParenthesisOnNewLine() {
         Parameters parameters = new ExtractParameters().please(Arrays.asList(
                 "FUNCTION any",
@@ -189,5 +174,38 @@ public class ExtractParametersTest {
                 "RETURN number;"
         ));
         assertThat(parameters.all(), equalTo(Arrays.asList("param number")));
+    }
+
+    @Test
+    public void canBeUsedToParseType() {
+        Parameters parameters = new ExtractParameters().please(Arrays.asList(
+                "TYPE any_type as object (",
+                "   field1 NUMBER,",
+                "   field2 number,",
+                "   field3 varchar2(10),",
+                "   field4 VARCHAR2",
+                ") RETURN number;"
+        ));
+        assertThat(parameters.all(), equalTo(Arrays.asList(
+                "field1 NUMBER", "field2 number", "field3 varchar2(10)", "field4 VARCHAR2"
+        )));
+    }
+
+    @Test
+    public void typeParsingResistsVarray() {
+        Parameters parameters = new ExtractParameters().please(Arrays.asList(
+                "TYPE any_type as varray(15) of number;"
+        ));
+        assertThat(parameters.count(), equalTo(0));
+        assertThat(parameters.all(), equalTo(Arrays.asList(new String[]{})));
+    }
+
+    @Test
+    public void typeParsingResistsUpperCaseVarray() {
+        Parameters parameters = new ExtractParameters().please(Arrays.asList(
+                "TYPE any_type as VARRAY(15) of number;"
+        ));
+        assertThat(parameters.count(), equalTo(0));
+        assertThat(parameters.all(), equalTo(Arrays.asList(new String[]{})));
     }
 }

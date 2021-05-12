@@ -11,8 +11,8 @@ public class ExtractRecordTypeName {
 
     public ExtractRecordTypeName() {
         patterns = new ArrayList<>();
-        patterns.add(Pattern.compile("as varray[\\(\\d*\\)]* of (.*)"));
-        patterns.add(Pattern.compile("is varray[\\(\\d*\\)]* of (.*)"));
+        patterns.add(Pattern.compile("as varray[\\(\\d*\\)]*[\\s]*of (.*)"));
+        patterns.add(Pattern.compile("is varray[\\(\\d*\\)]*[\\s]*of (.*)"));
         patterns.add(Pattern.compile("as table of (.*)"));
         patterns.add(Pattern.compile("is table of (.*)"));
     }
@@ -20,6 +20,11 @@ public class ExtractRecordTypeName {
     public String please(List<String> specification) {
         List<String> clean = new RemoveComments().please(specification);
         String statement = new JoinWith(" ").please(clean).trim().toLowerCase();
+
+        return please(statement);
+    }
+
+    public String please(String statement) {
         for (int i=0; i < patterns.size(); i++) {
             Matcher matcher = patterns.get(i).matcher(statement);
             if (matcher.find()) {

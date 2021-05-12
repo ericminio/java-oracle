@@ -13,4 +13,9 @@ public class JoinWithTest {
     public void worksAsExpected() {
         MatcherAssert.assertThat(new JoinWith(" ").please(Arrays.asList("hello", "world")), equalTo("hello world"));
     }
+
+    @Test
+    public void trimFirst() {
+        MatcherAssert.assertThat(new JoinWith(" ").please(Arrays.asList("hello\n ", "world")), equalTo("hello world"));
+    }
 }

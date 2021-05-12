@@ -64,15 +64,15 @@ public class GenerateAdaptersFromFilesTest {
 
     @Test
     public void logsPackageGeneration() throws SQLException, IOException {
-        assertThat(generateAdaptersFromFiles.getLog(), containsString("INFO: Generating class for package"));
-        assertThat(generateAdaptersFromFiles.getLog(), containsString("INFO: -> examples.AnyPackage"));
+        assertThat(generateAdaptersFromFiles.getLog(), containsString("Generating class for package"));
+        assertThat(generateAdaptersFromFiles.getLog(), containsString("-> examples.AnyPackage"));
     }
 
     @Test
     public void logsTypeGeneration() throws SQLException, IOException {
-        assertThat(generateAdaptersFromFiles.getLog(), containsString("INFO: Generating classes for types"));
-        assertThat(generateAdaptersFromFiles.getLog(), containsString("INFO: -> generating class for type example_array_type"));
-        assertThat(generateAdaptersFromFiles.getLog(), containsString("INFO: -> generating class for type example_any_type"));
+        assertThat(generateAdaptersFromFiles.getLog(), containsString("Generating classes for types"));
+        assertThat(generateAdaptersFromFiles.getLog(), containsString("-> generating class for type example_array_type"));
+        assertThat(generateAdaptersFromFiles.getLog(), containsString("-> generating class for type example_any_type"));
     }
 
     @Test

@@ -2,8 +2,6 @@ package ericminio.javaoracle.domain;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class TypeMapperFactory {
 
@@ -45,7 +43,7 @@ public class TypeMapperFactory {
     public boolean isArrayType(String type) {
         for (int i=0; i<typeSpecifications.size(); i++) {
             String statement = getTypeSpecification(i);
-            if (statement.indexOf("type " + type.toLowerCase()) != -1) {
+            if (statement.indexOf("type " + type.toLowerCase()) != -1 || statement.indexOf("type \"" + type.toLowerCase() + "\"") != -1) {
                 if (statement.indexOf("as object") != -1) {
                     return false;
                 }
@@ -58,41 +56,45 @@ public class TypeMapperFactory {
     }
 
     public String recordTypeOfArrayType(String type) {
-        Pattern pattern = Pattern.compile("of (.*)");
-        for (int i=0; i<typeSpecifications.size(); i++) {
-            String statement = getTypeSpecification(i);
-            if (statement.indexOf("type " + type.toLowerCase()) != -1) {
-                Matcher matcher = pattern.matcher(statement);
-                if (matcher.find()) {
-                    return matcher.group(1).replace(";", "");
+        List<String> specification = specificationOfType(type);
+        String recordType = new ExtractRecordTypeName().please(specification);
+        if (recordType !=null ) {
+            return recordType;
+        }
+
+        String message = "Not an array type or unknwn type " + type + "\n";
+        message += " specification found:\n" + specification + "\n";
+        throw new RuntimeException(message);
+    }
+
+    public List<String> customTypesOfFields(String type) {
+        try {
+            ArrayList<String> types = new ArrayList<>();
+            List<String> typeSpecification = specificationOfType(type);
+            Parameters parameters = new ExtractParameters().please(typeSpecification);
+            for (int index = 0; index < parameters.count(); index++) {
+                String specification = parameters.get(index).toLowerCase();
+                specification = specification.replaceAll("\\s+", " ");
+                if (specification.indexOf(" in ") != -1) {
+                    specification = specification.replace(" in ", " ");
+                }
+                String[] parts = specification.trim().split("\\s");
+                String candidate = parts[1];
+                if (isCustomType(candidate)) {
+                    types.add(candidate);
                 }
             }
+            return types;
         }
-        throw new RuntimeException("Not an array type or unknwn type " + type);
+        catch (RuntimeException e) {
+            String message = "Something went wrong with type " + type;
+            throw new RuntimeException(message, e);
+        }
     }
 
     private String getTypeSpecification(int i) {
         List<String> typeSpecification = typeSpecifications.get(i);
         return new JoinWith(" ").please(typeSpecification).trim().toLowerCase();
-    }
-
-    public List<String> customTypesOfFields(String type) {
-        ArrayList<String> types = new ArrayList<>();
-        List<String> typeSpecification = specificationOfType(type);
-        Parameters parameters = new ExtractParameters().please(typeSpecification);
-        for (int index = 0; index< parameters.count(); index++) {
-            String specification = parameters.get(index).toLowerCase();
-            specification = specification.replaceAll("\\s+", " ");
-            if (specification.indexOf(" in ") != -1) {
-                specification = specification.replace(" in ", " ");
-            }
-            String[] parts = specification.trim().split("\\s");
-            String candidate = parts[1];
-            if (isCustomType(candidate)) {
-                types.add(candidate);
-            }
-        }
-        return types;
     }
 
     private List<String> specificationOfType(String type) {
@@ -103,6 +105,12 @@ public class TypeMapperFactory {
                 return typeSpecification;
             }
         }
-        throw new RuntimeException("unknown type: " + type);
+        String message = "Unknown type: " + type + "\nKnowm types:\n";
+        for (int i=0; i<typeSpecifications.size(); i++) {
+            List<String> typeSpecification = typeSpecifications.get(i);
+            String typeName = new ExtractTypeName().please(typeSpecification);
+            message += (typeName + "\n");
+        }
+        throw new RuntimeException(message);
     }
 }

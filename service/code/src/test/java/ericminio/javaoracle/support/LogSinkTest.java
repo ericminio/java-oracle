@@ -23,7 +23,7 @@ public class LogSinkTest {
         Logger logger = logSink.getLogger();
         logger.log(Level.INFO, "hello world");
 
-        assertThat(logSink.getLog(), equalTo("INFO: hello world\n"));
+        assertThat(logSink.getLog(), equalTo("[INFO] hello world\n"));
     }
 
     @Test
@@ -32,7 +32,7 @@ public class LogSinkTest {
         logger.log(Level.INFO, "hello");
         logger.log(Level.INFO, "world");
 
-        assertThat(logSink.getLog(), equalTo("INFO: hello\nINFO: world\n"));
+        assertThat(logSink.getLog(), equalTo("[INFO] hello\n[INFO] world\n"));
     }
 
     @Test

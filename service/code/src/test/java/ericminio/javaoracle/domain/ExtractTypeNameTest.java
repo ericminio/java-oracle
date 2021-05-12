@@ -63,4 +63,11 @@ public class ExtractTypeNameTest {
         assertThat(new ExtractTypeName().please(Arrays.asList("create or replace type beautiful_type is table of number")),
                 equalTo("beautiful_type"));
     }
+
+    @Test
+    public void resistsDoubleQuotes() {
+        assertThat(new ExtractTypeName().please(Arrays.asList(
+                "create type \"beautiful_type\" as object(value number)"
+        )), equalTo("beautiful_type"));
+    }
 }

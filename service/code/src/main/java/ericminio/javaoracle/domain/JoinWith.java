@@ -13,7 +13,7 @@ public class JoinWith {
     public String please(List<String> lines) {
         String oneLine = "";
         for (int i=0; i<lines.size(); i++) {
-            oneLine += lines.get(i);
+            oneLine += lines.get(i).trim();
             if (i < lines.size()-1) {
                 oneLine += delimiter;
             }

@@ -22,7 +22,12 @@ public class TypeMapperFactoryTest {
                 Arrays.asList("create or replace type any_varray_type as varray(15) of any_type;"),
                 Arrays.asList("create or replace type missing_semicolon as table of any_type"),
                 Arrays.asList("create or replace type extra_spaces as table of any_type    "),
-                Arrays.asList("create or replace type any_type_nesting as object (one any_type, two another_type, three number)")
+                Arrays.asList("create or replace type any_type_nesting as object (one any_type, two another_type, three number)"),
+                Arrays.asList("create or replace type \"quoted_type\" as object (one any_type)"),
+                Arrays.asList("TYPE \"RANDOM_case\" AS varray(1500) OF ANY_type"),
+                Arrays.asList("TYPE \"multiline_array\" IS varray(1500)\n", "OF ANY_type;"),
+                Arrays.asList("TYPE \"extra_inline_spaces\"         AS varray(1500) OF ANY_type"),
+                Arrays.asList("TYPE \"missing_OF_leading_space\" AS varray(1500)OF ANY_type")
                 );
         typeMapperFactory = new TypeMapperFactory(typeSpecifications);
     }
@@ -40,6 +45,11 @@ public class TypeMapperFactoryTest {
     @Test
     public void isArrayTypeResistsUpperCaseIncoming() {
         assertThat(typeMapperFactory.isArrayType("ANY_TABLE_TYPE"), equalTo(true));
+    }
+
+    @Test
+    public void isArrayTypeResistsQuotes() {
+        assertThat(typeMapperFactory.isArrayType("random_case"), equalTo(true));
     }
 
     @Test
@@ -79,6 +89,11 @@ public class TypeMapperFactoryTest {
 
     @Test
     public void recordTypeGetterResistsUpperCase() {
+        assertThat(typeMapperFactory.recordTypeOfArrayType("random_case"), equalTo("any_type"));
+    }
+
+    @Test
+    public void recordTypeGetterResistsQuotedType() {
         assertThat(typeMapperFactory.recordTypeOfArrayType("EXTRA_SPACES"), equalTo("any_type"));
     }
 
@@ -146,5 +161,46 @@ public class TypeMapperFactoryTest {
         assertThat(typeMapperFactory.customTypesOfFields("any_type_nesting").size(), equalTo(2));
         assertThat(typeMapperFactory.customTypesOfFields("any_type_nesting").get(0), equalTo("any_type"));
         assertThat(typeMapperFactory.customTypesOfFields("any_type_nesting").get(1), equalTo("another_type"));
+    }
+
+    @Test
+    public void customTypesOfFieldResistsQuotedType() {
+        assertThat(typeMapperFactory.customTypesOfFields("quoted_type").size(), equalTo(1));
+        assertThat(typeMapperFactory.customTypesOfFields("quoted_type").get(0), equalTo("any_type"));
+    }
+
+    @Test
+    public void customTypesOfFieldResistsVarray() {
+        assertThat(typeMapperFactory.customTypesOfFields("random_case").size(), equalTo(0));
+    }
+
+    @Test
+    public void recordTypeGetterResistsMultilineDefinition() {
+        assertThat(typeMapperFactory.recordTypeOfArrayType("multiline_array"), equalTo("any_type"));
+    }
+
+    @Test
+    public void isArrayTypeResistsMultilineDefinition() {
+        assertThat(typeMapperFactory.isArrayType("multiline_array"), equalTo(true));
+    }
+
+    @Test
+    public void recordTypeGetterResistsExtraInlineSpaces() {
+        assertThat(typeMapperFactory.recordTypeOfArrayType("extra_inline_spaces"), equalTo("any_type"));
+    }
+
+    @Test
+    public void isArrayTypeResistsExtraInlineSpaces() {
+        assertThat(typeMapperFactory.isArrayType("extra_inline_spaces"), equalTo(true));
+    }
+
+    @Test
+    public void recordTypeGetterResistsMissingOfLeadingSpace() {
+        assertThat(typeMapperFactory.recordTypeOfArrayType("missing_OF_leading_space"), equalTo("any_type"));
+    }
+
+    @Test
+    public void isArrayTypeResistsMissingOfLeadingSpace() {
+        assertThat(typeMapperFactory.isArrayType("missing_OF_leading_space"), equalTo(true));
     }
 }

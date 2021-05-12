@@ -63,15 +63,15 @@ public class GenerateAdaptersFromDatabaseTest extends DatabaseTest {
 
     @Test
     public void logsPackageGeneration() throws SQLException, IOException {
-        assertThat(generateAdaptersFromDatabase.getLog(), containsString("INFO: Generating class for package"));
-        assertThat(generateAdaptersFromDatabase.getLog(), containsString("INFO: -> examples.AnyPackage"));
+        assertThat(generateAdaptersFromDatabase.getLog(), containsString("Generating class for package"));
+        assertThat(generateAdaptersFromDatabase.getLog(), containsString("-> examples.AnyPackage"));
     }
 
     @Test
     public void logsTypeGeneration() throws SQLException, IOException {
-        assertThat(generateAdaptersFromDatabase.getLog(), containsString("INFO: Generating classes for types"));
-        assertThat(generateAdaptersFromDatabase.getLog(), containsString("INFO: -> generating class for type example_array_type"));
-        assertThat(generateAdaptersFromDatabase.getLog(), containsString("INFO: -> generating class for type example_any_type"));
+        assertThat(generateAdaptersFromDatabase.getLog(), containsString("Generating classes for types"));
+        assertThat(generateAdaptersFromDatabase.getLog(), containsString("-> generating class for type example_array_type"));
+        assertThat(generateAdaptersFromDatabase.getLog(), containsString("-> generating class for type example_any_type"));
     }
 
     @Test
