@@ -10,6 +10,10 @@ public class BuildSomethingWithParametersTest {
 
     private class Dummy extends BuildSomethingWithParameters {
 
+        public Dummy(TypeMapperFactory typeMapperFactory) {
+            super(typeMapperFactory);
+        }
+
         @Override
         protected String modify(String output, int index, String name, String type, boolean isLast) {
             return output
@@ -24,7 +28,7 @@ public class BuildSomethingWithParametersTest {
 
     @Before
     public void newSpy() {
-        dummy = new Dummy();
+        dummy = new Dummy(new TypeMapperFactory());
     }
 
     @Test

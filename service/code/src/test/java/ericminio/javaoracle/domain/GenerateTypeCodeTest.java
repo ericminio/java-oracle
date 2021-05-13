@@ -16,7 +16,7 @@ public class GenerateTypeCodeTest {
 
     @Before
     public void generateCode() throws IOException {
-        List<String> typeSpecification = Arrays.asList(
+        List<String> sut = Arrays.asList(
                 "type custom_type as object\n",
                 "(\n",
                 "   field1 number,\n",
@@ -29,11 +29,10 @@ public class GenerateTypeCodeTest {
                         "create or replace type record_type as object(\n",
                         "   value number\n",
                         ");\n"),
-                Arrays.asList("create or replace type array_type as table of record_type;")
+                Arrays.asList("create or replace type array_type as table of record_type;"),
+                sut
         );
-        TypeMapperFactory typeMapperFactory = new TypeMapperFactory(typeSpecifications);
-        GenerateTypeCode generateTypeCode = new GenerateTypeCode();
-        code = generateTypeCode.please(typeSpecification, typeMapperFactory);
+        code = new GenerateTypeCode().please(sut, new TypeMapperFactory(typeSpecifications));
     }
 
     @Test

@@ -1,5 +1,6 @@
 package ericminio.javaoracle.domain;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -10,11 +11,22 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class BuildWriteSqlTest {
 
+    BuildWriteSql buildWriteSql;
+
+    @Before
+    public void sut() {
+        List<List<String>> typeSpecifications = Arrays.asList(
+                Arrays.asList("create type custom_type as object(value number)")
+        );
+        TypeMapperFactory typeMapperFactory = new TypeMapperFactory(typeSpecifications);
+        buildWriteSql = new BuildWriteSql(typeMapperFactory);
+    }
+
     @Test
     public void forNumber() {
         Parameters parameters = new Parameters();
         parameters.add("any_field number");
-        assertThat(new BuildWriteSql(new TypeMapperFactory()).please(parameters), equalTo("" +
+        assertThat(buildWriteSql.please(parameters), equalTo("" +
                 "        stream.writeBigDecimal(this.getAnyField());"
         ));
     }
@@ -23,7 +35,7 @@ public class BuildWriteSqlTest {
     public void forString() {
         Parameters parameters = new Parameters();
         parameters.add("any_field varchar2(10)");
-        assertThat(new BuildWriteSql(new TypeMapperFactory()).please(parameters), equalTo("" +
+        assertThat(buildWriteSql.please(parameters), equalTo("" +
                 "        stream.writeString(this.getAnyField());"
         ));
     }
@@ -32,7 +44,7 @@ public class BuildWriteSqlTest {
     public void forDate() {
         Parameters parameters = new Parameters();
         parameters.add("any_field date");
-        assertThat(new BuildWriteSql(new TypeMapperFactory()).please(parameters), equalTo("" +
+        assertThat(buildWriteSql.please(parameters), equalTo("" +
                 "        stream.writeTimestamp(new java.sql.Timestamp(this.getAnyField().getTime()));"
         ));
     }
@@ -41,7 +53,7 @@ public class BuildWriteSqlTest {
     public void forCustomType() {
         Parameters parameters = new Parameters();
         parameters.add("any_field custom_type");
-        assertThat(new BuildWriteSql(new TypeMapperFactory()).please(parameters), equalTo("" +
+        assertThat(buildWriteSql.please(parameters), equalTo("" +
                 "        stream.writeObject(this.getAnyField());"
         ));
     }
@@ -51,7 +63,7 @@ public class BuildWriteSqlTest {
         Parameters parameters = new Parameters();
         parameters.add("field1 varchar2(10)");
         parameters.add("field2 number(15,4)");
-        assertThat(new BuildWriteSql(new TypeMapperFactory()).please(parameters), equalTo("" +
+        assertThat(buildWriteSql.please(parameters), equalTo("" +
                 "        stream.writeString(this.getField1());\n" +
                 "        stream.writeBigDecimal(this.getField2());"
         ));

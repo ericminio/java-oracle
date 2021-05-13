@@ -1,5 +1,6 @@
 package ericminio.javaoracle.domain;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -10,11 +11,22 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class BuildReadSqlTest {
 
+    BuildReadSql buildReadSql;
+    
+    @Before
+    public void sut() {
+        List<List<String>> typeSpecifications = Arrays.asList(
+                Arrays.asList("create type custom_type as object(value number)")
+        );
+        TypeMapperFactory typeMapperFactory = new TypeMapperFactory(typeSpecifications);
+        buildReadSql = new BuildReadSql(typeMapperFactory);
+    }
+    
     @Test
     public void forNumber() {
         Parameters parameters = new Parameters();
         parameters.add("any_field number");
-        assertThat(new BuildReadSql(new TypeMapperFactory()).please(parameters), equalTo("" +
+        assertThat(buildReadSql.please(parameters), equalTo("" +
                 "        this.setAnyField(stream.readBigDecimal());"
         ));
     }
@@ -23,7 +35,7 @@ public class BuildReadSqlTest {
     public void forString() {
         Parameters parameters = new Parameters();
         parameters.add("field varchar2(10)");
-        assertThat(new BuildReadSql(new TypeMapperFactory()).please(parameters), equalTo("" +
+        assertThat(buildReadSql.please(parameters), equalTo("" +
                 "        this.setField(stream.readString());"
         ));
     }
@@ -32,7 +44,7 @@ public class BuildReadSqlTest {
     public void forDate() {
         Parameters parameters = new Parameters();
         parameters.add("field date");
-        assertThat(new BuildReadSql(new TypeMapperFactory()).please(parameters), equalTo("" +
+        assertThat(buildReadSql.please(parameters), equalTo("" +
                 "        this.setField(new Date(stream.readTimestamp().getTime()));"
         ));
     }
@@ -41,7 +53,7 @@ public class BuildReadSqlTest {
     public void forCustomType() {
         Parameters parameters = new Parameters();
         parameters.add("field custom_type");
-        assertThat(new BuildReadSql(new TypeMapperFactory()).please(parameters), equalTo("" +
+        assertThat(buildReadSql.please(parameters), equalTo("" +
                 "        this.setField((CustomType) stream.readObject());"
         ));
     }
@@ -51,7 +63,7 @@ public class BuildReadSqlTest {
         Parameters parameters = new Parameters();
         parameters.add("field1 varchar2(10)");
         parameters.add("field2 number(15,4)");
-        assertThat(new BuildReadSql(new TypeMapperFactory()).please(parameters), equalTo("" +
+        assertThat(buildReadSql.please(parameters), equalTo("" +
                 "        this.setField1(stream.readString());\n" +
                 "        this.setField2(stream.readBigDecimal());"
         ));

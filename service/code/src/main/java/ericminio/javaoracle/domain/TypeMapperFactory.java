@@ -36,23 +36,18 @@ public class TypeMapperFactory {
         throw new RuntimeException(("Teach me about type " + incoming));
     }
 
-    public static boolean isCustomType(String type) {
+    public boolean isCustomType(String type) {
         return type.indexOf("_") != -1;
     }
 
     public boolean isArrayType(String type) {
-        for (int i=0; i<typeSpecifications.size(); i++) {
-            String statement = getTypeSpecification(i);
-            if (statement.indexOf("type " + type.toLowerCase()) != -1 || statement.indexOf("type \"" + type.toLowerCase() + "\"") != -1) {
-                if (statement.indexOf("as object") != -1) {
-                    return false;
-                }
-                else {
-                    return true;
-                }
-            }
+        if (! isCustomType(type)) {
+            return false;
         }
-        return false;
+        List<String> specification = specificationOfType(type);
+        String statement = new JoinWith(" ").please(specification).trim().toLowerCase();
+
+        return statement.indexOf("as object") == -1;
     }
 
     public String recordTypeOfArrayType(String type) {
@@ -92,11 +87,6 @@ public class TypeMapperFactory {
         }
     }
 
-    private String getTypeSpecification(int i) {
-        List<String> typeSpecification = typeSpecifications.get(i);
-        return new JoinWith(" ").please(typeSpecification).trim().toLowerCase();
-    }
-
     private List<String> specificationOfType(String type) {
         for (int i=0; i<typeSpecifications.size(); i++) {
             List<String> typeSpecification = typeSpecifications.get(i);
@@ -105,7 +95,7 @@ public class TypeMapperFactory {
                 return typeSpecification;
             }
         }
-        String message = "Unknown type: " + type + "\nKnowm types:\n";
+        String message = "Unknown type: " + type + "\n" + typeSpecifications.size() +" known types:\n";
         for (int i=0; i<typeSpecifications.size(); i++) {
             List<String> typeSpecification = typeSpecifications.get(i);
             String typeName = new ExtractTypeName().please(typeSpecification);

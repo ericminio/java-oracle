@@ -9,10 +9,10 @@ public abstract class BuildSomethingWithParameters {
     protected final CamelCase camelCase;
     protected final TypeMapperFactory typeMapperFactory;
 
-    public BuildSomethingWithParameters() {
+    public BuildSomethingWithParameters(TypeMapperFactory typeMapperFactory) {
         pascalCase = new PascalCase();
         camelCase = new CamelCase();
-        this.typeMapperFactory = new TypeMapperFactory();
+        this.typeMapperFactory = typeMapperFactory;
     }
 
     public String please(Parameters parameters) {

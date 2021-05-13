@@ -2,10 +2,8 @@ package ericminio.javaoracle.domain;
 
 public class BuildReadSql extends BuildSomethingWithParameters {
 
-    private TypeMapperFactory typeMapperFactory;
-
     public BuildReadSql(TypeMapperFactory typeMapperFactory) {
-        this.typeMapperFactory = typeMapperFactory;
+        super(typeMapperFactory);
     }
 
     @Override

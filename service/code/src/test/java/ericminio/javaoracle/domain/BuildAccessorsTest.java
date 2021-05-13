@@ -1,5 +1,6 @@
 package ericminio.javaoracle.domain;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -7,11 +8,18 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class BuildAccessorsTest {
 
+    BuildAccessors buildAccessors;
+    
+    @Before
+    public void sut() {
+        buildAccessors = new BuildAccessors(new TypeMapperFactory());
+    }
+    
     @Test
     public void one() {
         Parameters parameters = new Parameters();
         parameters.add("any_field number");
-        assertThat(new BuildAccessors().please(parameters), equalTo("" +
+        assertThat(buildAccessors.please(parameters), equalTo("" +
                 "    public BigDecimal getAnyField() {\n" +
                 "        return this.anyField;\n" +
                 "    }\n" +
@@ -26,7 +34,7 @@ public class BuildAccessorsTest {
         Parameters parameters = new Parameters();
         parameters.add("any_field number");
         parameters.add("another_field number");
-        assertThat(new BuildAccessors().please(parameters), equalTo("" +
+        assertThat(buildAccessors.please(parameters), equalTo("" +
                 "    public BigDecimal getAnyField() {\n" +
                 "        return this.anyField;\n" +
                 "    }\n" +

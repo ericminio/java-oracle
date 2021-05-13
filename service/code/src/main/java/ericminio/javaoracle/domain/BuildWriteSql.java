@@ -2,10 +2,8 @@ package ericminio.javaoracle.domain;
 
 public class BuildWriteSql extends BuildSomethingWithParameters {
 
-    private TypeMapperFactory typeMapperFactory;
-
     public BuildWriteSql(TypeMapperFactory typeMapperFactory) {
-        this.typeMapperFactory = typeMapperFactory;
+        super(typeMapperFactory);
     }
 
     @Override

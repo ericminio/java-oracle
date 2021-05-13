@@ -18,12 +18,12 @@ public class GenerateMethodCode {
         Parameters parameters = new ExtractParameters().please(functionSpecification);
         String methodCode = methodTemplate
                 .replace("public Object", "public " + typeMapperFactory.of(returnType).javaType())
-                .replace("methodName()", "methodName(" + new BuildMethodParameterList().please(parameters) + ")")
+                .replace("methodName()", "methodName(" + new BuildMethodParameterList(typeMapperFactory).please(parameters) + ")")
                 .replace("methodName", new CamelCase().please(functionName))
                 .replace("packageName", packageName)
                 .replace("functionName", functionName)
                 .replace("???", new PlaceholderList().please(parameters.count()))
-                .replace("        // set IN parameters\n", new BuildSqlStatementParameterSettings().please(parameters))
+                .replace("        // set IN parameters\n", new BuildSqlStatementParameterSettings(typeMapperFactory).please(parameters))
                 .replace("return (Object) resultSet.getObject(1);", typeMapperFactory.of(returnType).methodReturnStatement())
                 ;
         return methodCode;
