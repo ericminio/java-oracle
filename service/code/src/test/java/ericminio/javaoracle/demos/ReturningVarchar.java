@@ -17,8 +17,9 @@ public class ReturningVarchar {
         PreparedStatement statement = connection.prepareStatement("select returning_varchar.get_value() from dual");
         ResultSet resultSet = statement.executeQuery();
         resultSet.next();
+        Object data = resultSet.getObject(1);
 
-        return (String) resultSet.getObject(1);
+        return (String) data;
     }
 
 }

@@ -40,24 +40,31 @@ public class GenerateMethodCodeTest {
     }
 
     @Test
-    public void canReturnInteger() throws IOException {
+    public void canReturnString() throws IOException {
         String code = new GenerateMethodCode().please(Arrays.asList("FUNCTION any_method RETURN varchar2;"), "any_package", new TypeMapperFactory());
         assertThat(code, containsString("public String anyMethod() throws SQLException {\n"));
-        assertThat(code, containsString("    return (String) resultSet.getObject(1);\n"));
+        assertThat(code, containsString("    return (String) data;\n"));
     }
 
     @Test
-    public void canReturnString() throws IOException {
+    public void canReturnBigDecimal() throws IOException {
         String code = new GenerateMethodCode().please(Arrays.asList("FUNCTION any_method RETURN number;"), "any_package", new TypeMapperFactory());
         assertThat(code, containsString("public BigDecimal anyMethod() throws SQLException {\n"));
-        assertThat(code, containsString("    return (BigDecimal) resultSet.getObject(1);\n"));
+        assertThat(code, containsString("    return (BigDecimal) data;\n"));
+    }
+
+    @Test
+    public void canReturnDate() throws IOException {
+        String code = new GenerateMethodCode().please(Arrays.asList("FUNCTION any_method RETURN date;"), "any_package", new TypeMapperFactory());
+        assertThat(code, containsString("public Date anyMethod() throws SQLException {\n"));
+        assertThat(code, containsString("    return data == null ? null : new Date( ((java.sql.Timestamp) data).getTime() );\n"));
     }
 
     @Test
     public void canReturnCustomType() throws IOException {
         String code = new GenerateMethodCode().please(Arrays.asList("FUNCTION any_method RETURN any_type;"), "any_package", typeMapperFactory);
         assertThat(code, containsString("public AnyType anyMethod() throws SQLException {\n"));
-        assertThat(code, containsString("    return (AnyType) resultSet.getObject(1);\n"));
+        assertThat(code, containsString("    return (AnyType) data;\n"));
     }
 
     @Test
@@ -67,7 +74,7 @@ public class GenerateMethodCodeTest {
         assertThat(code, containsString("connection.prepareStatement(\"select any_package.any_method(?, ?) from dual\");\n"));
         assertThat(code, containsString("   statement.setBigDecimal(1, anyField1);\n"));
         assertThat(code, containsString("   statement.setString(2, anyField2);\n"));
-        assertThat(code, containsString("    return (AnyType) resultSet.getObject(1);\n"));
+        assertThat(code, containsString("    return (AnyType) data;\n"));
     }
 
     @Test
@@ -89,6 +96,6 @@ public class GenerateMethodCodeTest {
         TypeMapperFactory typeMapperFactory = new TypeMapperFactory(typeSpecifications);
         String code = new GenerateMethodCode().please(functionSpecification, "any_package", typeMapperFactory);
         assertThat(code, containsString("public ArrayType anyMethod() throws SQLException {\n"));
-        assertThat(code, containsString("    return ArrayType.with((Object[]) resultSet.getArray(1).getArray());\n"));
+        assertThat(code, containsString("    return ArrayType.with((Object[]) ((java.sql.Array) data).getArray());\n"));
     }
 }

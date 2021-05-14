@@ -19,8 +19,9 @@ public class TakingCustomType {
         statement.setObject(1, input);
         ResultSet resultSet = statement.executeQuery();
         resultSet.next();
+        Object data = resultSet.getObject(1);
 
-        return (CustomType) resultSet.getObject(1);
+        return (CustomType) data;
     }
 
 }

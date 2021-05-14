@@ -32,6 +32,6 @@ public class TypeMapperCustomType implements TypeMapper {
 
     @Override
     public String methodReturnStatement() {
-        return "return (" + new PascalCase().please(this.type) + ") resultSet.getObject(1);";
+        return "return (" + new PascalCase().please(this.type) + ") data;";
     }
 }

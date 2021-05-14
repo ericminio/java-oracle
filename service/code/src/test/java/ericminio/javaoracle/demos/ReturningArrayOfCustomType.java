@@ -18,8 +18,9 @@ public class ReturningArrayOfCustomType {
         PreparedStatement statement = connection.prepareStatement("select returning_array_of_custom_type.get_value() from dual");
         ResultSet resultSet = statement.executeQuery();
         resultSet.next();
+        Object data = resultSet.getObject(1);
 
-        return ArrayOfCustomType.with((Object[]) resultSet.getArray(1).getArray());
+        return ArrayOfCustomType.with((Object[]) ((java.sql.Array) data).getArray());
     }
 
 }

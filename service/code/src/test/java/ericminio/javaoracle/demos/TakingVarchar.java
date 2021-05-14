@@ -18,8 +18,9 @@ public class TakingVarchar {
         statement.setString(1, input);
         ResultSet resultSet = statement.executeQuery();
         resultSet.next();
+        Object data = resultSet.getObject(1);
 
-        return (String) resultSet.getObject(1);
+        return (String) data;
     }
 
 }

@@ -24,6 +24,6 @@ public class TypeMapperNumber implements TypeMapper {
 
     @Override
     public String methodReturnStatement() {
-        return "return (BigDecimal) resultSet.getObject(1);";
+        return "return (BigDecimal) data;";
     }
 }

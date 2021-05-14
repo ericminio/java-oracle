@@ -24,6 +24,6 @@ public class TypeMapperDate implements TypeMapper {
 
     @Override
     public String methodReturnStatement() {
-        return "return new Date( ((java.sql.Timestamp) resultSet.getObject(1)).getTime() );";
+        return "return data == null ? null : new Date( ((java.sql.Timestamp) data).getTime() );";
     }
 }

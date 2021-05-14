@@ -103,7 +103,7 @@ public class TypeMapperFactoryTest {
         assertThat(typeMapperFactory.of("number").javaType(), equalTo("BigDecimal"));
         assertThat(typeMapperFactory.of("number").sqlInputRead(), equalTo("stream.readBigDecimal()"));
         assertThat(typeMapperFactory.of("number").sqlOutputWrite(), equalTo("stream.writeBigDecimal(this.getField());"));
-        assertThat(typeMapperFactory.of("number").methodReturnStatement(), equalTo("return (BigDecimal) resultSet.getObject(1);"));
+        assertThat(typeMapperFactory.of("number").methodReturnStatement(), equalTo("return (BigDecimal) data;"));
     }
 
     @Test
@@ -112,7 +112,7 @@ public class TypeMapperFactoryTest {
         assertThat(typeMapperFactory.of("VARCHAR2").javaType(), equalTo("String"));
         assertThat(typeMapperFactory.of("VARCHAR2").sqlInputRead(), equalTo("stream.readString()"));
         assertThat(typeMapperFactory.of("VARCHAR2").sqlOutputWrite(), equalTo("stream.writeString(this.getField());"));
-        assertThat(typeMapperFactory.of("VARCHAR2").methodReturnStatement(), equalTo("return (String) resultSet.getObject(1);"));
+        assertThat(typeMapperFactory.of("VARCHAR2").methodReturnStatement(), equalTo("return (String) data;"));
     }
 
     @Test
@@ -121,7 +121,7 @@ public class TypeMapperFactoryTest {
         assertThat(typeMapperFactory.of("VARCHAR").javaType(), equalTo("String"));
         assertThat(typeMapperFactory.of("VARCHAR").sqlInputRead(), equalTo("stream.readString()"));
         assertThat(typeMapperFactory.of("VARCHAR").sqlOutputWrite(), equalTo("stream.writeString(this.getField());"));
-        assertThat(typeMapperFactory.of("VARCHAR").methodReturnStatement(), equalTo("return (String) resultSet.getObject(1);"));
+        assertThat(typeMapperFactory.of("VARCHAR").methodReturnStatement(), equalTo("return (String) data;"));
     }
 
     @Test
@@ -130,7 +130,7 @@ public class TypeMapperFactoryTest {
         assertThat(typeMapperFactory.of("DATE").javaType(), equalTo("Date"));
         assertThat(typeMapperFactory.of("DATE").sqlInputRead(), equalTo("new Date(stream.readTimestamp().getTime())"));
         assertThat(typeMapperFactory.of("DATE").sqlOutputWrite(), equalTo("stream.writeTimestamp(new java.sql.Timestamp(this.getField().getTime()));"));
-        assertThat(typeMapperFactory.of("DATE").methodReturnStatement(), equalTo("return new Date( ((java.sql.Timestamp) resultSet.getObject(1)).getTime() );"));
+        assertThat(typeMapperFactory.of("DATE").methodReturnStatement(), equalTo("return data == null ? null : new Date( ((java.sql.Timestamp) data).getTime() );"));
     }
 
     @Test
@@ -139,7 +139,7 @@ public class TypeMapperFactoryTest {
         assertThat(typeMapperFactory.of("any_type").javaType(), equalTo("AnyType"));
         assertThat(typeMapperFactory.of("any_type").sqlInputRead(), equalTo("(AnyType) stream.readObject()"));
         assertThat(typeMapperFactory.of("any_type").sqlOutputWrite(), equalTo("stream.writeObject(this.getField());"));
-        assertThat(typeMapperFactory.of("any_type").methodReturnStatement(), equalTo("return (AnyType) resultSet.getObject(1);"));
+        assertThat(typeMapperFactory.of("any_type").methodReturnStatement(), equalTo("return (AnyType) data;"));
     }
 
     @Test
@@ -148,7 +148,7 @@ public class TypeMapperFactoryTest {
         assertThat(typeMapperFactory.of("any_table_type").javaType(), equalTo("AnyTableType"));
         assertThat(typeMapperFactory.of("any_table_type").sqlInputRead(), equalTo("AnyTableType.with((Object[]) stream.readArray().getArray())"));
         assertThat(typeMapperFactory.of("any_table_type").sqlOutputWrite(), equalTo("stream.writeObject(this.getField());"));
-        assertThat(typeMapperFactory.of("any_table_type").methodReturnStatement(), equalTo("return AnyTableType.with((Object[]) resultSet.getArray(1).getArray());"));
+        assertThat(typeMapperFactory.of("any_table_type").methodReturnStatement(), equalTo("return AnyTableType.with((Object[]) ((java.sql.Array) data).getArray());"));
     }
 
     @Test

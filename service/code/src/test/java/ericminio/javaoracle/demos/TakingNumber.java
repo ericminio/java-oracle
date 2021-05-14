@@ -19,8 +19,9 @@ public class TakingNumber {
         statement.setBigDecimal(1, input);
         ResultSet resultSet = statement.executeQuery();
         resultSet.next();
+        Object data = resultSet.getObject(1);
 
-        return (BigDecimal) resultSet.getObject(1);
+        return (BigDecimal) data;
     }
 
 }

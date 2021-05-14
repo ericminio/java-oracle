@@ -18,8 +18,9 @@ public class ReturningDate {
         PreparedStatement statement = connection.prepareStatement("select returning_date.get_value() from dual");
         ResultSet resultSet = statement.executeQuery();
         resultSet.next();
+        Object data = resultSet.getObject(1);
 
-        return new Date( ((java.sql.Timestamp) resultSet.getObject(1)).getTime() );
+        return data == null ? null : new Date( ((java.sql.Timestamp) data).getTime() );
     }
 
 }

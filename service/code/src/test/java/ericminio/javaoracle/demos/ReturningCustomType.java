@@ -18,8 +18,9 @@ public class ReturningCustomType {
         PreparedStatement statement = connection.prepareStatement("select returning_custom_type.get_value() from dual");
         ResultSet resultSet = statement.executeQuery();
         resultSet.next();
+        Object data = resultSet.getObject(1);
 
-        return (CustomType) resultSet.getObject(1);
+        return (CustomType) data;
     }
 
 }

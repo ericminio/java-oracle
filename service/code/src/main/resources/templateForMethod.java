@@ -3,6 +3,7 @@
         // set IN parameters
         ResultSet resultSet = statement.executeQuery();
         resultSet.next();
+        Object data = resultSet.getObject(1);
 
-        return (Object) resultSet.getObject(1);
+        return data;
     }

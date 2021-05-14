@@ -32,6 +32,6 @@ public class TypeMapperArrayType implements TypeMapper {
 
     @Override
     public String methodReturnStatement() {
-        return "return " + new PascalCase().please(this.type) + ".with((Object[]) resultSet.getArray(1).getArray());";
+        return "return " + new PascalCase().please(this.type) + ".with((Object[]) ((java.sql.Array) data).getArray());";
     }
 }

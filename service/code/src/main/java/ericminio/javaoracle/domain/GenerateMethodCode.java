@@ -24,7 +24,7 @@ public class GenerateMethodCode {
                 .replace("functionName", functionName)
                 .replace("???", new PlaceholderList().please(parameters.count()))
                 .replace("        // set IN parameters\n", new BuildSqlStatementParameterSettings(typeMapperFactory).please(parameters))
-                .replace("return (Object) resultSet.getObject(1);", typeMapperFactory.of(returnType).methodReturnStatement())
+                .replace("return data;", typeMapperFactory.of(returnType).methodReturnStatement())
                 ;
         return methodCode;
     }

@@ -19,8 +19,9 @@ public class ReturningCustomTypeNesting {
         PreparedStatement statement = connection.prepareStatement("select returning_custom_type_nesting.get_value() from dual");
         ResultSet resultSet = statement.executeQuery();
         resultSet.next();
+        Object data = resultSet.getObject(1);
 
-        return (CustomTypeNesting) resultSet.getObject(1);
+        return (CustomTypeNesting) data;
     }
 
 }

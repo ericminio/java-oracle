@@ -19,8 +19,9 @@ public class TakingDate {
         statement.setTimestamp(1, new java.sql.Timestamp(input.getTime()));
         ResultSet resultSet = statement.executeQuery();
         resultSet.next();
+        Object data = resultSet.getObject(1);
 
-        return new Date( ((java.sql.Timestamp) resultSet.getObject(1)).getTime() );
+        return data == null ? null : new Date( ((java.sql.Timestamp) data).getTime() );
     }
 
 }

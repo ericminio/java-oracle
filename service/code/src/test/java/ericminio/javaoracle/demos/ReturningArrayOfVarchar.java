@@ -14,7 +14,8 @@ public class ReturningArrayOfVarchar {
         CallableStatement statement = connection.prepareCall("select returning_array_of_varchar.get_value() from dual");
         ResultSet resultSet = statement.executeQuery();
         resultSet.next();
+        Object candidate = resultSet.getObject(1);
 
-        return ArrayOfVarchar.with((Object[]) resultSet.getArray(1).getArray());
+        return ArrayOfVarchar.with((Object[]) ((java.sql.Array) candidate).getArray());
     }
 }

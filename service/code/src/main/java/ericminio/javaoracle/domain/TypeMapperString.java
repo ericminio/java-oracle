@@ -24,6 +24,6 @@ public class TypeMapperString implements TypeMapper {
 
     @Override
     public String methodReturnStatement() {
-        return "return (String) resultSet.getObject(1);";
+        return "return (String) data;";
     }
 }

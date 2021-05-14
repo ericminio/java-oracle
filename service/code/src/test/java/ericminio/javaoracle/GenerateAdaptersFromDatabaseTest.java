@@ -41,7 +41,7 @@ public class GenerateAdaptersFromDatabaseTest extends DatabaseTest {
 
         assertThat(code, containsString("   public ExampleArrayType anyFunction()"));
         assertThat(code, containsString("       PreparedStatement statement = connection.prepareStatement(\"select any_package.any_function() from dual\");"));
-        assertThat(code, containsString("       return ExampleArrayType.with((Object[]) resultSet.getArray(1).getArray());"));
+        assertThat(code, containsString("       return ExampleArrayType.with((Object[]) ((java.sql.Array) data).getArray());"));
     }
 
     @Test

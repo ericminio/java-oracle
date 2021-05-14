@@ -18,8 +18,9 @@ public class TakingNoParameter {
         PreparedStatement statement = connection.prepareStatement("select taking_no_parameter.get_value() from dual");
         ResultSet resultSet = statement.executeQuery();
         resultSet.next();
+        Object data = resultSet.getObject(1);
 
-        return (BigDecimal) resultSet.getObject(1);
+        return (BigDecimal) data;
     }
 
 }
