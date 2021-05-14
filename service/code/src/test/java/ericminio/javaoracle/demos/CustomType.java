@@ -77,7 +77,16 @@ public class CustomType implements SQLData {
     public void readSQL(SQLInput stream, String typeName) throws SQLException {
         this.setId(stream.readBigDecimal());
         this.setLabel(stream.readString());
-        this.setCreationDate(new Date(stream.readTimestamp().getTime()));
+        this.setCreationDate(buildDateOrNull(stream.readTimestamp()));
+    }
+
+    private Date buildDateOrNull(java.sql.Timestamp timestamp) {
+        if (timestamp == null) {
+            return null;
+        }
+        else {
+            return new Date(timestamp.getTime());
+        }
     }
 
     @Override

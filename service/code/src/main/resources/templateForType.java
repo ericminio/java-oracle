@@ -2,6 +2,7 @@ import java.sql.SQLData;
 import java.sql.SQLException;
 import java.sql.SQLInput;
 import java.sql.SQLOutput;
+import java.util.Date;
 
 public class ClassName implements SQLData {
     public static final String NAME = "STATIC_NAME_FIELD";
@@ -45,6 +46,15 @@ public class ClassName implements SQLData {
     @Override
     public void readSQL(SQLInput stream, String typeName) throws SQLException {
         // fields readSQL contribution
+    }
+
+    private Date buildDateOrNull(java.sql.Timestamp timestamp) {
+        if (timestamp == null) {
+            return null;
+        }
+        else {
+            return new Date(timestamp.getTime());
+        }
     }
 
     @Override

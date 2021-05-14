@@ -128,7 +128,7 @@ public class TypeMapperFactoryTest {
     public void knowsAboutDate() {
         assertThat(typeMapperFactory.of("DATE").functionParameterSettingStatement(), equalTo("statement.setTimestamp(index, new java.sql.Timestamp(field.getTime()));"));
         assertThat(typeMapperFactory.of("DATE").javaType(), equalTo("Date"));
-        assertThat(typeMapperFactory.of("DATE").sqlInputRead(), equalTo("new Date(stream.readTimestamp().getTime())"));
+        assertThat(typeMapperFactory.of("DATE").sqlInputRead(), equalTo("buildDateOrNull(stream.readTimestamp())"));
         assertThat(typeMapperFactory.of("DATE").sqlOutputWrite(), equalTo("stream.writeTimestamp(new java.sql.Timestamp(this.getField().getTime()));"));
         assertThat(typeMapperFactory.of("DATE").methodReturnStatement(), equalTo("return data == null ? null : new Date( ((java.sql.Timestamp) data).getTime() );"));
     }

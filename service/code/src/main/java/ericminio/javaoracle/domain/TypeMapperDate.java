@@ -14,7 +14,7 @@ public class TypeMapperDate implements TypeMapper {
 
     @Override
     public String sqlInputRead() {
-        return "new Date(stream.readTimestamp().getTime())";
+        return "buildDateOrNull(stream.readTimestamp())";
     }
 
     @Override

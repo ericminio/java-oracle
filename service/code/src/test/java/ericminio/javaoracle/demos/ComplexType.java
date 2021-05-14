@@ -4,6 +4,7 @@ import java.sql.SQLData;
 import java.sql.SQLException;
 import java.sql.SQLInput;
 import java.sql.SQLOutput;
+import java.util.Date;
 
 public class ComplexType implements SQLData {
     public static final String NAME = "COMPLEX_TYPE";
@@ -64,6 +65,15 @@ public class ComplexType implements SQLData {
     public void readSQL(SQLInput stream, String typeName) throws SQLException {
         this.setValue((CustomType) stream.readObject());
         this.setCollection(ArrayOfCustomType.with((Object[]) stream.readArray().getArray()));
+    }
+
+    private Date buildDateOrNull(java.sql.Timestamp timestamp) {
+        if (timestamp == null) {
+            return null;
+        }
+        else {
+            return new Date(timestamp.getTime());
+        }
     }
 
     @Override

@@ -45,7 +45,7 @@ public class BuildReadSqlTest {
         Parameters parameters = new Parameters();
         parameters.add("field date");
         assertThat(buildReadSql.please(parameters), equalTo("" +
-                "        this.setField(new Date(stream.readTimestamp().getTime()));"
+                "        this.setField(buildDateOrNull(stream.readTimestamp()));"
         ));
     }
 
