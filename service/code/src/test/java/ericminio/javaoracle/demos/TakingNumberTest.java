@@ -38,9 +38,16 @@ public class TakingNumberTest extends DatabaseTest {
     }
 
     @Test
-    public void getValue() throws SQLException {
+    public void worksAsExpected() throws SQLException {
         TakingNumber takingNumber = new TakingNumber(connection);
 
         assertThat(takingNumber.getValue(new BigDecimal(41)), equalTo(new BigDecimal(42)));
+    }
+
+    @Test
+    public void worksWithDecimal() throws SQLException {
+        TakingNumber takingNumber = new TakingNumber(connection);
+
+        assertThat(takingNumber.getValue(new BigDecimal(41.2)).floatValue(), equalTo(42.2f));
     }
 }
