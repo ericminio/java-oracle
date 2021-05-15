@@ -1,6 +1,11 @@
 #!/bin/bash
 
-source ./utils.sh
+function current_dir {
+    echo $( cd "$( dirname "$1" )" >/dev/null 2>&1 && pwd )    
+}
+DIR=$(current_dir ${BASH_SOURCE[0]})
+
+source $DIR/utils.sh
 
 ready=0
 while [ "$ready" != "1" ]
