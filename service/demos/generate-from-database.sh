@@ -9,7 +9,6 @@ mvn clean package \
     -Doracle.password=oracle
 
 cd target
-
 mkdir -p /usr/local/src/service/demos/generated-from-database
 rm /usr/local/src/service/demos/generated-from-database/*.java
 executeFile /usr/local/src/work/drop-packages.sql
@@ -26,6 +25,7 @@ java \
     -DtypeNamePrefix=example_type_ \
     -DjavaPackage=company.name \
     -DoutputFolder=/usr/local/src/service/demos/generated-from-database \
-    -cp java-oracle-1.0-jar-with-dependencies.jar ericminio.javaoracle.main.GenerateAdaptersFromDatabase 
+    -cp ~/.m2/repository/com/oracle/database/jdbc/ojdbc6/11.2.0.4/ojdbc6-11.2.0.4.jar:java-oracle-1.0.jar \
+    ericminio.javaoracle.main.GenerateAdaptersFromDatabase 
 
 ls -la /usr/local/src/service/demos/generated-from-database
