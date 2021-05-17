@@ -5,8 +5,7 @@ source /usr/local/src/oracle/utils.sh
 cd /usr/local/src/service/code
 mvn clean package \
     -Doracle.url=jdbc:oracle:thin:@oracle:1521:XE \
-    -Doracle.username=system \
-    -Doracle.password=oracle
+    -Doracle.user=system/oracle
 
 cd target
 mkdir -p /usr/local/src/service/demos/generated-from-database
@@ -19,8 +18,7 @@ execute "select type_name from user_types order by type_name;"
 execute "select object_name from user_objects where object_type='PACKAGE';"
 java \
     -Doracle.url=jdbc:oracle:thin:@oracle:1521:XE \
-    -Doracle.username=system \
-    -Doracle.password=oracle \
+    -Doracle.user=system/oracle \
     -DoraclePackage=example \
     -DtypeNamePrefix=example_type_ \
     -DjavaPackage=company.name \

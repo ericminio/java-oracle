@@ -19,12 +19,13 @@ public class GetDataFromDatabase {
         List<String> typeNames = new Database().selectDistinctTypeNamesWithPrefix(typeNamePrefix);
         logger.log(Level.INFO, "Fetching type definitions");
         List<String> typeSpecifications = new ArrayList<>();
-        for (String type:typeNames) {
+        for (int i=0; i<typeNames.size(); i++) {
+            String type = typeNames.get(i);
+            logger.log(Level.INFO, (i+1) + "/" + typeNames.size() +" fetching type " + type);
             List<String> typeSpecification = new Database().selectTypeDefinition(type);
             typeSpecifications.addAll(typeSpecification);
             typeSpecifications.add("/\n");
         }
-        logger.log(Level.INFO, typeNames.size() + " type definitions fetched");
 
         return new BuildIncoming().from(packageSpecification, typeSpecifications);
     }
