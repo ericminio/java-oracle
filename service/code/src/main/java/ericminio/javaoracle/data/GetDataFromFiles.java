@@ -1,5 +1,7 @@
 package ericminio.javaoracle.data;
 
+import ericminio.javaoracle.domain.Incoming;
+
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;

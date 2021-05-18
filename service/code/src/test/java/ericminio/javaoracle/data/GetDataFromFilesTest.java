@@ -2,6 +2,7 @@ package ericminio.javaoracle.data;
 
 import ericminio.javaoracle.domain.ExtractPackageName;
 import ericminio.javaoracle.domain.ExtractTypeName;
+import ericminio.javaoracle.domain.Incoming;
 import ericminio.javaoracle.domain.JoinWith;
 import org.junit.Before;
 import org.junit.Test;

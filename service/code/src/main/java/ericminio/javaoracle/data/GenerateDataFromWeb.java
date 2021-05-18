@@ -1,5 +1,6 @@
 package ericminio.javaoracle.data;
 
+import ericminio.javaoracle.domain.Incoming;
 import ericminio.javaoracle.http.FormDataSet;
 
 import java.util.Arrays;

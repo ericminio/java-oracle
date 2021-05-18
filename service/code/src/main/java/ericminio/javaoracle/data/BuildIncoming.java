@@ -1,6 +1,6 @@
 package ericminio.javaoracle.data;
 
-import ericminio.javaoracle.domain.ExtractTypeName;
+import ericminio.javaoracle.domain.Incoming;
 import ericminio.javaoracle.domain.JoinWith;
 import ericminio.javaoracle.domain.RemoveComments;
 
@@ -25,19 +25,16 @@ public class BuildIncoming {
         }
         incoming.setPackageSpecification(packageSpecification);
 
-        List<List<String>> typeSpecifications = new ArrayList<>();
-        List<String> typeNames = new ArrayList<>();
         typesSpecificationsLines = new RemoveDropTypeStatements().from(typesSpecificationsLines);
         typesSpecificationsLines = new RemoveComments().please(typesSpecificationsLines);
         String asOneLine = new JoinWith("").please(typesSpecificationsLines);
         String[] statements = asOneLine.split("/");
+        List<List<String>> typeSpecifications = new ArrayList<>();
         for (int i=0; i<statements.length; i++) {
             String statement = statements[i];
             typeSpecifications.add(Arrays.asList(statement));
-            typeNames.add(new ExtractTypeName().please(Arrays.asList(statement)));
         }
         incoming.setTypeSpecifications(typeSpecifications);
-        incoming.setTypeNames(typeNames);
 
         return incoming;
     }

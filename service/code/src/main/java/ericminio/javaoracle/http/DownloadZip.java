@@ -3,7 +3,7 @@ package ericminio.javaoracle.http;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import ericminio.javaoracle.data.GenerateDataFromWeb;
-import ericminio.javaoracle.data.Incoming;
+import ericminio.javaoracle.domain.Incoming;
 import ericminio.javaoracle.domain.FileSet;
 import ericminio.javaoracle.domain.GenerateClasses;
 import ericminio.javaoracle.support.LogSink;

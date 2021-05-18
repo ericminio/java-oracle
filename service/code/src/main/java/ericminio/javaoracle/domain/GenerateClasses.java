@@ -1,6 +1,5 @@
 package ericminio.javaoracle.domain;
 
-import ericminio.javaoracle.data.Incoming;
 import ericminio.javaoracle.support.LogSink;
 import ericminio.javaoracle.support.PascalCase;
 

@@ -1,6 +1,6 @@
 package ericminio.javaoracle.main;
 
-import ericminio.javaoracle.data.Incoming;
+import ericminio.javaoracle.domain.Incoming;
 import ericminio.javaoracle.domain.FileInfo;
 import ericminio.javaoracle.domain.FileSet;
 import ericminio.javaoracle.domain.GenerateClasses;
