@@ -26,6 +26,9 @@ public class TypeMapperFactory {
         if (normalized.startsWith("DATE")) {
             return new TypeMapperDate();
         }
+        if (normalized.startsWith("CLOB")) {
+            return new TypeMapperClobType();
+        }
         if (isCustomType(incoming)) {
             if (isArrayType(incoming)) {
                 return new TypeMapperArrayType(incoming);

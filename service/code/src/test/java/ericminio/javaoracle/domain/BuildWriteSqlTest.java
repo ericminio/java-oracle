@@ -50,6 +50,15 @@ public class BuildWriteSqlTest {
     }
 
     @Test
+    public void forClob() {
+        Parameters parameters = new Parameters();
+        parameters.add("any_field clob");
+        assertThat(buildWriteSql.please(parameters), equalTo("" +
+                "        stream.writeClob(this.getAnyField());"
+        ));
+    }
+
+    @Test
     public void forCustomType() {
         Parameters parameters = new Parameters();
         parameters.add("any_field custom_type");

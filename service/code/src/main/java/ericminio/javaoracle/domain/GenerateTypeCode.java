@@ -25,6 +25,9 @@ public class GenerateTypeCode {
                 .replace("        // fields writeSQL contribution", new BuildWriteSql(typeMapperFactory).please(parameters))
         ;
 
+        if (code.indexOf("Clob ") != -1) {
+            code = "import java.sql.Clob;\n" + code;
+        }
         if (code.indexOf("BigDecimal ") != -1) {
             code = "import java.math.BigDecimal;\n" + code;
         }

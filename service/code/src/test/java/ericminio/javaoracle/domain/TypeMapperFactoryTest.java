@@ -232,4 +232,14 @@ public class TypeMapperFactoryTest {
         assertThat(typeMapperFactory.of("example_cursor").methodReturnStatement(), equalTo("return (ResultSet) data;"));
     }
 
+    @Test
+    public void knowsAboutClobType() {
+        assertThat(typeMapperFactory.of("clob"), instanceOf(TypeMapperClobType.class));
+        assertThat(typeMapperFactory.of("clob").functionParameterSettingStatement(), equalTo("statement.setClob(index, field);"));
+        assertThat(typeMapperFactory.of("clob").javaType(), equalTo("Clob"));
+        assertThat(typeMapperFactory.of("clob").sqlInputRead(), equalTo("stream.readClob()"));
+        assertThat(typeMapperFactory.of("clob").sqlOutputWrite(), equalTo("stream.writeClob(this.getField());"));
+        assertThat(typeMapperFactory.of("clob").methodReturnStatement(), equalTo("return (Clob) data;"));
+    }
+
 }

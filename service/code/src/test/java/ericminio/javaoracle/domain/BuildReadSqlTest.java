@@ -50,6 +50,15 @@ public class BuildReadSqlTest {
     }
 
     @Test
+    public void forClob() {
+        Parameters parameters = new Parameters();
+        parameters.add("field clob");
+        assertThat(buildReadSql.please(parameters), equalTo("" +
+                "        this.setField(stream.readClob());"
+        ));
+    }
+
+    @Test
     public void forCustomType() {
         Parameters parameters = new Parameters();
         parameters.add("field custom_type");

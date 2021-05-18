@@ -11,6 +11,7 @@ public class BuildWriteSql extends BuildSomethingWithParameters {
         if (this.typeMapperFactory.isArrayType(type)) {
             return output
                     + "        // ignore " + camelCase.please(name)
+                    + (!isLast ? "\n" : "")
                     ;
         }
 
