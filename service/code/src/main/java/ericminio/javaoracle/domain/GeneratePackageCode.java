@@ -16,6 +16,8 @@ public class GeneratePackageCode {
     private String packageName;
 
     public String please(List<String> packageSpecification, TypeMapperFactory typeMapperFactory) throws IOException {
+        logger.log(Level.INFO, "package specification:\n" + new JoinWith("\n").please(packageSpecification));
+
         String classTemplate = new Stringify().inputStream(this.getClass().getClassLoader().getResourceAsStream("templateForPackage.java"));
         this.packageName = new ExtractPackageName().please(packageSpecification);
 

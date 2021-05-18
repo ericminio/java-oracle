@@ -50,13 +50,39 @@ public class ExtractReturnTypeTest {
     }
 
     @Test
-    public void resistsReturnTypeOnNewLine() {
+    public void resistsReturnStatementOnNewLine() {
         assertThat(new ExtractReturnType().please(Arrays.asList(
                 "FUNCTION any",
                 "(",
                 "   param number",
                 ")",
                 "RETURN NUMBER;"
+        )), equalTo("NUMBER"));
+    }
+
+    @Test
+    public void resistsReturnTypeOnNewLine() {
+        assertThat(new ExtractReturnType().please(Arrays.asList(
+                "FUNCTION any",
+                "(",
+                "   param number",
+                ")",
+                "RETURN",
+                "NUMBER;"
+        )), equalTo("NUMBER"));
+    }
+
+    @Test
+    public void resistsExtraSpaceBeforeSemicolon() {
+        assertThat(new ExtractReturnType().please(Arrays.asList(
+                "FUNCTION get_event_count RETURN NUMBER ;"
+        )), equalTo("NUMBER"));
+    }
+
+    @Test
+    public void resistsExtraSpacesAroundType() {
+        assertThat(new ExtractReturnType().please(Arrays.asList(
+                "FUNCTION get_event_count RETURN     NUMBER    ;"
         )), equalTo("NUMBER"));
     }
 }

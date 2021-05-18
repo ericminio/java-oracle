@@ -36,7 +36,7 @@ public class TypeMapperFactory {
             return new TypeMapperCustomType(incoming);
         }
 
-        throw new RuntimeException(("Teach me about type " + incoming));
+        throw new RuntimeException(("Teach me about type \"" + incoming + "\""));
     }
 
     public boolean isCustomType(String type) {

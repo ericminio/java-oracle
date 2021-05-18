@@ -1,13 +1,17 @@
 package ericminio.javaoracle.domain;
 
 import ericminio.javaoracle.support.CamelCase;
+import ericminio.javaoracle.support.LogSink;
 import ericminio.javaoracle.support.Stringify;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class GenerateMethodCode {
 
+    private final Logger logger = new LogSink(true).getLogger();
     private String returnType;
 
     public String please(List<String> functionSpecification, String packageName, TypeMapperFactory typeMapperFactory) throws IOException {
@@ -16,6 +20,7 @@ public class GenerateMethodCode {
         String functionName = new ExtractFunctionName().please(functionSpecification);
         returnType = new ExtractReturnType().please(functionSpecification);
         Parameters parameters = new ExtractParameters().please(functionSpecification);
+        logger.log(Level.INFO, ".. generating for " + functionName + " returning "+ returnType);
         String methodCode = methodTemplate
                 .replace("public Object", "public " + typeMapperFactory.of(returnType).javaType())
                 .replace("methodName()", "methodName(" + new BuildMethodParameterList(typeMapperFactory).please(parameters) + ")")
