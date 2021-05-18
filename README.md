@@ -2,6 +2,14 @@
 [![Build Status](https://github.com/ericminio/java-oracle/actions/workflows/java8.yml/badge.svg)](https://github.com/ericminio/java-oracle/actions)
 [![Build Status](https://github.com/ericminio/java-oracle/actions/workflows/java11.yml/badge.svg)](https://github.com/ericminio/java-oracle/actions)
 
+# Notes
+
+Supported types
+- VARCHAR
+- NUMBER
+- DATE
+
+
 # Run the tests
 ```
 docker-compose up java7 
