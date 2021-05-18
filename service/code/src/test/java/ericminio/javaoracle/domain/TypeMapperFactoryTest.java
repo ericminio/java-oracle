@@ -203,4 +203,12 @@ public class TypeMapperFactoryTest {
     public void isArrayTypeResistsMissingOfLeadingSpace() {
         assertThat(typeMapperFactory.isArrayType("missing_OF_leading_space"), equalTo(true));
     }
+
+    @Test
+    public void refCursorIsNotAnArrayType() {
+        assertThat(new TypeMapperFactory(Arrays.asList(
+                Arrays.asList("type example_cursor is ref cursor;")
+        )).isArrayType("example_cursor"), equalTo(false));
+    }
+
 }

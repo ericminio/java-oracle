@@ -47,7 +47,7 @@ public class TypeMapperFactory {
         List<String> specification = specificationOfType(type);
         String statement = new JoinWith(" ").please(specification).trim().toLowerCase();
 
-        return statement.indexOf("as object") == -1;
+        return statement.indexOf(" table") != -1 || statement.indexOf(" varray") != -1;
     }
 
     public String recordTypeOfArrayType(String type) {
@@ -57,7 +57,7 @@ public class TypeMapperFactory {
             return recordType;
         }
 
-        String message = "Not an array type or unknwn type " + type + "\n";
+        String message = "Not an array type or unknown type " + type + "\n";
         message += " specification found:\n" + specification + "\n";
         throw new RuntimeException(message);
     }

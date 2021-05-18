@@ -16,6 +16,8 @@ public class ExtractTypeName {
         patterns.add(Pattern.compile("type (.*) is varray"));
         patterns.add(Pattern.compile("type (.*) as table"));
         patterns.add(Pattern.compile("type (.*) is table"));
+        patterns.add(Pattern.compile("type (.*) is ref cursor"));
+        patterns.add(Pattern.compile("type (.*) as ref cursor"));
     }
 
     public String please(List<String> specification) {

@@ -70,4 +70,18 @@ public class ExtractTypeNameTest {
                 "create type \"beautiful_type\" as object(value number)"
         )), equalTo("beautiful_type"));
     }
+
+    @Test
+    public void supportsIsRefCursor() {
+        assertThat(new ExtractTypeName().please(Arrays.asList(
+                "type beautiful_type is ref cursor"
+        )), equalTo("beautiful_type"));
+    }
+
+    @Test
+    public void supportsAsRefCursor() {
+        assertThat(new ExtractTypeName().please(Arrays.asList(
+                "type beautiful_type as ref cursor"
+        )), equalTo("beautiful_type"));
+    }
 }
