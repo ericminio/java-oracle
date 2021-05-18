@@ -43,6 +43,7 @@ public class GenerateClasses {
                             new GenerateTypeCode().please(incoming.getTypeSpecifications().get(i), typeMapperFactory));
             fileSet.add(new FileInfo(typeClassName+".java", typeClassCode));
         }
+        logger.log(Level.INFO, "Done");
         return fileSet;
     }
 
