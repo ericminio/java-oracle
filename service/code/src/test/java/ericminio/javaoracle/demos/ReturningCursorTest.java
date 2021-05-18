@@ -4,7 +4,6 @@ import ericminio.javaoracle.data.DatabaseTest;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -41,17 +40,24 @@ public class ReturningCursorTest extends DatabaseTest {
     }
 
     @Test
-    public void exploration() throws SQLException {
-        PreparedStatement statement = connection.prepareStatement("select returning_cursor.get_products() from dual");
-        ResultSet resultSet = statement.executeQuery();
-        resultSet.next();
-        Object data = resultSet.getObject(1);
-
-        ResultSet dunno = (ResultSet) data;
+    public void expectedRowCount() throws SQLException {
+        ReturningCursor returningCursor = new ReturningCursor(connection);
+        ResultSet resultSet = returningCursor.getProducts();
         int count = 0;
-        while (dunno.next()) {
+        while (resultSet.next()) {
             count ++;
         }
         assertThat(count, equalTo(2));
+    }
+
+    @Test
+    public void expectedContent() throws SQLException {
+        ReturningCursor returningCursor = new ReturningCursor(connection);
+        ResultSet resultSet = returningCursor.getProducts();
+
+        resultSet.next();
+        assertThat(resultSet.getString(1), equalTo("one"));
+        resultSet.next();
+        assertThat(resultSet.getString(1), equalTo("two"));
     }
 }
