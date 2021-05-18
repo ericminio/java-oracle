@@ -31,6 +31,9 @@ public class BuildTypeMapping {
         if (!typeMapperFactory.isCustomType(type)) {
             return;
         }
+        if (typeMapperFactory.isCursorType(type)) {
+            return;
+        }
         if (typeMapperFactory.isArrayType(type)) {
             String recordType = typeMapperFactory.recordTypeOfArrayType(type);
             collect(customTypes, recordType);

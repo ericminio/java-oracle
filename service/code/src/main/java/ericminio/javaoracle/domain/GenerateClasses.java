@@ -31,6 +31,10 @@ public class GenerateClasses {
         logger.log(Level.INFO, "Generating classes for types");
         for (int i = 0; i< incoming.getTypeNames().size(); i++) {
             String typeName = incoming.getTypeNames().get(i);
+            if (typeMapperFactory.isCursorType(typeName)) {
+                logger.log(Level.INFO, "!! skipping cursor type " + typeName);
+                continue;
+            }
             logger.log(Level.INFO, "-> generating class for type " + typeName);
             String typeClassName = new PascalCase().please(typeName);
             String typeClassCode = new AddPackageStatement(javaPackage).to(

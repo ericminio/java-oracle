@@ -98,4 +98,16 @@ public class GenerateMethodCodeTest {
         assertThat(code, containsString("public ArrayType anyMethod() throws SQLException {\n"));
         assertThat(code, containsString("    return ArrayType.with((Object[]) ((java.sql.Array) data).getArray());\n"));
     }
+
+    @Test
+    public void canReturnCursor() throws IOException {
+        List<String> functionSpecification = Arrays.asList("FUNCTION any_method RETURN any_cursor;");
+        List<List<String>> typeSpecifications = Arrays.asList(
+                Arrays.asList("type any_cursor as ref cursor;")
+        );
+        TypeMapperFactory typeMapperFactory = new TypeMapperFactory(typeSpecifications);
+        String code = new GenerateMethodCode().please(functionSpecification, "any_package", typeMapperFactory);
+        assertThat(code, containsString("public ResultSet anyMethod() throws SQLException {\n"));
+        assertThat(code, containsString("    return (ResultSet) data;\n"));
+    }
 }

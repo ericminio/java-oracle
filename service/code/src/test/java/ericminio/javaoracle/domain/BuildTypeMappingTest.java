@@ -24,7 +24,8 @@ public class BuildTypeMappingTest {
                 Arrays.asList("create or replace type any_type_nested as object (id number);"),
                 Arrays.asList("create or replace type any_type_nesting_twice as object (one any_type_nested, two any_type_nested);"),
                 Arrays.asList("create or replace type any_type as object (value number);"),
-                Arrays.asList("create or replace type another_type as object (value number);")
+                Arrays.asList("create or replace type another_type as object (value number);"),
+                Arrays.asList("create or replace type example_cursor as ref cursor;")
                 );
         TypeMapperFactory typeMapperFactory = new TypeMapperFactory(typeSpecifications);
         buildTypeMapping = new BuildTypeMapping(typeMapperFactory);
@@ -53,6 +54,11 @@ public class BuildTypeMappingTest {
     @Test
     public void notNeededForDate() {
         assertThat(buildTypeMapping.please(Arrays.asList("date")), equalTo(""));
+    }
+
+    @Test
+    public void notNeededForCursor() {
+        assertThat(buildTypeMapping.please(Arrays.asList("example_cursor")), equalTo(""));
     }
 
     @Test

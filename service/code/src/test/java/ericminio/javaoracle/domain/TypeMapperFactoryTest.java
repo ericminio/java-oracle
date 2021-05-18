@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.junit.Assert.assertThat;
 
 public class TypeMapperFactoryTest {
@@ -209,6 +210,26 @@ public class TypeMapperFactoryTest {
         assertThat(new TypeMapperFactory(Arrays.asList(
                 Arrays.asList("type example_cursor is ref cursor;")
         )).isArrayType("example_cursor"), equalTo(false));
+    }
+
+    @Test
+    public void cursorTypeCanBeDetected() {
+        assertThat(new TypeMapperFactory(Arrays.asList(
+                Arrays.asList("type example_cursor is ref cursor;")
+        )).isCursorType("example_cursor"), equalTo(true));
+    }
+
+    @Test
+    public void knowsAboutCursorType() {
+        TypeMapperFactory typeMapperFactory = new TypeMapperFactory(Arrays.asList(
+                Arrays.asList("type example_cursor is ref cursor;")
+        ));
+        assertThat(typeMapperFactory.of("example_cursor"), instanceOf(TypeMapperCursorType.class));
+        assertThat(typeMapperFactory.of("example_cursor").functionParameterSettingStatement(), equalTo("statement.setObject(index, field);"));
+        assertThat(typeMapperFactory.of("example_cursor").javaType(), equalTo("ResultSet"));
+        assertThat(typeMapperFactory.of("example_cursor").sqlInputRead(), equalTo("stream.readObject()"));
+        assertThat(typeMapperFactory.of("example_cursor").sqlOutputWrite(), equalTo("stream.writeObject(this.getField());"));
+        assertThat(typeMapperFactory.of("example_cursor").methodReturnStatement(), equalTo("return (ResultSet) data;"));
     }
 
 }

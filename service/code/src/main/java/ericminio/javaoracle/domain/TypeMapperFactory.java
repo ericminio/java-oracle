@@ -30,6 +30,9 @@ public class TypeMapperFactory {
             if (isArrayType(incoming)) {
                 return new TypeMapperArrayType(incoming);
             }
+            if (isCursorType(incoming)) {
+                return new TypeMapperCursorType(incoming);
+            }
             return new TypeMapperCustomType(incoming);
         }
 
@@ -38,6 +41,16 @@ public class TypeMapperFactory {
 
     public boolean isCustomType(String type) {
         return type.indexOf("_") != -1;
+    }
+
+    public boolean isCursorType(String type) {
+        if (! isCustomType(type)) {
+            return false;
+        }
+        List<String> specification = specificationOfType(type);
+        String statement = new JoinWith(" ").please(specification).trim().toLowerCase();
+
+        return statement.indexOf(" ref cursor") != -1;
     }
 
     public boolean isArrayType(String type) {
