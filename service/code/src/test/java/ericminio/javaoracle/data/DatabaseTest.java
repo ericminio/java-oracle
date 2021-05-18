@@ -27,6 +27,7 @@ public class DatabaseTest {
             dropTypes();
             count = with(connection).selectInt("select count(1) from user_types");
         } while (count > 0);
+        dropTables();
         dateformat = new SimpleDateFormat("yyyy/M/dd hh:mm:ss");
     }
 
@@ -60,5 +61,9 @@ public class DatabaseTest {
         for (String name:names) {
             with(connection).executeIgnoringFailure("drop type " + name);
         }
+    }
+
+    private void dropTables() {
+        with(connection).executeIgnoringFailure("drop table product");
     }
 }
