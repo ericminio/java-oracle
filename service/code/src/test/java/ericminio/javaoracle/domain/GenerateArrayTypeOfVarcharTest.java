@@ -10,15 +10,15 @@ import java.util.List;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.assertThat;
 
-public class GenerateArrayTypeCodeTest {
+public class GenerateArrayTypeOfVarcharTest {
 
     private String code;
 
     @Before
     public void generateCode() throws IOException {
-        List<String> typeSpecification = Arrays.asList("type array_of_any_type as varray(15) of random_type;");
+        List<String> typeSpecification = Arrays.asList("type array_of_any_type as table of varchar(100);");
         GenerateArrayTypeCode generateArrayTypeCode = new GenerateArrayTypeCode();
-        code = generateArrayTypeCode.please(typeSpecification);
+        code = generateArrayTypeCode.please(typeSpecification, new TypeMapperFactory());
     }
 
     @Test
@@ -28,22 +28,22 @@ public class GenerateArrayTypeCodeTest {
 
     @Test
     public void fieldDeclaration() {
-        assertThat(code, containsString("private RandomType[] array"));
+        assertThat(code, containsString("private String[] array"));
     }
 
     @Test
     public void getArray() {
-        assertThat(code, containsString("public RandomType[] getArray() {"));
+        assertThat(code, containsString("public String[] getArray() {"));
     }
 
     @Test
     public void setArray() {
-        assertThat(code, containsString("public void setArray(RandomType[] array) {"));
+        assertThat(code, containsString("public void setArray(String[] array) {"));
     }
 
     @Test
     public void getElement() {
-        assertThat(code, containsString("public RandomType getElement(long index) {"));
+        assertThat(code, containsString("public String getElement(long index) {"));
     }
 
     @Test
@@ -55,7 +55,7 @@ public class GenerateArrayTypeCodeTest {
     @Test
     public void staticBuilder() {
         assertThat(code, containsString("public static ArrayOfAnyType with(Object[] incoming) {"));
-        assertThat(code, containsString("RandomType[] array = new RandomType[incoming.length];"));
+        assertThat(code, containsString("String[] array = new String[incoming.length];"));
         assertThat(code, containsString("ArrayOfAnyType arrayType = new ArrayOfAnyType();"));
     }
 }

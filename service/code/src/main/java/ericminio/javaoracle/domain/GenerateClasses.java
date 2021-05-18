@@ -39,7 +39,7 @@ public class GenerateClasses {
             String typeClassName = new PascalCase().please(typeName);
             String typeClassCode = new AddPackageStatement(javaPackage).to(
                     (typeMapperFactory.isArrayType(typeName)) ?
-                            new GenerateArrayTypeCode().please(incoming.getTypeSpecifications().get(i)) :
+                            new GenerateArrayTypeCode().please(incoming.getTypeSpecifications().get(i), typeMapperFactory) :
                             new GenerateTypeCode().please(incoming.getTypeSpecifications().get(i), typeMapperFactory));
             fileSet.add(new FileInfo(typeClassName+".java", typeClassCode));
         }
