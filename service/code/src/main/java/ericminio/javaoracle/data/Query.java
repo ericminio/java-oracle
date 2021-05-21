@@ -124,4 +124,28 @@ public class Query {
             }
         }
     }
+
+    public String selectString(String sql, String[] parameters) {
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement(sql);
+            statement.setString(1, parameters[0]);
+            statement.setString(2, parameters[1]);
+            ResultSet resultSet = statement.executeQuery();
+            resultSet.next();
+
+            return resultSet.getString(1);
+        }
+        catch (SQLException executing) {
+            throw new RuntimeException(executing.getMessage() + " " + sql);
+        }
+        finally {
+            try {
+                statement.close();
+            }
+            catch (SQLException closing) {
+                throw new RuntimeException(closing.getMessage());
+            }
+        }
+    }
 }

@@ -31,8 +31,10 @@ public class BuildIncoming {
         String[] statements = asOneLine.split("/");
         List<List<String>> typeSpecifications = new ArrayList<>();
         for (int i=0; i<statements.length; i++) {
-            String statement = statements[i];
-            typeSpecifications.add(Arrays.asList(statement));
+            String statement = statements[i].trim();
+            if (statement.length() > 0) {
+                typeSpecifications.add(Arrays.asList(statement));
+            }
         }
         incoming.setTypeSpecifications(typeSpecifications);
 

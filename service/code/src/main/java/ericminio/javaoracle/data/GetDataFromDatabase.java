@@ -16,6 +16,7 @@ public class GetDataFromDatabase {
     public Incoming please(String oraclePackage, String typeNamePrefix) throws SQLException {
         logger.log(Level.INFO, "Fetching package definition");
         List<String> packageSpecification = new Database().selectPackageDefinition(oraclePackage);
+        packageSpecification = new TranslateTypeAttribute().please(packageSpecification);
         logger.log(Level.INFO, "Fetching type names");
         List<String> typeNames = new Database().selectDistinctTypeNamesWithPrefix(typeNamePrefix);
         logger.log(Level.INFO, "Fetching type definitions");

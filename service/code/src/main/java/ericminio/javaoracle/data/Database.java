@@ -51,4 +51,13 @@ public class Database {
         connection.close();
         return names;
     }
+
+    public String selectColumnType(String table, String column) throws SQLException {
+        Connection connection = connection();
+        String columnType = with(connection).selectString(
+                "select data_type from all_tab_columns where table_name=? and column_name=?",
+                new String[]{ table.toUpperCase(), column.toUpperCase() });
+        connection.close();
+        return columnType;
+    }
 }

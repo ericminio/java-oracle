@@ -3,7 +3,9 @@ package ericminio.javaoracle.domain;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -75,5 +77,17 @@ public class IncomingTest {
                 Arrays.asList("create or replace type example_array_type as table of example_any_type")
         ));
         assertThat(incoming.getTypeSpecifications().size(), equalTo(3));
+    }
+
+    @Test
+    public void resistsNoType() {
+        incoming.setPackageSpecification(Arrays.asList(
+                "create package any_package as",
+                "   function any_function return number;",
+                "end any_package;"
+        ));
+        incoming.setTypeSpecifications(new ArrayList<List<String>>());
+        assertThat(incoming.getTypeSpecifications().size(), equalTo(0));
+        assertThat(incoming.getTypeNames().size(), equalTo(0));
     }
 }
