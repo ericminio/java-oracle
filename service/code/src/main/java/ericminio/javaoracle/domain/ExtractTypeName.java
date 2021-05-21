@@ -11,21 +11,12 @@ public class ExtractTypeName {
 
     public ExtractTypeName() {
         patterns = new ArrayList<>();
-        patterns.add(Pattern.compile("type (.*) as object"));
-        patterns.add(Pattern.compile("type (.*) as varray"));
-        patterns.add(Pattern.compile("type (.*) is varray"));
-        patterns.add(Pattern.compile("type (.*) as table"));
-        patterns.add(Pattern.compile("type (.*) is table"));
-        patterns.add(Pattern.compile("type (.*) is ref cursor"));
-        patterns.add(Pattern.compile("type (.*) as ref cursor"));
+        patterns.add(Pattern.compile("type (.*) as"));
+        patterns.add(Pattern.compile("type (.*) is"));
     }
 
     public String please(List<String> specification) {
-        String statement = "";
-        for (int i=0; i < specification.size(); i++) {
-            statement += specification.get(i).trim().toLowerCase();
-            statement += " ";
-        }
+        String statement = new JoinWith(" ").please(specification).trim().toLowerCase();
         for (int i=0; i < patterns.size(); i++) {
             Matcher matcher = patterns.get(i).matcher(statement);
             if (matcher.find()) {
@@ -40,6 +31,6 @@ public class ExtractTypeName {
                 return candidate.trim();
             }
         }
-        return null;
+        throw new RuntimeException("type name not found in\n" + statement);
     }
 }

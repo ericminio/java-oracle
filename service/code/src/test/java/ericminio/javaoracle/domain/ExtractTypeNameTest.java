@@ -84,4 +84,11 @@ public class ExtractTypeNameTest {
                 "type beautiful_type as ref cursor"
         )), equalTo("beautiful_type"));
     }
+
+    @Test
+    public void supportsIsRecord() {
+        assertThat(new ExtractTypeName().please(Arrays.asList(
+                "type beautiful_type is record (id number)"
+        )), equalTo("beautiful_type"));
+    }
 }
