@@ -1,5 +1,6 @@
 package ericminio.javaoracle.demos;
 
+import java.math.BigDecimal;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -13,12 +14,15 @@ public class OutVarchar {
         this.connection = connection;
     }
 
-    public String getValue() throws SQLException {
-        CallableStatement statement = connection.prepareCall("{ call out_varchar.get_value(?) }");
-        statement.registerOutParameter(1, Types.VARCHAR);
+    public BigDecimal getValue(BigDecimal input, String[] value) throws SQLException {
+        CallableStatement statement = connection.prepareCall("{ ? = call out_varchar.get_value(?, ?) }");
+        statement.registerOutParameter(1, Types.NUMERIC);
+        statement.setBigDecimal(2, input);
+        statement.registerOutParameter(3, Types.VARCHAR);
         statement.executeUpdate();
         Object data = statement.getObject(1);
+        value[0] = (String) statement.getObject(3);
 
-        return (String) data;
+        return (BigDecimal) data;
     }
 }
