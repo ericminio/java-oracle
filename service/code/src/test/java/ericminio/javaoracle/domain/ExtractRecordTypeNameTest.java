@@ -92,4 +92,21 @@ public class ExtractRecordTypeNameTest {
         assertThat(new ExtractRecordTypeName().please(Arrays.asList("TYPE array_type IS varray(20)of custom_type;")), equalTo("custom_type"));
         assertThat(new ExtractRecordTypeName().please(Arrays.asList("TYPE array_type AS varray(20)of custom_type;")), equalTo("custom_type"));
     }
+
+    @Test
+    public void resistsSemicolonOnNewLine() {
+        assertThat(new ExtractRecordTypeName().please(Arrays.asList(
+                "create or replace type beautiful_type is table of number",
+                ";"
+                )),
+                equalTo("number"));
+    }
+
+    @Test
+    public void ignoresIndexBy() {
+        assertThat(new ExtractRecordTypeName().please(Arrays.asList(
+                "type beautiful_type is table of number index by binary_integer;"
+                )),
+                equalTo("number"));
+    }
 }

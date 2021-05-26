@@ -32,7 +32,10 @@ public class ExtractRecordTypeName {
                 if (candidate.endsWith(";")) {
                     candidate = candidate.substring(0, candidate.length()-1);
                 }
-                return candidate;
+                if (candidate.indexOf("index by") != -1) {
+                    candidate = candidate.substring(0, candidate.indexOf("index by"));
+                }
+                return candidate.trim();
             }
         }
         return null;

@@ -111,11 +111,11 @@ public class TypeMapperFactory {
                 return typeSpecification;
             }
         }
-        String message = "Unknown type: " + type + "\n" + typeSpecifications.size() +" known types:\n";
+        String message = "Unknown type: \"" + type + "\"\n" + typeSpecifications.size() +" known types:\n";
         for (int i=0; i<typeSpecifications.size(); i++) {
             List<String> typeSpecification = typeSpecifications.get(i);
             String typeName = new ExtractTypeName().please(typeSpecification);
-            message += (typeName + "\n");
+            message += ("\"" + typeName + "\"\n");
         }
         throw new RuntimeException(message);
     }
