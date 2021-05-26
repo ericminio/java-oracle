@@ -65,4 +65,14 @@ public class BuildOutParameterSettingsTest {
                 "        field[0] = outField == null ? null : new Date( ((java.sql.Timestamp) outField).getTime() );\n" +
                 ""));
     }
+
+    @Test
+    public void camelCase() {
+        Parameters parameters = new Parameters();
+        parameters.add("any_field out number");
+        assertThat(buildOutParameterSettings.please(parameters), equalTo("" +
+                "        Object outAnyField = statement.getObject(2);\n" +
+                "        anyField[0] = (BigDecimal) outAnyField;\n" +
+                ""));
+    }
 }

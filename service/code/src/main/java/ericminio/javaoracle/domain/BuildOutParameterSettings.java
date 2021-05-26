@@ -17,7 +17,7 @@ public class BuildOutParameterSettings extends BuildSomethingWithParameters {
         String casting = typeMapperFactory.of(type).cast().replace("data", tmpName);
         String statement = "        Object " + tmpName + " = statement.getObject(index);\n";
         statement = statement.replace("index", ""+(1+index+1));
-        statement += "        " + name + "[0] = " + casting;
+        statement += "        " + camelCase.please(name) + "[0] = " + casting;
         return output
                 + statement
                 + "\n";
