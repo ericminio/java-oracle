@@ -16,7 +16,7 @@ public class ReturningVarchar {
     public String getValue() throws SQLException {
         CallableStatement statement = connection.prepareCall("{ ? = call returning_varchar.get_value() }");
         statement.registerOutParameter(1, Types.VARCHAR);
-        statement.executeUpdate();
+        statement.execute();
         Object data = statement.getObject(1);
 
         return (String) data;

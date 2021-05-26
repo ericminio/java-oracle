@@ -17,7 +17,7 @@ public class TakingVarchar {
         CallableStatement statement = connection.prepareCall("{ ? = call taking_varchar.get_value(?) }");
         statement.registerOutParameter(1, Types.VARCHAR);
         statement.setString(2, input);
-        statement.executeUpdate();
+        statement.execute();
         Object data = statement.getObject(1);
 
         return (String) data;

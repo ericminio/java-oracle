@@ -17,7 +17,7 @@ public class ReturningCustomType {
     public CustomType getValue() throws SQLException {
         CallableStatement statement = connection.prepareCall("{ ? = call returning_custom_type.get_value() }");
         statement.registerOutParameter(1, Types.STRUCT, "CUSTOM_TYPE");
-        statement.executeUpdate();
+        statement.execute();
         Object data = statement.getObject(1);
 
         return (CustomType) data;

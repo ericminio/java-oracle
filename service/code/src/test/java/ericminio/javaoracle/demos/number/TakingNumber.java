@@ -18,7 +18,7 @@ public class TakingNumber {
         CallableStatement statement = connection.prepareCall("{ ? = call taking_number.get_value(?) }");
         statement.registerOutParameter(1, Types.NUMERIC);
         statement.setBigDecimal(2, input);
-        statement.executeUpdate();
+        statement.execute();
         Object data = statement.getObject(1);
 
         return (BigDecimal) data;

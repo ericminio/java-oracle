@@ -17,7 +17,7 @@ public class ReturningArrayEmpty {
     public ArrayOfCustomType getValue() throws SQLException {
         CallableStatement statement = connection.prepareCall("{ ? = call returning_array_empty.get_value() }");
         statement.registerOutParameter(1, Types.ARRAY, "ARRAY_OF_CUSTOM_TYPE");
-        statement.executeUpdate();
+        statement.execute();
         Object data = statement.getObject(1);
 
         return ArrayOfCustomType.with((Object[]) ((java.sql.Array) data).getArray());

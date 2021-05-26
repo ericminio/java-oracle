@@ -19,7 +19,7 @@ public class OutNumber {
         statement.registerOutParameter(1, Types.NUMERIC);
         statement.setBigDecimal(2, input);
         statement.registerOutParameter(3, Types.NUMERIC);
-        statement.executeUpdate();
+        statement.execute();
         Object data = statement.getObject(1);
         Object outValue = statement.getObject(3);
         value[0] = (BigDecimal) outValue;

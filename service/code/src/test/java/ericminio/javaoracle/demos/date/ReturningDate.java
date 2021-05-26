@@ -17,7 +17,7 @@ public class ReturningDate {
     public Date getValue() throws SQLException {
         CallableStatement statement = connection.prepareCall("{ ? = call returning_date.get_value() }");
         statement.registerOutParameter(1, Types.TIMESTAMP);
-        statement.executeUpdate();
+        statement.execute();
         Object data = statement.getObject(1);
 
         return data == null ? null : new Date( ((java.sql.Timestamp) data).getTime() );

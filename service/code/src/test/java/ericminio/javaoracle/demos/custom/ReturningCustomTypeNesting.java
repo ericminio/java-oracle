@@ -18,7 +18,7 @@ public class ReturningCustomTypeNesting {
     public CustomTypeNesting getValue() throws SQLException {
         CallableStatement statement = connection.prepareCall("{ ? = call returning_custom_type_nesting.get_value() }");
         statement.registerOutParameter(1, Types.STRUCT, "CUSTOM_TYPE_NESTING");
-        statement.executeUpdate();
+        statement.execute();
         Object data = statement.getObject(1);
 
         return (CustomTypeNesting) data;

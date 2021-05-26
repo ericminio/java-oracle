@@ -16,7 +16,7 @@ public class ReturningCursor {
     public ResultSet getProducts() throws SQLException {
         CallableStatement statement = connection.prepareCall("{ ? = call returning_cursor.get_products() }");
         statement.registerOutParameter(1, oracle.jdbc.OracleTypes.CURSOR);
-        statement.executeUpdate();
+        statement.execute();
         Object data = statement.getObject(1);
 
         return (ResultSet) data;

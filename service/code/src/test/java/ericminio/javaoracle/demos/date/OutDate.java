@@ -19,7 +19,7 @@ public class OutDate {
         CallableStatement statement = connection.prepareCall("{ ? = call out_date.get_value(?) }");
         statement.registerOutParameter(1, Types.NUMERIC);
         statement.registerOutParameter(2, Types.TIMESTAMP);
-        statement.executeUpdate();
+        statement.execute();
         Object data = statement.getObject(1);
         Object outValue = statement.getObject(2);
         value[0] = outValue == null ? null : new Date( ((java.sql.Timestamp) outValue).getTime() );

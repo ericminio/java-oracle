@@ -17,7 +17,7 @@ public class TakingNoParameter {
     public BigDecimal getValue() throws SQLException {
         CallableStatement statement = connection.prepareCall("{ ? = call taking_no_parameter.get_value() }");
         statement.registerOutParameter(1, Types.NUMERIC);
-        statement.executeUpdate();
+        statement.execute();
         Object data = statement.getObject(1);
 
         return (BigDecimal) data;

@@ -18,7 +18,7 @@ public class TakingCustomType {
         CallableStatement statement = connection.prepareCall("{ ? = call taking_custom_type.get_value(?) }");
         statement.registerOutParameter(1, Types.STRUCT, "CUSTOM_TYPE");
         statement.setObject(2, input);
-        statement.executeUpdate();
+        statement.execute();
         Object data = statement.getObject(1);
 
         return (CustomType) data;

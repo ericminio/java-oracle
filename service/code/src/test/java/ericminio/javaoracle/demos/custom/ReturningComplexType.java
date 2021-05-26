@@ -18,7 +18,7 @@ public class ReturningComplexType {
     public ComplexType getField() throws SQLException {
         CallableStatement statement = connection.prepareCall("{ ? = call returning_complex_type.get_field() }");
         statement.registerOutParameter(1, Types.STRUCT, "COMPLEX_TYPE");
-        statement.executeUpdate();
+        statement.execute();
         Object data = statement.getObject(1);
 
         return (ComplexType) data;

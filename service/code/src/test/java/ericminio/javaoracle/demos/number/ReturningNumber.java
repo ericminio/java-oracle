@@ -17,7 +17,7 @@ public class ReturningNumber {
     public BigDecimal getValue() throws SQLException {
         CallableStatement statement = connection.prepareCall("{ ? = call returning_number.get_value() }");
         statement.registerOutParameter(1, Types.NUMERIC);
-        statement.executeUpdate();
+        statement.execute();
         Object data = statement.getObject(1);
 
         return (BigDecimal) data;

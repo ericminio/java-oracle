@@ -16,7 +16,7 @@ public class ReturningArrayOfVarchar {
     public ArrayOfVarchar getValue() throws SQLException {
         CallableStatement statement = connection.prepareCall("{ ? = call returning_array_of_varchar.get_value() }");
         statement.registerOutParameter(1, Types.ARRAY, "ARRAY_OF_VARCHAR");
-        statement.executeUpdate();
+        statement.execute();
         Object data = statement.getObject(1);
 
         return ArrayOfVarchar.with((Object[]) ((java.sql.Array) data).getArray());
