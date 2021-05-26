@@ -29,7 +29,7 @@ public class GeneratePackageCodeTest {
                 "PACKAGE EXPLORATION\n",
                 "AS\n",
                 "   FUNCTION get_event_count RETURN number;\n",
-                "END EXPLORATION;"
+                "END any_package;"
         ), typeMapperFactory);
         assertThat(generatePackageCode.getPackageName(), equalTo("exploration"));
     }
@@ -40,7 +40,7 @@ public class GeneratePackageCodeTest {
                 "PACKAGE any_package\n",
                 "AS\n",
                 "   FUNCTION any_function RETURN number;\n",
-                "END EXPLORATION;"
+                "END any_package;"
         ), typeMapperFactory);
         assertThat(code, containsString("" +
                 "    public AnyPackage(Connection connection) {\n" +
@@ -55,7 +55,7 @@ public class GeneratePackageCodeTest {
                 "PACKAGE any_package\n",
                 "AS\n",
                 "   FUNCTION any_function RETURN any_type;\n",
-                "END EXPLORATION;"
+                "END any_package;"
         ), typeMapperFactory);
         assertThat(code, containsString("" +
                 "    public AnyPackage(Connection connection) throws SQLException {\n" +
@@ -66,14 +66,25 @@ public class GeneratePackageCodeTest {
     }
 
     @Test
-    public void importsArePreservedByDefault() throws IOException {
+    public void importsArePreservedWithoutBigDecimalByDefault() throws IOException {
         String code = generatePackageCode.please(Arrays.asList(
                 "PACKAGE any_package\n",
                 "AS\n",
                 "   FUNCTION any_function RETURN any_type;\n",
-                "END EXPLORATION;"
+                "END any_package;"
         ), typeMapperFactory);
         assertThat(code, not(containsString("import java.math.BigDecimal;\n")));
+    }
+
+    @Test
+    public void importsArePreservedWithoutClobByDefault() throws IOException {
+        String code = generatePackageCode.please(Arrays.asList(
+                "PACKAGE any_package\n",
+                "AS\n",
+                "   FUNCTION any_function RETURN any_type;\n",
+                "END any_package;"
+        ), typeMapperFactory);
+        assertThat(code, not(containsString("import java.sql.Clob;\n")));
     }
 
     @Test
@@ -82,9 +93,20 @@ public class GeneratePackageCodeTest {
                 "PACKAGE any_package\n",
                 "AS\n",
                 "   FUNCTION any_function RETURN number;\n",
-                "END EXPLORATION;"
+                "END any_package;"
         ), typeMapperFactory);
         assertThat(code, containsString("import java.math.BigDecimal;\n"));
+    }
+
+    @Test
+    public void importsAreUpdatedIfClobIsUsedAsReturnType() throws IOException {
+        String code = generatePackageCode.please(Arrays.asList(
+                "PACKAGE any_package\n",
+                "AS\n",
+                "   FUNCTION any_function RETURN clob;\n",
+                "END any_package;"
+        ), typeMapperFactory);
+        assertThat(code, containsString("import java.sql.Clob;\n"));
     }
 
     @Test
@@ -93,9 +115,20 @@ public class GeneratePackageCodeTest {
                 "PACKAGE any_package\n",
                 "AS\n",
                 "   FUNCTION any_function(param number) RETURN any_type;\n",
-                "END EXPLORATION;"
+                "END any_package;"
         ), typeMapperFactory);
         assertThat(code, containsString("import java.math.BigDecimal;\n"));
+    }
+
+    @Test
+    public void importsAreUpdatedIfClobIsUsedAsParameter() throws IOException {
+        String code = generatePackageCode.please(Arrays.asList(
+                "PACKAGE any_package\n",
+                "AS\n",
+                "   FUNCTION any_function(param clob) RETURN any_type;\n",
+                "END any_package;"
+        ), typeMapperFactory);
+        assertThat(code, containsString("import java.sql.Clob;\n"));
     }
 
     @Test
