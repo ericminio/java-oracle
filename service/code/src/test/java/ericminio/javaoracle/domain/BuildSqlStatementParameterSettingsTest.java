@@ -27,7 +27,7 @@ public class BuildSqlStatementParameterSettingsTest {
         Parameters parameters = new Parameters();
         parameters.add("field varchar2");
         assertThat(buildSqlStatementParameterSettings.please(parameters), equalTo("" +
-                "        statement.setString(1, field);\n" +
+                "        statement.setString(2, field);\n" +
                 ""));
     }
 
@@ -36,7 +36,7 @@ public class BuildSqlStatementParameterSettingsTest {
         Parameters parameters = new Parameters();
         parameters.add("field number");
         assertThat(buildSqlStatementParameterSettings.please(parameters), equalTo("" +
-                "        statement.setBigDecimal(1, field);\n" +
+                "        statement.setBigDecimal(2, field);\n" +
                 ""));
     }
 
@@ -45,7 +45,7 @@ public class BuildSqlStatementParameterSettingsTest {
         Parameters parameters = new Parameters();
         parameters.add("field date");
         assertThat(buildSqlStatementParameterSettings.please(parameters), equalTo("" +
-                "        statement.setTimestamp(1, new java.sql.Timestamp(field.getTime()));\n" +
+                "        statement.setTimestamp(2, new java.sql.Timestamp(field.getTime()));\n" +
                 ""));
     }
 
@@ -54,7 +54,7 @@ public class BuildSqlStatementParameterSettingsTest {
         Parameters parameters = new Parameters();
         parameters.add("field any_type");
         assertThat(buildSqlStatementParameterSettings.please(parameters), equalTo("" +
-                "        statement.setObject(1, field);\n" +
+                "        statement.setObject(2, field);\n" +
                 ""));
     }
 
@@ -63,7 +63,7 @@ public class BuildSqlStatementParameterSettingsTest {
         Parameters parameters = new Parameters();
         parameters.add("any_field any_type");
         assertThat(buildSqlStatementParameterSettings.please(parameters), equalTo("" +
-                "        statement.setObject(1, anyField);\n" +
+                "        statement.setObject(2, anyField);\n" +
                 ""));
     }
 
@@ -76,11 +76,11 @@ public class BuildSqlStatementParameterSettingsTest {
         parameters.add("field4 date");
         parameters.add("field5 any_type");
         assertThat(buildSqlStatementParameterSettings.please(parameters), equalTo("" +
-                "        statement.setString(1, field1);\n" +
-                "        statement.setString(2, field2);\n" +
-                "        statement.setBigDecimal(3, field3);\n" +
-                "        statement.setTimestamp(4, new java.sql.Timestamp(field4.getTime()));\n" +
-                "        statement.setObject(5, field5);\n" +
+                "        statement.setString(2, field1);\n" +
+                "        statement.setString(3, field2);\n" +
+                "        statement.setBigDecimal(4, field3);\n" +
+                "        statement.setTimestamp(5, new java.sql.Timestamp(field4.getTime()));\n" +
+                "        statement.setObject(6, field5);\n" +
                 ""));
     }
 
@@ -88,5 +88,14 @@ public class BuildSqlStatementParameterSettingsTest {
     public void parametersSettingsCanBeEmpty() {
         Parameters parameters = new Parameters();
         assertThat(buildSqlStatementParameterSettings.please(parameters), equalTo(""));
+    }
+
+    @Test
+    public void forOutParameterString() {
+        Parameters parameters = new Parameters();
+        parameters.add("field out varchar2");
+        assertThat(buildSqlStatementParameterSettings.please(parameters), equalTo("" +
+                "        statement.registerOutParameter(2, Types.VARCHAR);\n" +
+                ""));
     }
 }

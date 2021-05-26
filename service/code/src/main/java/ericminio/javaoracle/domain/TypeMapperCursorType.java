@@ -18,6 +18,11 @@ public class TypeMapperCursorType implements TypeMapper {
     }
 
     @Override
+    public String functionParameterOutType() {
+        return "oracle.jdbc.OracleTypes.CURSOR";
+    }
+
+    @Override
     public String sqlInputRead() {
         return "stream.readObject()";
     }
@@ -29,6 +34,11 @@ public class TypeMapperCursorType implements TypeMapper {
 
     @Override
     public String methodReturnStatement() {
-        return "return (ResultSet) data;";
+        return "return " + cast();
+    }
+
+    @Override
+    public String cast() {
+        return "(ResultSet) data;";
     }
 }

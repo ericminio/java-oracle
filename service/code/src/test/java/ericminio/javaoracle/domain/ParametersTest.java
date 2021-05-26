@@ -32,4 +32,37 @@ public class ParametersTest {
         assertThat(parameters.count(), equalTo(2));
         assertThat(parameters.all(), equalTo(Arrays.asList("field1 number", "field2 number")));
     }
+
+    @Test
+    public void exposesParameter() {
+        Parameters parameters = new Parameters();
+        parameters.add("field number");
+        Parameter parameter = parameters.getParameter(0);
+
+        assertThat(parameter.getName(), equalTo("field"));
+        assertThat(parameter.getType(), equalTo("number"));
+        assertThat(parameter.isOut(), equalTo(false));
+    }
+
+    @Test
+    public void supportOptionalInKeyword() {
+        Parameters parameters = new Parameters();
+        parameters.add("field in number");
+        Parameter parameter = parameters.getParameter(0);
+
+        assertThat(parameter.getName(), equalTo("field"));
+        assertThat(parameter.getType(), equalTo("number"));
+        assertThat(parameter.isOut(), equalTo(false));
+    }
+
+    @Test
+    public void supportOutKeyword() {
+        Parameters parameters = new Parameters();
+        parameters.add("field out number");
+        Parameter parameter = parameters.getParameter(0);
+
+        assertThat(parameter.getName(), equalTo("field"));
+        assertThat(parameter.getType(), equalTo("number"));
+        assertThat(parameter.isOut(), equalTo(true));
+    }
 }

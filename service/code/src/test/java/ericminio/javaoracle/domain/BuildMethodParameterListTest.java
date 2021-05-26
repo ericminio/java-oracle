@@ -57,4 +57,11 @@ public class BuildMethodParameterListTest {
         parameters.add("any_field any_type");
         assertThat(buildMethodParameterList.please(parameters), equalTo("AnyType anyField"));
     }
+
+    @Test
+    public void outParameterBecomesArray() {
+        Parameters parameters = new Parameters();
+        parameters.add("any_field out any_type");
+        assertThat(buildMethodParameterList.please(parameters), equalTo("AnyType[] anyField"));
+    }
 }

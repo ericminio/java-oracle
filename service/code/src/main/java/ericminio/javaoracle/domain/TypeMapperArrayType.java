@@ -21,6 +21,11 @@ public class TypeMapperArrayType implements TypeMapper {
     }
 
     @Override
+    public String functionParameterOutType() {
+        return "Types.ARRAY, \"" + this.type.toUpperCase() + "\"";
+    }
+
+    @Override
     public String sqlInputRead() {
         return new PascalCase().please(this.type) + ".with((Object[]) stream.readArray().getArray())";
     }
@@ -32,6 +37,11 @@ public class TypeMapperArrayType implements TypeMapper {
 
     @Override
     public String methodReturnStatement() {
-        return "return " + new PascalCase().please(this.type) + ".with((Object[]) ((java.sql.Array) data).getArray());";
+        return "return " + cast();
+    }
+
+    @Override
+    public String cast() {
+        return new PascalCase().please(this.type) + ".with((Object[]) ((java.sql.Array) data).getArray());";
     }
 }

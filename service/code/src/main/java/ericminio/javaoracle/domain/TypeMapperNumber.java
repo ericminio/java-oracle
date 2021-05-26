@@ -13,6 +13,11 @@ public class TypeMapperNumber implements TypeMapper {
     }
 
     @Override
+    public String functionParameterOutType() {
+        return "Types.NUMERIC";
+    }
+
+    @Override
     public String sqlInputRead() {
         return "stream.readBigDecimal()";
     }
@@ -24,6 +29,11 @@ public class TypeMapperNumber implements TypeMapper {
 
     @Override
     public String methodReturnStatement() {
-        return "return (BigDecimal) data;";
+        return "return " + cast();
+    }
+
+    @Override
+    public String cast() {
+        return "(BigDecimal) data;";
     }
 }

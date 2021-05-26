@@ -7,7 +7,9 @@ public class BuildAccessors extends BuildSomethingWithParameters {
     }
 
     @Override
-    protected String modify(String output, int index, String name, String type, boolean isLast) {
+    protected String modify(String output, int index, Parameter parameter, boolean isLast) {
+        String name = parameter.getName();
+        String type = parameter.getType();
         return output
                 + (index > 0 ? "\n" : "")
                 + "    public " + typeMapperFactory.of(type).javaType() + " get" + pascalCase.please(name) + "() {\n"

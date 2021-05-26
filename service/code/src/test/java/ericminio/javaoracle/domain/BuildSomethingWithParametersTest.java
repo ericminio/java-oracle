@@ -15,7 +15,9 @@ public class BuildSomethingWithParametersTest {
         }
 
         @Override
-        protected String modify(String output, int index, String name, String type, boolean isLast) {
+        protected String modify(String output, int index, Parameter parameter, boolean isLast) {
+            String name = parameter.getName();
+            String type = parameter.getType();
             return output
                 + (index != 0 ? ", " : "")
                 + name + " " + type

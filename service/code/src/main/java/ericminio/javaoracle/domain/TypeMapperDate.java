@@ -13,6 +13,11 @@ public class TypeMapperDate implements TypeMapper {
     }
 
     @Override
+    public String functionParameterOutType() {
+        return "Types.TIMESTAMP";
+    }
+
+    @Override
     public String sqlInputRead() {
         return "buildDateOrNull(stream.readTimestamp())";
     }
@@ -24,6 +29,11 @@ public class TypeMapperDate implements TypeMapper {
 
     @Override
     public String methodReturnStatement() {
-        return "return data == null ? null : new Date( ((java.sql.Timestamp) data).getTime() );";
+        return "return " + cast();
+    }
+
+    @Override
+    public String cast() {
+        return "data == null ? null : new Date( ((java.sql.Timestamp) data).getTime() );";
     }
 }

@@ -40,7 +40,7 @@ public class GenerateAdaptersFromFilesTest {
         assertThat(code, containsString("       connection.getTypeMap().put(ExampleAnyType.NAME, ExampleAnyType.class);"));
 
         assertThat(code, containsString("   public ExampleArrayType anyFunction()"));
-        assertThat(code, containsString("       PreparedStatement statement = connection.prepareStatement(\"select any_package.any_function() from dual\");"));
+        assertThat(code, containsString("       CallableStatement statement = connection.prepareCall(\"{ ? = call any_package.any_function() }\");"));
         assertThat(code, containsString("       return ExampleArrayType.with((Object[]) ((java.sql.Array) data).getArray());"));
     }
 

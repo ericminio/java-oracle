@@ -3,13 +3,18 @@ package ericminio.javaoracle.domain;
 public class TypeMapperString implements TypeMapper {
 
     @Override
+    public String javaType() {
+        return "String";
+    }
+
+    @Override
     public String functionParameterSettingStatement() {
         return "statement.setString(index, field);";
     }
 
     @Override
-    public String javaType() {
-        return "String";
+    public String functionParameterOutType() {
+        return "Types.VARCHAR";
     }
 
     @Override
@@ -24,6 +29,11 @@ public class TypeMapperString implements TypeMapper {
 
     @Override
     public String methodReturnStatement() {
-        return "return (String) data;";
+        return "return " + cast();
+    }
+
+    @Override
+    public String cast() {
+        return "(String) data;";
     }
 }

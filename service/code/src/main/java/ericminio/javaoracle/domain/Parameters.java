@@ -6,17 +6,20 @@ import java.util.List;
 public class Parameters {
 
     List<String> specifications;
+    List<Parameter> parameters;
 
     public Parameters() {
         specifications = new ArrayList<>();
+        parameters = new ArrayList<>();
     }
 
     public void add(String parameterSpecification) {
         specifications.add(parameterSpecification);
+        parameters.add(new Parameter(parameterSpecification));
     }
 
     public int count() {
-        return specifications.size();
+        return parameters.size();
     }
 
     public List<String> all() {
@@ -25,5 +28,9 @@ public class Parameters {
 
     public String get(int i) {
         return specifications.get(i);
+    }
+
+    public Parameter getParameter(int i) {
+        return parameters.get(i);
     }
 }

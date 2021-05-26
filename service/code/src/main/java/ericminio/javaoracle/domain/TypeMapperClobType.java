@@ -13,6 +13,11 @@ public class TypeMapperClobType implements TypeMapper {
     }
 
     @Override
+    public String functionParameterOutType() {
+        return "Types.CLOB";
+    }
+
+    @Override
     public String sqlInputRead() {
         return "stream.readClob()";
     }
@@ -24,6 +29,11 @@ public class TypeMapperClobType implements TypeMapper {
 
     @Override
     public String methodReturnStatement() {
-        return "return (Clob) data;";
+        return "return " + cast();
+    }
+
+    @Override
+    public String cast() {
+        return "(Clob) data;";
     }
 }

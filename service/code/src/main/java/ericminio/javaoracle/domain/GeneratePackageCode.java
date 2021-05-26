@@ -49,7 +49,14 @@ public class GeneratePackageCode {
             code = "import java.math.BigDecimal;\n" + code;
         }
         if (code.indexOf("Date ") != -1) {
-            code = code.replace("import java.sql.SQLException;", "import java.sql.SQLException;\nimport java.util.Date;");
+            code = code.replace("import java.sql.Types;", "import java.sql.Types;\nimport java.util.Date;");
+        }
+        if (code.indexOf("oracle.jdbc.OracleTypes.CURSOR") != -1) {
+            code = code
+                    .replace("import java.sql.SQLException;\n",
+                    "import java.sql.ResultSet;\nimport java.sql.SQLException;\n")
+                    .replace("import java.sql.Types;\n", "")
+            ;
         }
 
         return code;

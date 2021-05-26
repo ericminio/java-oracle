@@ -28,7 +28,9 @@ public class GenerateMethodCode {
                 .replace("packageName", packageName)
                 .replace("functionName", functionName)
                 .replace("???", new PlaceholderList().please(parameters.count()))
-                .replace("        // set IN parameters\n", new BuildSqlStatementParameterSettings(typeMapperFactory).please(parameters))
+                .replace("Types.OTHER", typeMapperFactory.of(returnType).functionParameterOutType())
+                .replace("        // set/register parameters\n", new BuildSqlStatementParameterSettings(typeMapperFactory).please(parameters))
+                .replace("        // set out parameters\n", new BuildOutParameterSettings(typeMapperFactory).please(parameters))
                 .replace("return data;", typeMapperFactory.of(returnType).methodReturnStatement())
                 ;
         return methodCode;

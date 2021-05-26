@@ -7,7 +7,8 @@ public class BuildToStringConcatenation extends BuildSomethingWithParameters {
     }
 
     @Override
-    protected String modify(String output, int index, String name, String type, boolean isLast) {
+    protected String modify(String output, int index, Parameter parameter, boolean isLast) {
+        String name = parameter.getName();
         return output
                 + "                "
                 + "+ \""

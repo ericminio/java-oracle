@@ -7,7 +7,9 @@ public class BuildDeclarationStatements extends BuildSomethingWithParameters {
     }
 
     @Override
-    protected String modify(String output, int index, String name, String type, boolean isLast) {
+    protected String modify(String output, int index, Parameter parameter, boolean isLast) {
+        String name = parameter.getName();
+        String type = parameter.getType();
         return output
                 + "    private " + typeMapperFactory.of(type).javaType()+ " " + camelCase.please(name) + ";"
                 + (!isLast ? "\n" : "")

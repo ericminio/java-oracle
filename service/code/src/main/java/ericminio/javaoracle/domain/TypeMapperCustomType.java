@@ -21,6 +21,11 @@ public class TypeMapperCustomType implements TypeMapper {
     }
 
     @Override
+    public String functionParameterOutType() {
+        return "Types.STRUCT, \""+ this.type.toUpperCase() + "\"";
+    }
+
+    @Override
     public String sqlInputRead() {
         return "(" + new PascalCase().please(this.type) + ") stream.readObject()";
     }
@@ -32,6 +37,11 @@ public class TypeMapperCustomType implements TypeMapper {
 
     @Override
     public String methodReturnStatement() {
-        return "return (" + new PascalCase().please(this.type) + ") data;";
+        return "return " + cast();
+    }
+
+    @Override
+    public String cast() {
+        return "(" + new PascalCase().please(this.type) + ") data;";
     }
 }

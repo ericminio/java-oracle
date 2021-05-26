@@ -50,7 +50,7 @@ public class GenerateClassesResistsCursorTest {
                 "        this.connection = connection;\n" +
                 "    }"));
         assertThat(code, containsString("   public ResultSet anyFunction()"));
-        assertThat(code, containsString("       PreparedStatement statement = connection.prepareStatement(\"select any_package.any_function() from dual\");"));
+        assertThat(code, containsString("       CallableStatement statement = connection.prepareCall(\"{ ? = call any_package.any_function() }\");"));
         assertThat(code, containsString("       return (ResultSet) data;"));
     }
 }

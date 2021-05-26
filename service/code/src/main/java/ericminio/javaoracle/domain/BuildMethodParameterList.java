@@ -7,9 +7,11 @@ public class BuildMethodParameterList extends BuildSomethingWithParameters {
     }
 
     @Override
-    protected String modify(String output, int index, String name, String type, boolean isLast) {
+    protected String modify(String output, int index, Parameter parameter, boolean isLast) {
         return output
-                + typeMapperFactory.of(type).javaType() + " " + camelCase.please(name)
+                + typeMapperFactory.of(parameter.getType()).javaType()
+                + ( parameter.isOut() ? "[]" : "")
+                + " " + camelCase.please(parameter.getName())
                 + (!isLast ? ", ": "")
                 ;
     }

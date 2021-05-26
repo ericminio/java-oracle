@@ -7,7 +7,9 @@ public class BuildReadSql extends BuildSomethingWithParameters {
     }
 
     @Override
-    protected String modify(String output, int index, String name, String type, boolean isLast) {
+    protected String modify(String output, int index, Parameter parameter, boolean isLast) {
+        String name = parameter.getName();
+        String type = parameter.getType();
         return output
                 + "        this.set" + pascalCase.please(name) + "(" + this.typeMapperFactory.of(type).sqlInputRead() + ");"
                 + (!isLast ? "\n" : "")
