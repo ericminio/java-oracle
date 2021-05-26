@@ -45,22 +45,7 @@ public class GeneratePackageCode {
                 .replace("        // type mapping\n", typeMapping)
                 .replace("    // methods", methodsCode)
         ;
-        if (code.indexOf("BigDecimal ") != -1) {
-            code = "import java.math.BigDecimal;\n" + code;
-        }
-        if (code.indexOf("Date ") != -1) {
-            code = code.replace("import java.sql.Types;", "import java.sql.Types;\nimport java.util.Date;");
-        }
-        if (code.indexOf("Clob ") != -1) {
-            code = code.replace("import java.sql.CallableStatement;", "import java.sql.CallableStatement;\nimport java.sql.Clob;");
-        }
-        if (code.indexOf("oracle.jdbc.OracleTypes.CURSOR") != -1) {
-            code = code
-                    .replace("import java.sql.SQLException;\n",
-                    "import java.sql.ResultSet;\nimport java.sql.SQLException;\n")
-                    .replace("import java.sql.Types;\n", "")
-            ;
-        }
+        code = new GenerateImports().please(code);
 
         return code;
     }

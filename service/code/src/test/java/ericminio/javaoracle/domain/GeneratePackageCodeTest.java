@@ -171,4 +171,14 @@ public class GeneratePackageCodeTest {
                 "    }"
         ));
     }
+
+    @Test
+    public void typesAddedInImportWhenUsed() throws IOException {
+        String code = generatePackageCode.please(Arrays.asList(
+                "package any_package as\n",
+                "   function any_function() return varchar;\n",
+                "end any_package;"
+        ), typeMapperFactory);
+        assertThat(code, containsString("import java.sql.Types;\n"));
+    }
 }

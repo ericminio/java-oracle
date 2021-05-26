@@ -8,6 +8,7 @@ Supported types
 - VARCHAR
 - NUMBER
 - DATE
+- CLOB
 
 
 # Run the tests
