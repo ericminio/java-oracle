@@ -1,9 +1,9 @@
 package ericminio.javaoracle.demos.custom;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 
 public class ReturningComplexType {
 
@@ -16,10 +16,11 @@ public class ReturningComplexType {
     }
 
     public ComplexType getField() throws SQLException {
-        PreparedStatement statement = connection.prepareStatement("select returning_complex_type.get_field() from dual");
-        ResultSet resultSet = statement.executeQuery();
-        resultSet.next();
+        CallableStatement statement = connection.prepareCall("{ ? = call returning_complex_type.get_field() }");
+        statement.registerOutParameter(1, Types.STRUCT, "COMPLEX_TYPE");
+        statement.executeUpdate();
+        Object data = statement.getObject(1);
 
-        return (ComplexType) resultSet.getObject(1);
+        return (ComplexType) data;
     }
 }

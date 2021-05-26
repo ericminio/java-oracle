@@ -1,9 +1,9 @@
 package ericminio.javaoracle.demos.custom;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 
 public class ReturningCustomTypeDateFieldNull {
 
@@ -15,10 +15,10 @@ public class ReturningCustomTypeDateFieldNull {
     }
 
     public CustomType getValue() throws SQLException {
-        PreparedStatement statement = connection.prepareStatement("select custom_type_date_null.get_value() from dual");
-        ResultSet resultSet = statement.executeQuery();
-        resultSet.next();
-        Object data = resultSet.getObject(1);
+        CallableStatement statement = connection.prepareCall("{ ? = call custom_type_date_null.get_value() }");
+        statement.registerOutParameter(1, Types.STRUCT, "CUSTOM_TYPE");
+        statement.executeUpdate();
+        Object data = statement.getObject(1);
 
         return (CustomType) data;
     }
