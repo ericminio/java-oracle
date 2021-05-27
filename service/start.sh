@@ -10,4 +10,4 @@ mvn clean package \
 
 cd target
 
-java -DPORT=$PORT -cp java-oracle-1.0.1.jar ericminio.javaoracle.main.StartServer 
+java -DPORT=$PORT -cp java-oracle-1.0.2.jar ericminio.javaoracle.main.StartServer 
