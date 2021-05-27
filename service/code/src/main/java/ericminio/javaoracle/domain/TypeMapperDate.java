@@ -4,7 +4,7 @@ public class TypeMapperDate implements TypeMapper {
 
     @Override
     public String functionParameterSettingStatement() {
-        return "statement.setTimestamp(index, new java.sql.Timestamp(field.getTime()));";
+        return "statement.setTimestamp(index, field == null ? null : new java.sql.Timestamp(field.getTime()));";
     }
 
     @Override

@@ -45,7 +45,7 @@ public class BuildSqlStatementParameterSettingsTest {
         Parameters parameters = new Parameters();
         parameters.add("field date");
         assertThat(buildSqlStatementParameterSettings.please(parameters), equalTo("" +
-                "        statement.setTimestamp(2, new java.sql.Timestamp(field.getTime()));\n" +
+                "        statement.setTimestamp(2, field == null ? null : new java.sql.Timestamp(field.getTime()));\n" +
                 ""));
     }
 
@@ -79,7 +79,7 @@ public class BuildSqlStatementParameterSettingsTest {
                 "        statement.setString(2, field1);\n" +
                 "        statement.setString(3, field2);\n" +
                 "        statement.setBigDecimal(4, field3);\n" +
-                "        statement.setTimestamp(5, new java.sql.Timestamp(field4.getTime()));\n" +
+                "        statement.setTimestamp(5, field4 == null ? null : new java.sql.Timestamp(field4.getTime()));\n" +
                 "        statement.setObject(6, field5);\n" +
                 ""));
     }

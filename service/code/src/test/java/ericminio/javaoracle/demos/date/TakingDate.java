@@ -17,7 +17,7 @@ public class TakingDate {
     public Date getValue(Date input) throws SQLException {
         CallableStatement statement = connection.prepareCall("{ ? = call taking_date.get_value(?) }");
         statement.registerOutParameter(1, Types.TIMESTAMP);
-        statement.setTimestamp(2, new java.sql.Timestamp(input.getTime()));
+        statement.setTimestamp(2, input == null ? null : new java.sql.Timestamp(input.getTime()));
         statement.execute();
         Object data = statement.getObject(1);
 

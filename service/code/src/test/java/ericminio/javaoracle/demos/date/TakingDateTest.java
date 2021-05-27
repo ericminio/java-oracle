@@ -6,7 +6,6 @@ import org.junit.Test;
 
 import java.sql.SQLException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import static ericminio.javaoracle.data.Query.with;
@@ -33,6 +32,9 @@ public class TakingDateTest extends DatabaseTest {
                 "    ) return date\n" +
                 "    as\n" +
                 "    begin\n" +
+                "        if input is null then\n" +
+                "            return to_date('2000/01/01 01:01:01', 'YYYY/MM/DD HH24:MI:SS');\n" +
+                "        end if;\n" +
                 "        return input + 1;\n" +
                 "    end;\n" +
                 "\n" +
@@ -42,10 +44,17 @@ public class TakingDateTest extends DatabaseTest {
     @Test
     public void getValue() throws SQLException, ParseException {
         TakingDate takingDate = new TakingDate(connection);
-        SimpleDateFormat dateformat = new SimpleDateFormat("yyyy/M/dd hh:mm:ss");
         Date input = dateformat.parse("2015/01/14 19:15:42");
         Date expected = dateformat.parse("2015/01/15 19:15:42");
 
         assertThat(takingDate.getValue(input), equalTo(expected));
+    }
+
+    @Test
+    public void resistsNull() throws SQLException, ParseException {
+        TakingDate takingDate = new TakingDate(connection);
+        Date expected = dateformat.parse("2000/01/01 01:01:01");
+
+        assertThat(takingDate.getValue(null), equalTo(expected));
     }
 }
