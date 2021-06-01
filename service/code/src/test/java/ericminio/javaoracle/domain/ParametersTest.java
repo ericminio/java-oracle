@@ -65,4 +65,22 @@ public class ParametersTest {
         assertThat(parameter.getType(), equalTo("number"));
         assertThat(parameter.isOut(), equalTo(true));
     }
+
+    @Test
+    public void knowsWhenNoDateFieldExistsInList() {
+        Parameters parameters = new Parameters();
+        parameters.add("field1 number");
+        parameters.add("field2 varchar2");
+
+        assertThat(parameters.hasDateField(), equalTo(false));
+    }
+
+    @Test
+    public void knowsWhenDateFieldExistsInList() {
+        Parameters parameters = new Parameters();
+        parameters.add("field1 number");
+        parameters.add("field2 date");
+
+        assertThat(parameters.hasDateField(), equalTo(true));
+    }
 }

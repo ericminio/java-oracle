@@ -10,6 +10,7 @@ public class GenerateTypeCode {
 
     public String please(List<String> typeSpecification, TypeMapperFactory typeMapperFactory) throws IOException {
         String typeTemplate = new Stringify().inputStream(this.getClass().getClassLoader().getResourceAsStream("templateForType.java"));
+        String dateUtilTemplate = new Stringify().inputStream(this.getClass().getClassLoader().getResourceAsStream("templateForDateUtil.java"));
 
         String typeName = new ExtractTypeName().please(typeSpecification);
         Parameters parameters = new ExtractParameters().please(typeSpecification);
@@ -23,6 +24,7 @@ public class GenerateTypeCode {
                 .replace("                // fields toString contribution", new BuildToStringConcatenation(typeMapperFactory).please(parameters))
                 .replace("        // fields readSQL contribution", new BuildReadSql(typeMapperFactory).please(parameters))
                 .replace("        // fields writeSQL contribution", new BuildWriteSql(typeMapperFactory).please(parameters))
+                .replace("    // date util if needed\n", parameters.hasDateField() ? dateUtilTemplate : "")
         ;
 
         if (code.indexOf("Clob ") != -1) {
@@ -30,6 +32,9 @@ public class GenerateTypeCode {
         }
         if (code.indexOf("BigDecimal ") != -1) {
             code = "import java.math.BigDecimal;\n" + code;
+        }
+        if (code.indexOf("Date ") != -1) {
+            code = code.replace("import java.sql.SQLOutput;\n", "import java.sql.SQLOutput;\nimport java.util.Date;\n");
         }
 
         return code;

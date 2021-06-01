@@ -4,7 +4,6 @@ import java.sql.SQLData;
 import java.sql.SQLException;
 import java.sql.SQLInput;
 import java.sql.SQLOutput;
-import java.util.Date;
 
 public class CustomTypeNesting implements SQLData {
     public static final String NAME = "CUSTOM_TYPE_NESTING";
@@ -55,17 +54,9 @@ public class CustomTypeNesting implements SQLData {
         this.setNested((CustomType) stream.readObject());
     }
 
-    private Date buildDateOrNull(java.sql.Timestamp timestamp) {
-        if (timestamp == null) {
-            return null;
-        }
-        else {
-            return new Date(timestamp.getTime());
-        }
-    }
-
     @Override
     public void writeSQL(SQLOutput stream) throws SQLException {
         stream.writeObject(this.getNested());
     }
+
 }

@@ -33,4 +33,13 @@ public class Parameters {
     public Parameter getParameter(int i) {
         return parameters.get(i);
     }
+
+    public boolean hasDateField() {
+        for (int i=0; i<count(); i++) {
+            if (getParameter(i).getType().equalsIgnoreCase("date")) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

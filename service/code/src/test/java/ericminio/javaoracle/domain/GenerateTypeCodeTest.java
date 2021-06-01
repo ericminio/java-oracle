@@ -22,7 +22,8 @@ public class GenerateTypeCodeTest {
                 "   field1 number,\n",
                 "   field2 varchar2(10),\n",
                 "   field3 array_type,\n",
-                "   field4 clob\n",
+                "   field4 clob,\n",
+                "   field5 date\n",
                 ")"
         );
         List<List<String>> typeSpecifications = Arrays.asList(
@@ -43,7 +44,12 @@ public class GenerateTypeCodeTest {
 
     @Test
     public void importsIncludeClob() {
-        assertThat(code, containsString("import java.sql.Clob;\nimport java.sql.SQLData;\n"));
+        assertThat(code, containsString("import java.sql.Clob;\n"));
+    }
+
+    @Test
+    public void importsIncludeDate() {
+        assertThat(code, containsString("import java.util.Date;\n"));
     }
 
     @Test
@@ -70,6 +76,19 @@ public class GenerateTypeCodeTest {
         GenerateTypeCode generateTypeCode = new GenerateTypeCode();
         code = generateTypeCode.please(typeSpecification, new TypeMapperFactory());
         assertThat(code, not(containsString("import java.sql.Clob;")));
+    }
+
+    @Test
+    public void importsDoNotAlwaysNeedDate() throws IOException {
+        List<String> typeSpecification = Arrays.asList(
+                "type custom_type as object\n",
+                "(\n",
+                "   field varchar2(10)\n",
+                ")"
+        );
+        GenerateTypeCode generateTypeCode = new GenerateTypeCode();
+        code = generateTypeCode.please(typeSpecification, new TypeMapperFactory());
+        assertThat(code, not(containsString("import java.util.Date;")));
     }
 
     @Test
@@ -137,6 +156,13 @@ public class GenerateTypeCodeTest {
                 + "    public void setField4(Clob field4) {\n"
                 + "        this.field4 = field4;\n"
                 + "    }\n"
+                + "\n"
+                + "    public Date getField5() {\n"
+                + "        return this.field5;\n"
+                + "    }\n"
+                + "    public void setField5(Date field5) {\n"
+                + "        this.field5 = field5;\n"
+                + "    }\n"
         ));
     }
 
@@ -155,6 +181,7 @@ public class GenerateTypeCodeTest {
                 "                && (this.getField2() == null ? other.getField2() == null : this.getField2().equals(other.getField2()))\n" +
                 "                && (this.getField3() == null ? other.getField3() == null : this.getField3().equals(other.getField3()))\n" +
                 "                && (this.getField4() == null ? other.getField4() == null : this.getField4().equals(other.getField4()))\n" +
+                "                && (this.getField5() == null ? other.getField5() == null : this.getField5().equals(other.getField5()))\n" +
                 "                ;\n" +
                 "    }"
         ));
@@ -170,6 +197,7 @@ public class GenerateTypeCodeTest {
                 "                + (this.getField2() == null ? 0 : this.getField2().hashCode())\n" +
                 "                + (this.getField3() == null ? 0 : this.getField3().hashCode())\n" +
                 "                + (this.getField4() == null ? 0 : this.getField4().hashCode())\n" +
+                "                + (this.getField5() == null ? 0 : this.getField5().hashCode())\n" +
                 "                ;\n" +
                 "    }"
         ));
@@ -185,6 +213,7 @@ public class GenerateTypeCodeTest {
                 "                + \", field2=\" + (this.getField2() == null ? \"null\" : this.getField2().toString())\n" +
                 "                + \", field3=\" + (this.getField3() == null ? \"null\" : this.getField3().toString())\n" +
                 "                + \", field4=\" + (this.getField4() == null ? \"null\" : this.getField4().toString())\n" +
+                "                + \", field5=\" + (this.getField5() == null ? \"null\" : this.getField5().toString())\n" +
                 "                + \" ]\";\n" +
                 "    }"
         ));
@@ -199,6 +228,7 @@ public class GenerateTypeCodeTest {
                 "        this.setField2(stream.readString());\n" +
                 "        this.setField3(ArrayType.with((Object[]) stream.readArray().getArray()));\n" +
                 "        this.setField4(stream.readClob());\n" +
+                "        this.setField5(buildDateOrNull(stream.readTimestamp()));\n" +
                 "    }"
         ));
     }
@@ -212,6 +242,7 @@ public class GenerateTypeCodeTest {
                 "        stream.writeString(this.getField2());\n" +
                 "        // ignore field3\n" +
                 "        stream.writeClob(this.getField4());\n" +
+                "        stream.writeTimestamp(new java.sql.Timestamp(this.getField5().getTime()));\n" +
                 "    }"
         ));
     }
@@ -240,5 +271,31 @@ public class GenerateTypeCodeTest {
         code = generateTypeCode.please(typeSpecification, typeMapperFactory);
 
         assertThat(code, containsString("public class CustomType implements SQLData {"));
+    }
+
+    @Test
+    public void mayNeedDateUtility() throws IOException {
+        List<String> typeSpecification = Arrays.asList(
+                "type custom_type as object\n",
+                "(\n",
+                "   field date\n",
+                ")"
+        );
+        GenerateTypeCode generateTypeCode = new GenerateTypeCode();
+        code = generateTypeCode.please(typeSpecification, new TypeMapperFactory());
+        assertThat(code, containsString("private Date buildDateOrNull"));
+    }
+
+    @Test
+    public void doesNotAlwaysNeedDateUtility() throws IOException {
+        List<String> typeSpecification = Arrays.asList(
+                "type custom_type as object\n",
+                "(\n",
+                "   field varchar2(10)\n",
+                ")"
+        );
+        GenerateTypeCode generateTypeCode = new GenerateTypeCode();
+        code = generateTypeCode.please(typeSpecification, new TypeMapperFactory());
+        assertThat(code, not(containsString("private Date buildDateOrNull")));
     }
 }

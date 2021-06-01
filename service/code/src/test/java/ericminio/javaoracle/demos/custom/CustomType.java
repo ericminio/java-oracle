@@ -80,6 +80,13 @@ public class CustomType implements SQLData {
         this.setCreationDate(buildDateOrNull(stream.readTimestamp()));
     }
 
+    @Override
+    public void writeSQL(SQLOutput stream) throws SQLException {
+        stream.writeBigDecimal(this.getId());
+        stream.writeString(this.getLabel());
+        stream.writeTimestamp(new java.sql.Timestamp(this.getCreationDate().getTime()));
+    }
+
     private Date buildDateOrNull(java.sql.Timestamp timestamp) {
         if (timestamp == null) {
             return null;
@@ -87,12 +94,5 @@ public class CustomType implements SQLData {
         else {
             return new Date(timestamp.getTime());
         }
-    }
-
-    @Override
-    public void writeSQL(SQLOutput stream) throws SQLException {
-        stream.writeBigDecimal(this.getId());
-        stream.writeString(this.getLabel());
-        stream.writeTimestamp(new java.sql.Timestamp(this.getCreationDate().getTime()));
     }
 }
