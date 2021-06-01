@@ -27,15 +27,7 @@ public class GenerateTypeCode {
                 .replace("    // date util if needed\n", parameters.hasDateField() ? dateUtilTemplate : "")
         ;
 
-        if (code.indexOf("Clob ") != -1) {
-            code = "import java.sql.Clob;\n" + code;
-        }
-        if (code.indexOf("BigDecimal ") != -1) {
-            code = "import java.math.BigDecimal;\n" + code;
-        }
-        if (code.indexOf("Date ") != -1) {
-            code = code.replace("import java.sql.SQLOutput;\n", "import java.sql.SQLOutput;\nimport java.util.Date;\n");
-        }
+        code = new GenerateImports().please(code);
 
         return code;
     }
