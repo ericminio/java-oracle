@@ -10,7 +10,14 @@ public class OutVarchar {
 
     private Connection connection;
 
+    public OutVarchar() {
+    }
+
     public OutVarchar(Connection connection) {
+        this.setConnection(connection);
+    }
+
+    public void setConnection(Connection connection) {
         this.connection = connection;
     }
 

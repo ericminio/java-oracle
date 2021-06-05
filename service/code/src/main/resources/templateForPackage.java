@@ -6,7 +6,14 @@ public class ClassName {
 
     private Connection connection;
 
+    public ClassName() {
+    }
+
     public ClassName(Connection connection) {
+        this.setConnection(connection);
+    }
+
+    public void setConnection(Connection connection) {
         this.connection = connection;
         // type mapping
     }

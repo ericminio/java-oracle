@@ -10,7 +10,14 @@ public class TakingNumber {
 
     private Connection connection;
 
+    public TakingNumber() {
+    }
+
     public TakingNumber(Connection connection) {
+        this.setConnection(connection);
+    }
+
+    public void setConnection(Connection connection) {
         this.connection = connection;
     }
 

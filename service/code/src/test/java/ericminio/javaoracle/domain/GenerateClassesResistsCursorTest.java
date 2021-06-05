@@ -46,7 +46,7 @@ public class GenerateClassesResistsCursorTest {
 
         assertThat(code, containsString("public class AnyPackage {"));
         assertThat(code, containsString("   private Connection connection;"));
-        assertThat(code, containsString("   public AnyPackage(Connection connection) {\n" +
+        assertThat(code, containsString("   public void setConnection(Connection connection) {\n" +
                 "        this.connection = connection;\n" +
                 "    }"));
         assertThat(code, containsString("   public ResultSet anyFunction()"));

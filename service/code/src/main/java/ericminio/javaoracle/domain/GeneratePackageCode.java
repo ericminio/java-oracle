@@ -38,7 +38,10 @@ public class GeneratePackageCode {
         logger.log(Level.INFO, "Building type mapping");
         String typeMapping = new BuildTypeMapping(typeMapperFactory).please(returnTypes);
         if (typeMapping.length() > 0) {
-            classTemplate = classTemplate.replace("ClassName(Connection connection) {", "ClassName(Connection connection) throws SQLException {");
+            classTemplate = classTemplate
+                    .replace("ClassName(Connection connection) {", "ClassName(Connection connection) throws SQLException {")
+                    .replace("setConnection(Connection connection) {", "setConnection(Connection connection) throws SQLException {")
+            ;
         }
         String code = classTemplate
                 .replace("ClassName", new PascalCase().please(packageName))

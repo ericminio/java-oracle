@@ -9,7 +9,14 @@ public class ReturningVarchar {
 
     private Connection connection;
 
+    public ReturningVarchar() {
+    }
+
     public ReturningVarchar(Connection connection) {
+        this.setConnection(connection);
+    }
+
+    public void setConnection(Connection connection) {
         this.connection = connection;
     }
 

@@ -9,7 +9,14 @@ public class TakingVarchar {
 
     private Connection connection;
 
+    public TakingVarchar() {
+    }
+
     public TakingVarchar(Connection connection) {
+        this.setConnection(connection);
+    }
+
+    public void setConnection(Connection connection) {
         this.connection = connection;
     }
 

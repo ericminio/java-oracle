@@ -34,7 +34,8 @@ public class ReturningVarcharTest extends DatabaseTest {
 
     @Test
     public void works() throws SQLException {
-        ReturningVarchar returningVarchar = new ReturningVarchar(connection);
+        ReturningVarchar returningVarchar = new ReturningVarchar();
+        returningVarchar.setConnection(connection);
         
         assertThat(returningVarchar.getValue(), equalTo("42"));
     }

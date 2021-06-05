@@ -9,7 +9,14 @@ public class ReturningCustomType {
 
     private Connection connection;
 
+    public ReturningCustomType() {
+    }
+
     public ReturningCustomType(Connection connection) throws SQLException {
+        this.setConnection(connection);
+    }
+
+    public void setConnection(Connection connection) throws SQLException {
         this.connection = connection;
         connection.getTypeMap().put(CustomType.NAME, CustomType.class);
     }

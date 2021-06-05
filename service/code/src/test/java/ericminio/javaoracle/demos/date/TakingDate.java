@@ -10,7 +10,14 @@ public class TakingDate {
 
     private Connection connection;
 
+    public TakingDate() {
+    }
+
     public TakingDate(Connection connection) {
+        this.setConnection(connection);
+    }
+
+    public void setConnection(Connection connection) {
         this.connection = connection;
     }
 

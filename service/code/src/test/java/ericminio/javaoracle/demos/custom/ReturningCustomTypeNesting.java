@@ -9,7 +9,14 @@ public class ReturningCustomTypeNesting {
 
     private Connection connection;
 
+    public ReturningCustomTypeNesting() {
+    }
+
     public ReturningCustomTypeNesting(Connection connection) throws SQLException {
+        this.setConnection(connection);
+    }
+
+    public void setConnection(Connection connection) throws SQLException {
         this.connection = connection;
         connection.getTypeMap().put(CustomTypeNesting.NAME, CustomTypeNesting.class);
         connection.getTypeMap().put(CustomType.NAME, CustomType.class);

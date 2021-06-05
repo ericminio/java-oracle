@@ -10,7 +10,14 @@ public class ReturningClob {
 
     private Connection connection;
 
+    public ReturningClob() {
+    }
+
     public ReturningClob(Connection connection) {
+        this.setConnection(connection);
+    }
+
+    public void setConnection(Connection connection) {
         this.connection = connection;
     }
 

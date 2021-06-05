@@ -11,7 +11,14 @@ public class OutDate {
 
     private Connection connection;
 
+    public OutDate() {
+    }
+
     public OutDate(Connection connection) {
+        this.setConnection(connection);
+    }
+
+    public void setConnection(Connection connection) {
         this.connection = connection;
     }
 

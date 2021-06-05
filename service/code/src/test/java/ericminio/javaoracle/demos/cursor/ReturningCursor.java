@@ -9,7 +9,14 @@ public class ReturningCursor {
 
     private Connection connection;
 
+    public ReturningCursor() {
+    }
+
     public ReturningCursor(Connection connection) {
+        this.setConnection(connection);
+    }
+
+    public void setConnection(Connection connection) {
         this.connection = connection;
     }
 

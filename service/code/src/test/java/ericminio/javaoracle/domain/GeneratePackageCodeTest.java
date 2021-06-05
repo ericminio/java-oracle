@@ -44,7 +44,22 @@ public class GeneratePackageCodeTest {
         ), typeMapperFactory);
         assertThat(code, containsString("" +
                 "    public AnyPackage(Connection connection) {\n" +
-                "        this.connection = connection;\n" +
+                "        this.setConnection(connection);\n" +
+                "    }"
+        ));
+    }
+
+    @Test
+    public void generatesConstructorThrowsClauseWhenTypeMappingNeeded() throws IOException {
+        String code = generatePackageCode.please(Arrays.asList(
+                "PACKAGE any_package\n",
+                "AS\n",
+                "   FUNCTION any_function RETURN any_type;\n",
+                "END any_package;"
+        ), typeMapperFactory);
+        assertThat(code, containsString("" +
+                "    public AnyPackage(Connection connection) throws SQLException {\n" +
+                "        this.setConnection(connection);\n" +
                 "    }"
         ));
     }
@@ -58,7 +73,7 @@ public class GeneratePackageCodeTest {
                 "END any_package;"
         ), typeMapperFactory);
         assertThat(code, containsString("" +
-                "    public AnyPackage(Connection connection) throws SQLException {\n" +
+                "    public void setConnection(Connection connection) throws SQLException {\n" +
                 "        this.connection = connection;\n" +
                 "        connection.getTypeMap().put(AnyType.NAME, AnyType.class);\n" +
                 "    }"
@@ -144,7 +159,7 @@ public class GeneratePackageCodeTest {
         );
         String code = new GeneratePackageCode().please(packageSpecification, new TypeMapperFactory(typeSpecifications));
         assertThat(code, containsString("" +
-                "    public AnyPackage(Connection connection) throws SQLException {\n" +
+                "    public void setConnection(Connection connection) throws SQLException {\n" +
                 "        this.connection = connection;\n" +
                 "        connection.getTypeMap().put(RecordType.NAME, RecordType.class);\n" +
                 "    }"
@@ -164,7 +179,7 @@ public class GeneratePackageCodeTest {
         );
         String code = new GeneratePackageCode().please(packageSpecification, new TypeMapperFactory(typeSpecifications));
         assertThat(code, containsString("" +
-                "    public AnyPackage(Connection connection) throws SQLException {\n" +
+                "    public void setConnection(Connection connection) throws SQLException {\n" +
                 "        this.connection = connection;\n" +
                 "        connection.getTypeMap().put(AnyTypeNesting.NAME, AnyTypeNesting.class);\n" +
                 "        connection.getTypeMap().put(AnyType.NAME, AnyType.class);\n" +

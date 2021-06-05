@@ -10,7 +10,14 @@ public class ReturningNumber {
 
     private Connection connection;
 
+    public ReturningNumber() {
+    }
+
     public ReturningNumber(Connection connection) {
+        this.setConnection(connection);
+    }
+
+    public void setConnection(Connection connection) {
         this.connection = connection;
     }
 

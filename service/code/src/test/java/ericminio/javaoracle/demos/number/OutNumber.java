@@ -10,7 +10,14 @@ public class OutNumber {
 
     private Connection connection;
 
+    public OutNumber() {
+    }
+
     public OutNumber(Connection connection) {
+        this.setConnection(connection);
+    }
+
+    public void setConnection(Connection connection) {
         this.connection = connection;
     }
 

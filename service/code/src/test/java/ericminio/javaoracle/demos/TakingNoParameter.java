@@ -10,7 +10,14 @@ public class TakingNoParameter {
 
     private Connection connection;
 
+    public TakingNoParameter() {
+    }
+
     public TakingNoParameter(Connection connection) {
+        this.setConnection(connection);
+    }
+
+    public void setConnection(Connection connection) {
         this.connection = connection;
     }
 

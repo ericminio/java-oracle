@@ -10,7 +10,14 @@ public class ReturningDate {
 
     private Connection connection;
 
+    public ReturningDate() {
+    }
+
     public ReturningDate(Connection connection) {
+        this.setConnection(connection);
+    }
+
+    public void setConnection(Connection connection) {
         this.connection = connection;
     }
 
