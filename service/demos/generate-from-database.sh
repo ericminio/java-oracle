@@ -23,7 +23,7 @@ java \
     -DtypeNamePrefix=example_type_ \
     -DjavaPackage=company.name \
     -DoutputFolder=/usr/local/src/service/demos/generated-from-database \
-    -cp ~/.m2/repository/com/oracle/database/jdbc/ojdbc6/11.2.0.4/ojdbc6-11.2.0.4.jar:java-oracle-1.0.3.jar \
+    -cp ~/.m2/repository/com/oracle/database/jdbc/ojdbc6/11.2.0.4/ojdbc6-11.2.0.4.jar:java-oracle-1.0.4.jar \
     ericminio.javaoracle.main.GenerateAdaptersFromDatabase 
 
 ls -la /usr/local/src/service/demos/generated-from-database
